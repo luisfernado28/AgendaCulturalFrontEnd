@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
@@ -9,18 +9,32 @@ import {
   incrementIfOdd,
   selectCount,
 } from './counterSlice';
+import {
+  fetchEvents, selectAllEvents
+} from '../../redux/eventsSlice'
 import styles from './Counter.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function Counter() {
+  const dispatch2 = useDispatch()
+  const events= useSelector(selectAllEvents)
+
   const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
+  
+  useEffect(() => {
+    dispatch(fetchEvents())
+    // localStorage.removeItem('myFilter')
+  }, [dispatch2])
 
+  dispatch2(fetchEvents)
   return (
     <div>
       <div className={styles.row}>
+        {events}
         <button
           className={styles.button}
           aria-label="Decrement value"
