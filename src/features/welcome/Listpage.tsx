@@ -17,10 +17,11 @@ function ListPage(): JSX.Element {
         return (
             <div key={event.id} >
                 {event.title}
+                {event.price}
             </div>
         )
     })
-    
+
     return (
         <div>
             {status}
