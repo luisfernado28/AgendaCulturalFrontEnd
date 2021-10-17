@@ -1,3 +1,5 @@
+import {Event } from '../redux/types';
+
 let routes: string
 
 // if (process.env.EVENTS_APP_API !== undefined) {
@@ -5,13 +7,13 @@ let routes: string
   routes = `http://localhost:5000/v1.0/events`
 // }
 
-export async function getEvents() {
+export async function getEvents(): Promise<Event[]> {
   try {
-    console.log(routes);
     const response = await fetch(routes);
     const results = await response.json();
     return results;
   } catch (error) {
+    throw new Error();
     //throw new Error(error.toString())
   }
 }
