@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../../redux/eventsSlice"
 import { Event} from "../../redux/types"
+import EventCard from '../../components/eventCard'
 
 
 function ListPage(): JSX.Element {
@@ -18,15 +19,13 @@ function ListPage(): JSX.Element {
     const eventsList = events.map((event: Event) => {
         return (
             <div key={event.id} >
-                {event.title}
-                {event.price}
+                <EventCard {...event}/>
             </div>
         )
     })
 
     return (
         <div sx={{background: '#D5A030'}}>
-            {status}
             {eventsList}
             Espacio de prueba
         </div>

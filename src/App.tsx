@@ -1,14 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
-import  ListPage  from './features/welcome/Listpage';
+import ListPage from './features/welcome/Listpage';
 import './App.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <ListPage/>
+        <ListPage />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -51,6 +54,7 @@ function App() {
           </a>
         </span>
       </header>
+      <Footer />
     </div>
   );
 }
