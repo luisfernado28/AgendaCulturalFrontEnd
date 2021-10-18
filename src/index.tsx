@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -6,13 +7,16 @@ import store from './redux/store';
 //import store from './redux/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-
+import { ThemeProvider } from 'theme-ui'
+import { theme } from './styles/theme'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

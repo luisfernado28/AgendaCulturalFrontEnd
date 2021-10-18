@@ -1,3 +1,5 @@
+/** @jsxImportSource theme-ui */
+import { jsx } from 'theme-ui'
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../../redux/eventsSlice"
@@ -23,7 +25,7 @@ function ListPage(): JSX.Element {
     })
 
     return (
-        <div>
+        <div sx={{background: '#D5A030'}}>
             {status}
             {eventsList}
             Espacio de prueba
