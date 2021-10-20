@@ -27,7 +27,7 @@ export interface Event {
     twitter: string,
     instagram: string,
     imageUrl?:  string,
-    dates?:  string[],
+    dates:  string[],
     tagsId?:  string[],
     time?: string
   }

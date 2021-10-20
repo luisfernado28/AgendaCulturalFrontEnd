@@ -26,6 +26,20 @@ function EventCard({
   venueId
 }: Event): JSX.Element {
   const color = 'orange'
+  const frontCardDate = new Date(dates[0]).getDay() + '/' + new Date(dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
+  const fromToCardDate = setDatesRange();
+
+  function setDatesRange(): string{
+    const first= new Date(dates[0]);
+    if(dates.length==1){
+      return  first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) ; 
+    }else{
+      const last= new Date(dates[dates.length-1]);
+      const string = 'Desde ' + first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) + ' hasta el ' +  last.getDay() + ' de ' + last.toLocaleString('default', { month: 'long' });
+      return string;
+    }
+
+  }
 
   //TODO code for blob containers
   //getImage();
@@ -71,13 +85,13 @@ function EventCard({
       height: '350px',
     }}>
       <Box>
-        <Image src={imageUrl}></Image>
+        <Image src={imageUrl} variant="card"></Image>
       </Box>
       <Box>
-        <Text sx={{ color: 'red' }}> Date </Text><Text>Title:{title}</Text><br />
+        <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Text>Venue:{venueId}</Text><br />
         <Text>Dates:{price}</Text><br />
-        <Text>Time:8:PM</Text><br />
+        <Text>Time {fromToCardDate}</Text><br />
         <Text>Categorias:{description}</Text><br />
         <Text>Precio:{price}</Text><br />
       </Box>
