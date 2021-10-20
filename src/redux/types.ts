@@ -26,7 +26,8 @@ export interface Event {
     facebook: string,
     twitter: string,
     instagram: string,
-    images?:  string[],
+    imageUrl?:  string,
     dates?:  string[],
     tagsId?:  string[],
+    time?: string
   }

@@ -1,9 +1,9 @@
 /** @jsxImportSource theme-ui */
-import { jsx } from 'theme-ui'
+import { Grid, jsx, Text } from 'theme-ui'
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../../redux/eventsSlice"
-import { Event} from "../../redux/types"
+import { Event } from "../../redux/types"
 import EventCard from '../../components/eventCard'
 
 
@@ -19,15 +19,21 @@ function ListPage(): JSX.Element {
     const eventsList = events.map((event: Event) => {
         return (
             <div key={event.id} >
-                <EventCard {...event}/>
+                <EventCard {...event} />
             </div>
         )
     })
 
     return (
-        <div sx={{background: '#D5A030'}}>
+        <div >
+            <Text>Eventos en tendencia</Text>
+            <Grid
+                columns={[2]}
+                sx={{ justifyContent: 'stretch', my: '50px', rowGap: '100px', columnGap: '50px'}}
+            >
             {eventsList}
-            Espacio de prueba
+
+            </Grid>
         </div>
     )
 }

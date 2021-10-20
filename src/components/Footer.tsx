@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 
-import { Box, Grid,jsx } from 'theme-ui'
+import { Box,jsx } from 'theme-ui'
 
 
 const Footer = (): JSX.Element => {
