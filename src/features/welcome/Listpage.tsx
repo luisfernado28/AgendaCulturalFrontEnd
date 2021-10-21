@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../../redux/eventsSlice"
 import { Event } from "../../redux/types"
 import EventCard from '../../components/eventCard'
+import { singleVenue } from '../../redux/venueSlice'
 
 
 function ListPage(): JSX.Element {
@@ -13,7 +14,6 @@ function ListPage(): JSX.Element {
 
     useEffect(() => {
         dispatch(fetchEvents())
-        // localStorage.removeItem('myFilter')
     }, [dispatch])
 
     const eventsList = events.map((event: Event) => {

@@ -1,10 +1,9 @@
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-
-
 import { BlobDownloadResponseModel, BlobDownloadResponseParsed, BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Card,
   Container,
@@ -15,6 +14,7 @@ import {
 } from 'theme-ui'
 
 import { Event } from '../redux/types'
+import { fetchVenueById, singleVenue } from '../redux/venueSlice';
 
 function EventCard({
   title,
@@ -25,17 +25,22 @@ function EventCard({
   dates,
   venueId
 }: Event): JSX.Element {
-  const color = 'orange'
   const frontCardDate = new Date(dates[0]).getDay() + '/' + new Date(dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
   const fromToCardDate = setDatesRange();
+  const dispatch = useDispatch()
 
-  function setDatesRange(): string{
-    const first= new Date(dates[0]);
-    if(dates.length==1){
-      return  first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) ; 
-    }else{
-      const last= new Date(dates[dates.length-1]);
-      const string = 'Desde ' + first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) + ' hasta el ' +  last.getDay() + ' de ' + last.toLocaleString('default', { month: 'long' });
+  const { Venue, venueStatus } = useSelector(singleVenue)
+  useEffect(() => {
+    dispatch(fetchVenueById(venueId))
+  }, [dispatch])
+  console.log(Venue);
+  function setDatesRange(): string {
+    const first = new Date(dates[0]);
+    if (dates.length == 1) {
+      return first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' });
+    } else {
+      const last = new Date(dates[dates.length - 1]);
+      const string = 'Desde ' + first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) + ' hasta el ' + last.getDay() + ' de ' + last.toLocaleString('default', { month: 'long' });
       return string;
     }
 
@@ -89,7 +94,7 @@ function EventCard({
       </Box>
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
-        <Text>Venue:{venueId}</Text><br />
+        <Text>Venue:{Venue.name}</Text><br />
         <Text>Dates:{price}</Text><br />
         <Text>Time {fromToCardDate}</Text><br />
         <Text>Categorias:{description}</Text><br />
