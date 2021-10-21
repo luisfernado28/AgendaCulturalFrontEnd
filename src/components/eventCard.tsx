@@ -95,8 +95,8 @@ function EventCard({
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Text>Venue:{Venue.name}</Text><br />
-        <Text>Dates:{price}</Text><br />
-        <Text>Time {fromToCardDate}</Text><br />
+        <Text>Dates:{fromToCardDate}</Text><br />
+        <Text>Time {new Date(dates[0]).getTime() + ':' + new Date(dates[0]).getMinutes()}</Text><br />
         <Text>Categorias:{description}</Text><br />
         <Text>Precio:{price}</Text><br />
       </Box>

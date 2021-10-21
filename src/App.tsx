@@ -1,18 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import ListPage from './features/welcome/Listpage';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Router from './components/Router';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <header className="App-header">
-        <ListPage />
-      </header>
-      <Footer />
+      <BrowserRouter>
+        <Header />
+        <header className="App-header">
+          <Router />
+        </header>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }
