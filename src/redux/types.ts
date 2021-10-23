@@ -32,6 +32,25 @@ export interface Event {
   time?: string
 }
   
+
+export interface CreateEvent {
+  title: string,
+  artist: string,
+  venueId: string,
+  status: number,
+  price: number,
+  phone: string,
+  type: string,
+  description: string,
+  website: string,
+  facebook: string,
+  twitter: string,
+  instagram: string,
+  imageUrl?: string,
+  dates: string[],
+  tagsId?: string[],
+  time?: string
+}
 export interface Venue {
   id: string,
   name: string,

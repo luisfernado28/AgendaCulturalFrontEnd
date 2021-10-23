@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getEvents } from '../utils/client'
+import { getEvents, postEvent } from '../utils/client'
 import { EventsReducer, StoreState } from './stateTypes'
-import { Event, Status } from './types'
+import { CreateEvent, Event, Status } from './types'
 
 const initialState: EventsReducer = {
   events: [
@@ -18,6 +18,13 @@ export const fetchEvents = createAsyncThunk(
   'events/fetchEvents',
   async () => {
     return await getEvents()
+  },
+)
+
+export const createEvent = createAsyncThunk(
+  'events/postEvents',
+  async (body: CreateEvent) => {
+    return await postEvent(body)
   },
 )
 

@@ -1,4 +1,4 @@
-import {Event } from '../redux/types';
+import {CreateEvent, Event } from '../redux/types';
 
 let routes: string
 
@@ -15,5 +15,22 @@ export async function getEvents(): Promise<Event[]> {
   } catch (error) {
     throw new Error();
     //throw new Error(error.toString())
+  }
+}
+
+export async function postEvent(params: CreateEvent): Promise<Event> {
+  try {
+    const {  ...body } = params
+    const res = await fetch(routes, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const result = await res.json()
+    return result
+  } catch (error) {
+    throw new Error();
   }
 }

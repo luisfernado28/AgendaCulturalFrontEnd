@@ -3,10 +3,11 @@
 
 import { useField } from 'formik'
 import { Fragment } from 'react'
-import { jsx, Label, Textarea } from 'theme-ui'
+import { Input, jsx, Label } from 'theme-ui'
 
 
-interface TextAreaInputProps {
+interface TextInputProps {
+  disabled?: boolean
   id?: string
   label: string
   lcolor?: string
@@ -17,10 +18,7 @@ interface TextAreaInputProps {
   type?: string
 }
 
-const TextAreaInput = ({
-  label,
-  ...props
-}: TextAreaInputProps): JSX.Element => {
+const TextInput = ({ label, ...props }: TextInputProps): JSX.Element => {
   const [field, meta] = useField(props)
 
   return (
@@ -28,12 +26,12 @@ const TextAreaInput = ({
       <Label sx={{ color: `${props.lcolor}` }} htmlFor={props.id || props.name}>
         {label}{' '}
       </Label>
-      <Textarea {...field} {...props} />
+      <Input {...field} {...props} />
       {meta.touched && meta.error ? (
-        <div>{meta.error}</div>
+        <div >{meta.error}</div>
       ) : null}
     </Fragment>
   )
 }
 
-export default TextAreaInput
+export default TextInput
