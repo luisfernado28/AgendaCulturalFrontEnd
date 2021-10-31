@@ -33,7 +33,6 @@ function EventCard({
   useEffect(() => {
     dispatch(fetchVenueById(venueId))
   }, [dispatch])
-  console.log(Venue);
   function setDatesRange(): string {
     const first = new Date(dates[0]);
     if (dates.length == 1) {
@@ -90,7 +89,7 @@ function EventCard({
       height: '350px',
     }}>
       <Box>
-        <Image src={imageUrl} variant="card"></Image>
+        <Image src={`${process.env.REACT_APP_Blob_API}${imageUrl}`} variant="card"></Image>
       </Box>
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />

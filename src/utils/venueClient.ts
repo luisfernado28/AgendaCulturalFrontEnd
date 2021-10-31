@@ -1,9 +1,9 @@
 import { Venue } from '../redux/types';
 
 let routes: string
-
-routes = `http://localhost:5000/v1.0/venues`
-
+if (process.env.REACT_APP_EVENTS_API !== undefined) {
+    routes = `${process.env.REACT_APP_EVENTS_API}/venues`
+  }
 export async function getVenueById(venueId: string): Promise<Venue> {
     try {
         const headers: any = {

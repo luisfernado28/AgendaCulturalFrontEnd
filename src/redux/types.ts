@@ -47,10 +47,16 @@ export interface CreateEvent {
   twitter: string,
   instagram: string,
   imageUrl?: string,
-  dates: string[],
-  tagsId?: string[],
+  dates: Dates,
+  tags?: string[],
   time?: string
 }
+
+export interface Dates{
+  areindependent: boolean,
+  dates: string[]
+}
+
 export interface Venue {
   id: string,
   name: string,

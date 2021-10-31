@@ -1,12 +1,11 @@
-import {CreateEvent, Event } from '../redux/types';
+import { CreateEvent, Event } from '../redux/types';
 
-let routes: string
+let routes: string ;
 
-// if (process.env.EVENTS_APP_API !== undefined) {
-  routes = `${process.env.EVENTS_APP_API}/events`
-  routes = `http://localhost:5000/v1.0/events`
-// }
 
+if (process.env.REACT_APP_EVENTS_API !== undefined) {
+  routes = `${process.env.REACT_APP_EVENTS_API}/events`
+}
 export async function getEvents(): Promise<Event[]> {
   try {
     const response = await fetch(routes);
@@ -20,7 +19,7 @@ export async function getEvents(): Promise<Event[]> {
 
 export async function postEvent(params: CreateEvent): Promise<Event> {
   try {
-    const {  ...body } = params
+    const { ...body } = params
     const res = await fetch(routes, {
       method: 'POST',
       body: JSON.stringify(body),

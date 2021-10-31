@@ -7,6 +7,8 @@ import TextInput from '../../components/TextInput'
 import { useDispatch } from 'react-redux'
 import { createEvent } from '../../redux/eventsSlice'
 import { CreateEvent, Event, Status } from '../../redux/types'
+import ImageUpload from '../../components/ImageUpload'
+import { useState } from 'react'
 
 
 export interface Values {
@@ -55,6 +57,7 @@ const CreateEventSchema = Yup.object().shape({
 })
 function CreateEventForm(): JSX.Element {
     const dispatch = useDispatch()
+    const [image, setImage] = useState<File>()
 
 
     const handleSubmit = async (
@@ -67,7 +70,10 @@ function CreateEventForm(): JSX.Element {
             venueId: '',
             status: 0,
             type: '',
-            dates: []
+            dates:  {
+                areindependent: true,
+                dates : []
+            }
         }
         await dispatch(createEvent(newEvent))
     }
@@ -103,6 +109,10 @@ function CreateEventForm(): JSX.Element {
                 {
                     ({ handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
+                            <ImageUpload
+                                fromChild={(local: File) => setImage(local)}
+                                alt={''}
+                            />
                             <Grid columns={[2]}>
                                 <Container>
                                     <TextInput
