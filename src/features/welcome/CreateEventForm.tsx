@@ -9,6 +9,7 @@ import { createEvent } from '../../redux/eventsSlice'
 import { CreateEvent, Event, Status } from '../../redux/types'
 import ImageUpload from '../../components/ImageUpload'
 import { useState } from 'react'
+import { postImage } from '../../utils/blobStorageClient'
 
 
 export interface Values {
@@ -25,7 +26,7 @@ export interface Values {
     facebook: string,
     twitter: string,
     instagram: string,
-    // imageUrl?: string,
+    imageUrl?: string,
     // dates: string[],
     // tagsId?: string[],
     // time?: string
@@ -64,18 +65,23 @@ function CreateEventForm(): JSX.Element {
         values: Values,
         // { setSubmitting }: FormikHelpers<Values>,
     ) => {
-        console.log(values)
+        console.log(image)
+        let newImageUrl: string='';
+        if (image) {
+             newImageUrl = await postImage(image)
+        }
         const newEvent: CreateEvent = {
             ...values,
             venueId: '',
             status: 0,
             type: '',
-            dates:  {
+            imageUrl: newImageUrl,
+            dates: {
                 areindependent: true,
-                dates : []
+                dates: []
             }
         }
-        await dispatch(createEvent(newEvent))
+        //await dispatch(createEvent(newEvent))
     }
 
     const initialValues: Values = {
@@ -92,7 +98,7 @@ function CreateEventForm(): JSX.Element {
         facebook: '',
         twitter: '',
         instagram: '',
-        // imageUrl: '',
+        imageUrl: '',
         // dates: [''],
         // tagsId: [''],
         // time: ''

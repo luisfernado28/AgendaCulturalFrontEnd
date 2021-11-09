@@ -45,21 +45,6 @@ function EventCard({
 
   }
 
-  //TODO code for blob containers
-  //getImage();
-  async function getImage() {
-    //Info strings
-    const account = "storageagendacultural";
-    const sas = "?sv=2020-08-04&ss=bfqt&srt=sc&sp=rwdlacupitfx&se=2021-10-20T05:32:27Z&st=2021-10-19T21:32:27Z&spr=https,http&sig=jl0Ez%2B8G7tW5h%2FsUAkJu3IiO1xtP1w6CeUxfMR7s3KQ%3D";
-    const containerName = "eventsimages";
-    const blobName = "cat.jpg";
-
-    //services 
-    const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net${sas}`);
-    const containerClient = blobServiceClient.getContainerClient(containerName);
-    const blobClient = containerClient.getBlobClient(blobName);
-
-  }
 
   let tagId = 0
   // const array = tags.split(',')
