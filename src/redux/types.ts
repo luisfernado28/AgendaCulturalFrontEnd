@@ -32,6 +32,11 @@ export interface Event {
   time?: string
 }
   
+export enum EventStatus {
+  HYBRID = 'Hibrido',
+  LIVE = 'Presencial',
+  VIRTUAL = 'Virtual',
+}
 
 export interface CreateEvent {
   title: string,
@@ -40,7 +45,7 @@ export interface CreateEvent {
   status: number,
   price: number,
   phone: string,
-  type: string,
+  type: EventStatus,
   description: string,
   website: string,
   facebook: string,

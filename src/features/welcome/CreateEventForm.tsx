@@ -1,14 +1,14 @@
 /** @jsxImportSource theme-ui */
-import { Button, Container, Grid, jsx, Label, Text } from 'theme-ui'
+import { Button, Container, Grid, jsx, Label, Radio, Text } from 'theme-ui'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextAreaInput from '../../components/TextAreaInput'
 import TextInput from '../../components/TextInput'
 import { useDispatch } from 'react-redux'
 import { createEvent } from '../../redux/eventsSlice'
-import { CreateEvent, Event, Status } from '../../redux/types'
+import { CreateEvent, Event, EventStatus, Status } from '../../redux/types'
 import ImageUpload from '../../components/ImageUpload'
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { postImage } from '../../utils/blobStorageClient'
 
 
@@ -20,7 +20,7 @@ export interface Values {
     price: number,
     // id: string,
     phone: string,
-    // type: string,
+    type: EventStatus,
     description: string,
     website: string,
     facebook: string,
@@ -65,16 +65,16 @@ function CreateEventForm(): JSX.Element {
         values: Values,
         // { setSubmitting }: FormikHelpers<Values>,
     ) => {
-        console.log(image)
-        let newImageUrl: string='';
+        let newImageUrl: string = '';
         if (image) {
-             newImageUrl = await postImage(image)
+            newImageUrl = await postImage(image)
         }
+        console.log(values);
+
         const newEvent: CreateEvent = {
             ...values,
-            venueId: '',
-            status: 0,
-            type: '',
+            venueId: 'asdfasdf',
+            status: 3,
             imageUrl: newImageUrl,
             dates: {
                 areindependent: true,
@@ -89,10 +89,10 @@ function CreateEventForm(): JSX.Element {
         artist: '',
         // venueId: '',
         // status: 0,
-        price: 0,
+        price: 56,
         // id: '',
         phone: '',
-        // type: '',
+        type: EventStatus.LIVE,
         description: '',
         website: '',
         facebook: '',
@@ -147,6 +147,49 @@ function CreateEventForm(): JSX.Element {
                                         placeholder="Descripción del evento"
                                         type="text"
                                     />
+                                    <Container
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-evenly',
+                                            width: '75%',
+                                            '@media screen and (max-width:1400px)': {
+                                                flexDirection: 'column',
+                                            },
+                                        }}>
+                                        <Fragment>
+
+                                            <Label>
+                                                <Radio
+                                                    name='type'
+                                                    value={EventStatus.LIVE}
+                                                    defaultChecked={initialValues.type === EventStatus.LIVE}
+                                                />
+                                                Presencial
+                                            </Label>
+                                        </Fragment>
+                                        {/* <Fragment>
+                                            <Label>
+                                                <Radio
+                                                    name='type'
+                                                    value='false'
+                                                />
+                                                Virtual
+                                            </Label>
+                                        </Fragment> */}
+                                        <Fragment>
+
+                                            <Label>
+                                                <Radio
+                                                    name='type'
+                                                    value={EventStatus.HYBRID}
+                                                    defaultChecked={initialValues.type === EventStatus.HYBRID}
+                                                />
+                                                Hibrido
+                                            </Label>
+                                        </Fragment>
+
+                                    </Container>
+
                                 </Container>
                                 <Container>
                                     <Text> Redes Sociales</Text>
