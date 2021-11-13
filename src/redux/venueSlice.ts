@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getVenueById } from '../utils/venueClient'
+import { getVenueById, getVenues } from '../utils/venueClient'
 
 import { VenueReducer, StoreState } from './stateTypes'
 import { Status } from './types'

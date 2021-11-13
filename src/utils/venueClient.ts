@@ -21,3 +21,15 @@ export async function getVenueById(venueId: string): Promise<Venue> {
         //throw new Error(error.toString())
     }
 }
+
+export async function getVenues(): Promise<Venue[]> {
+    try {
+      const response = await fetch(routes);
+      const results = await response.json();
+      return results;
+    } catch (error) {
+      throw new Error();
+      //throw new Error(error.toString())
+    }
+  }
+  

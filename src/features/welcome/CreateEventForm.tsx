@@ -1,21 +1,24 @@
 /** @jsxImportSource theme-ui */
-import { Button, Container, Grid, jsx, Label, Radio, Text } from 'theme-ui'
+import { Button, Container, Grid, jsx, Label, Radio, Select, Text } from 'theme-ui'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextAreaInput from '../../components/TextAreaInput'
 import TextInput from '../../components/TextInput'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createEvent } from '../../redux/eventsSlice'
-import { CreateEvent, Event, EventStatus, Status } from '../../redux/types'
+import { CreateEvent, Event, EventStatus, Status, Venue } from '../../redux/types'
 import ImageUpload from '../../components/ImageUpload'
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import { postImage } from '../../utils/blobStorageClient'
+import { fetchVenues, selectAllVenues } from '../../redux/venuesSlice'
+import React from 'react'
+import RadioButton from '../../components/RadioButton'
 
 
 export interface Values {
     title: string,
     artist: string,
-    // venueId: string,
+    venueId: string,
     // status: number,
     price: number,
     // id: string,
@@ -58,8 +61,18 @@ const CreateEventSchema = Yup.object().shape({
 })
 function CreateEventForm(): JSX.Element {
     const dispatch = useDispatch()
-    const [image, setImage] = useState<File>()
+    const [image, setImage] = useState<File>();
+    const { venues, status } = useSelector(selectAllVenues);
+    const [venueIdValue, setValueDropdown] = React.useState("--Select--");
+    const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
 
+    const handleChange = (e: any) => {
+        setValueRadio(e.target.value);
+    }
+
+    useEffect(() => {
+        dispatch(fetchVenues())
+    }, [dispatch])
 
     const handleSubmit = async (
         values: Values,
@@ -70,29 +83,31 @@ function CreateEventForm(): JSX.Element {
             newImageUrl = await postImage(image)
         }
         console.log(values);
-
+        values.type=statusValue;
         const newEvent: CreateEvent = {
             ...values,
-            venueId: 'asdfasdf',
             status: 3,
+            venueId: venueIdValue,
             imageUrl: newImageUrl,
             dates: {
                 areindependent: true,
                 dates: []
             }
         }
+        
+        console.log(newEvent);
         //await dispatch(createEvent(newEvent))
     }
 
     const initialValues: Values = {
         title: '',
         artist: '',
-        // venueId: '',
+        venueId: '',
         // status: 0,
         price: 56,
         // id: '',
         phone: '',
-        type: EventStatus.LIVE,
+        type: EventStatus.HYBRID,
         description: '',
         website: '',
         facebook: '',
@@ -104,6 +119,11 @@ function CreateEventForm(): JSX.Element {
         // time: ''
     }
 
+    const venuesListDrop = venues.map((venue: Venue) => {
+        return (
+            <option value={venue.id} key={venue.id}>{venue.name}</option>
+        )
+    })
     return (
         <div >
             <Text>Crea un nuevo evento!</Text>
@@ -133,8 +153,14 @@ function CreateEventForm(): JSX.Element {
                                         placeholder="Artista"
                                         type="text"
                                     />
-                                    Espacio, array from Venue Endpoint
-                                    Dropdown of info
+                                    Espacio
+                                    <Select
+                                        value={venueIdValue}
+                                        onChange={e => setValueDropdown(e.currentTarget.value)}
+                                    >
+                                        <option key="Sin espacio" value="No Venue">--Sin Espacio--</option>
+                                        {venuesListDrop}
+                                    </Select>
                                     <TextInput
                                         name="price"
                                         label="Precio"
@@ -156,38 +182,28 @@ function CreateEventForm(): JSX.Element {
                                                 flexDirection: 'column',
                                             },
                                         }}>
-                                        <Fragment>
+                                        <RadioButton
+                                            id="Presencial"
+                                            label="Presencial"
+                                            name="statusValue"
+                                            onChange={handleChange}
+                                            value={EventStatus.LIVE}
+                                        />
+                                        <RadioButton
+                                            id="Virtual"
+                                            label="Virtual"
+                                            name="statusValue"
+                                            onChange={handleChange}
 
-                                            <Label>
-                                                <Radio
-                                                    name='type'
-                                                    value={EventStatus.LIVE}
-                                                    defaultChecked={initialValues.type === EventStatus.LIVE}
-                                                />
-                                                Presencial
-                                            </Label>
-                                        </Fragment>
-                                        {/* <Fragment>
-                                            <Label>
-                                                <Radio
-                                                    name='type'
-                                                    value='false'
-                                                />
-                                                Virtual
-                                            </Label>
-                                        </Fragment> */}
-                                        <Fragment>
-
-                                            <Label>
-                                                <Radio
-                                                    name='type'
-                                                    value={EventStatus.HYBRID}
-                                                    defaultChecked={initialValues.type === EventStatus.HYBRID}
-                                                />
-                                                Hibrido
-                                            </Label>
-                                        </Fragment>
-
+                                            value={EventStatus.VIRTUAL}
+                                        />
+                                        <RadioButton
+                                            id="Hibrido"
+                                            label="Hibrido"
+                                            name="statusValue"
+                                            onChange={handleChange}
+                                            value={EventStatus.HYBRID}
+                                        />
                                     </Container>
 
                                 </Container>
