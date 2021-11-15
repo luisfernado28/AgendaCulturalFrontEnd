@@ -12,6 +12,7 @@ import {
   Box,
   Image
 } from 'theme-ui'
+import { date } from 'yup/lib/locale';
 
 import { Event } from '../redux/types'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice';
@@ -25,7 +26,7 @@ function EventCard({
   dates,
   venueId
 }: Event): JSX.Element {
-  const frontCardDate = new Date(dates[0]).getDay() + '/' + new Date(dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
+  const frontCardDate = new Date(dates.dates[0]).getDay() + '/' + new Date(dates.dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
   const fromToCardDate = setDatesRange();
   const dispatch = useDispatch()
 
@@ -34,15 +35,14 @@ function EventCard({
     dispatch(fetchVenueById(venueId))
   }, [dispatch])
   function setDatesRange(): string {
-    const first = new Date(dates[0]);
-    if (dates.length == 1) {
+    const first = new Date(dates.dates[0]);
+    if (dates.dates.length == 1) {
       return first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' });
     } else {
-      const last = new Date(dates[dates.length - 1]);
+      const last = new Date(dates.dates[dates.dates.length - 1]);
       const string = 'Desde ' + first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) + ' hasta el ' + last.getDay() + ' de ' + last.toLocaleString('default', { month: 'long' });
       return string;
     }
-
   }
 
 
@@ -80,8 +80,7 @@ function EventCard({
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Text>Venue:{Venue.name}</Text><br />
         <Text>Dates:{fromToCardDate}</Text><br />
-        <Text>Time {new Date(dates[0]).getTime() + ':' + new Date(dates[0]).getMinutes()}</Text><br />
-        <Text>Categorias:{description}</Text><br />
+        <Text>Time {new Date(dates.time).getHours() + ':' + new Date(dates.time).getMinutes()}</Text><br />
         <Text>Precio:{price}</Text><br />
       </Box>
     </Card>

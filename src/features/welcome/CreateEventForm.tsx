@@ -90,6 +90,7 @@ function CreateEventForm(): JSX.Element {
         const timeOfEvent = new Date();
         timeOfEvent.setHours(parseInt(value[0], 10));
         timeOfEvent.setMinutes(parseInt(value[1], 10));
+        console.log(timeOfEvent.toISOString())
         return timeOfEvent.toISOString();
     }
 
@@ -120,8 +121,8 @@ function CreateEventForm(): JSX.Element {
             }
         }
 
-        console.log(newEvent);
-        //await dispatch(createEvent(newEvent))
+        // console.log(newEvent);
+        await dispatch(createEvent(newEvent))
     }
 
     const initialValues: Values = {
