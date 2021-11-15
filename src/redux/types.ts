@@ -54,12 +54,12 @@ export interface CreateEvent {
   imageUrl?: string,
   dates: Dates,
   tags?: string[],
-  time?: string
 }
 
 export interface Dates{
   areindependent: boolean,
   dates: string[]
+  time: string
 }
 
 export interface Venue {

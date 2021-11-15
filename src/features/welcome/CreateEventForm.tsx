@@ -13,6 +13,8 @@ import { postImage } from '../../utils/blobStorageClient'
 import { fetchVenues, selectAllVenues } from '../../redux/venuesSlice'
 import React from 'react'
 import RadioButton from '../../components/RadioButton'
+import CalendarItem from '../../components/CalendarItem'
+import TimePickerItem from '../../components/TimeItem'
 
 
 export interface Values {
@@ -65,9 +67,30 @@ function CreateEventForm(): JSX.Element {
     const { venues, status } = useSelector(selectAllVenues);
     const [venueIdValue, setValueDropdown] = React.useState("--Select--");
     const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
+    const [calendarValue, setCalendarValue] = useState([new Date()]);
+    const [timeValue, settimeValue] = useState(new Date());
+    const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState('true');
+
+    const handlerangeOrMultipleValue = (e: any) => {
+        setrangeOrMultipleValue(e.target.value);
+    }
 
     const handleChange = (e: any) => {
         setValueRadio(e.target.value);
+    }
+    const handletimeChange = (e: any) => {
+        settimeValue(e);
+    }
+
+    const calendarOnChange = (e: any) => {
+        setCalendarValue(e);
+    }
+    function setTime(): string {
+        const value = timeValue.toString().split(":");
+        const timeOfEvent = new Date();
+        timeOfEvent.setHours(parseInt(value[0], 10));
+        timeOfEvent.setMinutes(parseInt(value[1], 10));
+        return timeOfEvent.toISOString();
     }
 
     useEffect(() => {
@@ -82,19 +105,21 @@ function CreateEventForm(): JSX.Element {
         if (image) {
             newImageUrl = await postImage(image)
         }
-        console.log(values);
-        values.type=statusValue;
+        values.type = statusValue;
         const newEvent: CreateEvent = {
             ...values,
-            status: 3,
+            status: 1,
             venueId: venueIdValue,
             imageUrl: newImageUrl,
             dates: {
-                areindependent: true,
-                dates: []
+                areindependent: (rangeOrMultipleValue === 'true'),
+                dates: calendarValue.map((date) => {
+                    return new Date(date.toString()).toISOString();
+                }),
+                time: setTime()
             }
         }
-        
+
         console.log(newEvent);
         //await dispatch(createEvent(newEvent))
     }
@@ -205,7 +230,26 @@ function CreateEventForm(): JSX.Element {
                                             value={EventStatus.HYBRID}
                                         />
                                     </Container>
-
+                                    <Container >
+                                        <RadioButton
+                                            id="Rango"
+                                            label="Rango de fechas"
+                                            name="rangeCalendar"
+                                            onChange={handlerangeOrMultipleValue}
+                                            value="true"
+                                            defaultChecked={rangeOrMultipleValue === "true"}
+                                        />
+                                        <RadioButton
+                                            id="Individuales"
+                                            label="Fechas individuales"
+                                            name="rangeCalendar"
+                                            onChange={handlerangeOrMultipleValue}
+                                            value="false"
+                                            defaultChecked={rangeOrMultipleValue === "false"}
+                                        />
+                                        <CalendarItem value={calendarValue} rangeOrMultiuple={rangeOrMultipleValue} onChange={calendarOnChange} />
+                                        <TimePickerItem value={timeValue} onChange={handletimeChange} />
+                                    </Container>
                                 </Container>
                                 <Container>
                                     <Text> Redes Sociales</Text>

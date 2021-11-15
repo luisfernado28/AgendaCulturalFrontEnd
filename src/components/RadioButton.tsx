@@ -8,9 +8,10 @@ import { jsx, Label, Radio } from 'theme-ui'
 interface RadioButtonProperties {
     id?: string
     label: string
+    defaultChecked?: boolean
     name: string
     value: string
-    onChange?: (e:any) => void
+    onChange?: (e: any) => void
 
 }
 
