@@ -2,10 +2,10 @@
 import { Grid, jsx, Text } from 'theme-ui'
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchEvents, selectAllEvents } from "../../redux/eventsSlice"
-import { Event } from "../../redux/types"
-import EventCard from '../../components/eventCard'
-import { singleVenue } from '../../redux/venueSlice'
+import { fetchEvents, selectAllEvents } from "../redux/eventsSlice"
+import { Event } from "../redux/types"
+import EventCard from '../components/eventCard'
+import { singleVenue } from '../redux/venueSlice'
 
 
 function ListPage(): JSX.Element {

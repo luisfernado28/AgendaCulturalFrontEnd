@@ -4,6 +4,7 @@
 import { BlobDownloadResponseModel, BlobDownloadResponseParsed, BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
 import {
   Card,
   Container,
@@ -18,6 +19,7 @@ import { Event } from '../redux/types'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice';
 
 function EventCard({
+  id,
   title,
   artist,
   imageUrl,
@@ -34,6 +36,7 @@ function EventCard({
   useEffect(() => {
     dispatch(fetchVenueById(venueId))
   }, [dispatch])
+  console.log(singleVenue)
   function setDatesRange(): string {
     const first = new Date(dates.dates[0]);
     if (dates.dates.length == 1) {
@@ -78,7 +81,9 @@ function EventCard({
       </Box>
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
-        <Text>Venue:{Venue.name}</Text><br />
+        <Link to={`/events/${id}`}>
+          <Text>Venue:{Venue.name}</Text><br />
+        </Link>
         <Text>Dates:{fromToCardDate}</Text><br />
         <Text>Time {new Date(dates.time).getHours() + ':' + new Date(dates.time).getMinutes()}</Text><br />
         <Text>Precio:{price}</Text><br />

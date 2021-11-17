@@ -1,6 +1,6 @@
 import { CreateEvent, Event } from '../redux/types';
 
-let routes: string ;
+let routes: string;
 
 
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
@@ -9,6 +9,22 @@ if (process.env.REACT_APP_EVENTS_API !== undefined) {
 export async function getEvents(): Promise<Event[]> {
   try {
     const response = await fetch(routes);
+    const results = await response.json();
+    return results;
+  } catch (error) {
+    throw new Error();
+    //throw new Error(error.toString())
+  }
+}
+
+export async function getEventById(eventId: string): Promise<Event> {
+  try {
+    const headers: any = {
+      'Content-Type': 'application/json',
+    }
+    const response = await fetch(`${routes}/${eventId}`, {
+      method: 'GET', headers
+    });
     const results = await response.json();
     return results;
   } catch (error) {

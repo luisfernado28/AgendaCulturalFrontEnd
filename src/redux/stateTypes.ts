@@ -13,6 +13,11 @@ export interface EventsReducer {
   hasMore: boolean
   status: string
 }
+export interface EventReducer {
+  error: Error
+  event: Event
+  eventStatus: string
+}
 export interface VenuesReducer {
   error: Error
   venues: Venue[]
@@ -26,6 +31,7 @@ export interface VenueReducer {
 }
 
 export interface StoreState {
+  event: EventReducer
   events: EventsReducer
   venue: VenueReducer
   venues: VenuesReducer
