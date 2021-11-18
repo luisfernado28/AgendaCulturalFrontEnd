@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RouteComponentProps} from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import { fetchEventById, singleEvent } from '../redux/eventSlice'
-import { Text } from 'theme-ui'
+import { Box, Text,Image } from 'theme-ui'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice'
 
 
@@ -16,8 +16,10 @@ function EventsDetail({
 
     useEffect(() => {
         dispatch(fetchEventById(match.params.id))
-        dispatch(fetchVenueById(event.venueId))
-    }, [dispatch,event.venueId,match.params.id])
+        if(!event.venueId.startsWith('-')){
+            dispatch(fetchVenueById(event.venueId))
+        }
+    }, [dispatch, event.venueId, match.params.id])
 
 
     return (
@@ -26,7 +28,7 @@ function EventsDetail({
             <Text>
                 {event.title}
             </Text>
-            Artista/Elenco:  
+            Artista/Elenco:
             <Text>
                 {event.artist}
             </Text>
@@ -51,7 +53,7 @@ function EventsDetail({
             {event.dates.areindependent
                 ?
                 <Text>
-                    
+
                     {new Date(event.dates.dates[0]).toDateString()}
                 </Text>
                 :
@@ -71,10 +73,9 @@ function EventsDetail({
                 {event.description}
             </Text>
 
-            <Text>
-                Foto: {"\n"}
-                {event.imageUrl}
-            </Text>
+            <Box>
+                <Image src={`${process.env.REACT_APP_Blob_API}${event.imageUrl}`} variant="card"></Image>
+            </Box>
         </Fragment>
     )
 }
