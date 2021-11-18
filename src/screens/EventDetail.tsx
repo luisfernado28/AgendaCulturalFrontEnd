@@ -1,8 +1,9 @@
 import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps} from 'react-router-dom'
 import { fetchEventById, singleEvent } from '../redux/eventSlice'
 import { Text } from 'theme-ui'
+import { fetchVenueById, singleVenue } from '../redux/venueSlice'
 
 
 function EventsDetail({
@@ -10,24 +11,28 @@ function EventsDetail({
 }: RouteComponentProps<{ id: string }>): JSX.Element {
     const dispatch = useDispatch()
     const { event } = useSelector(singleEvent)
+    const { Venue } = useSelector(singleVenue)
+
 
     useEffect(() => {
         dispatch(fetchEventById(match.params.id))
-    }, [dispatch])
+        dispatch(fetchVenueById(event.venueId))
+    }, [dispatch,event.venueId,match.params.id])
 
 
     return (
         <Fragment>
+            Titulo
             <Text>
                 {event.title}
             </Text>
+            Artista/Elenco:  
             <Text>
-                Artista/Elenco:  {"\n"}
                 {event.artist}
             </Text>
             <Text>
                 Escenario: {"\n"}
-                {event.venueId}
+                {Venue.name}
             </Text>
             <Text>
                 Precio: {"\n"}
@@ -41,10 +46,22 @@ function EventsDetail({
                 Tipo de evento: {"\n"}
                 {event.type}
             </Text>
-            <Text>
-                Fechas: {"\n"}
-                {event.dates.dates[0]}
-            </Text>
+            Fechas
+
+            {event.dates.areindependent
+                ?
+                <Text>
+                    
+                    {new Date(event.dates.dates[0]).toDateString()}
+                </Text>
+                :
+                <Text>
+                    {new Date(event.dates.dates[0]).toDateString()}a
+                    {new Date(event.dates.dates[1]).toDateString()}
+                </Text>
+
+            }
+
             <Text>
                 Horario: {"\n"}
                 {event.dates.time}
@@ -53,12 +70,11 @@ function EventsDetail({
                 Description: {"\n"}
                 {event.description}
             </Text>
-            
+
             <Text>
                 Foto: {"\n"}
                 {event.imageUrl}
             </Text>
-            {match.params.id}
         </Fragment>
     )
 }

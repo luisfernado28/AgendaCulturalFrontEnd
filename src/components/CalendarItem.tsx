@@ -3,8 +3,7 @@
 
 import { Fragment } from 'react'
 import DatePicker from 'react-multi-date-picker'
-import TimePicker from 'react-multi-date-picker/plugins/time_picker'
-import { jsx, Label, Radio } from 'theme-ui'
+import { jsx} from 'theme-ui'
 
 interface calendarProps {
     value: any,

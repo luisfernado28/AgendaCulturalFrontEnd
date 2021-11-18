@@ -1,19 +1,16 @@
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { BlobDownloadResponseModel, BlobDownloadResponseParsed, BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import {
   Card,
-  Container,
   Text,
   jsx,
   Box,
   Image
 } from 'theme-ui'
-import { date } from 'yup/lib/locale';
 
 import { Event } from '../redux/types'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice';
@@ -32,14 +29,13 @@ function EventCard({
   const fromToCardDate = setDatesRange();
   const dispatch = useDispatch()
 
-  const { Venue, venueStatus } = useSelector(singleVenue)
+  const { Venue} = useSelector(singleVenue)
   useEffect(() => {
     dispatch(fetchVenueById(venueId))
-  }, [dispatch])
-  console.log(singleVenue)
+  }, [dispatch,venueId])
   function setDatesRange(): string {
     const first = new Date(dates.dates[0]);
-    if (dates.dates.length == 1) {
+    if (dates.dates.length === 1) {
       return first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' });
     } else {
       const last = new Date(dates.dates[dates.dates.length - 1]);
@@ -48,8 +44,6 @@ function EventCard({
     }
   }
 
-
-  let tagId = 0
   // const array = tags.split(',')
 
   // const tagArray = array.map(tag => {
