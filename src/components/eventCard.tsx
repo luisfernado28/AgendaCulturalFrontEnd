@@ -29,10 +29,10 @@ function EventCard({
   const fromToCardDate = setDatesRange();
   const dispatch = useDispatch()
 
-  const { Venue} = useSelector(singleVenue)
+  const { Venue } = useSelector(singleVenue)
   useEffect(() => {
     dispatch(fetchVenueById(venueId))
-  }, [dispatch,venueId])
+  }, [dispatch, venueId])
   function setDatesRange(): string {
     const first = new Date(dates.dates[0]);
     if (dates.dates.length === 1) {
@@ -44,27 +44,6 @@ function EventCard({
     }
   }
 
-  // const array = tags.split(',')
-
-  // const tagArray = array.map(tag => {
-  //   tagId++
-  //   const tagColor = chance.color({ format: 'hex' })
-  //   return (
-  //     <div key={tagId}>
-  //       {/* <Chip
-  //         color={tagColor}
-  //         id={tagId}
-  //         label={tag}
-  //         name={tag}
-  //         outline={false}
-  //       /> */}
-  //     </div>
-  //   )
-  // })
-
-  // const splitUrl = imageUrl.split('upload/')
-  // const imageResized = `${splitUrl[0]}upload/w_512/${splitUrl[1]}`
-
   return (
     <Card variant="primary" sx={{
       maxWidth: 400,
@@ -75,10 +54,12 @@ function EventCard({
       </Box>
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
-        <Link to={`/events/${id}`}>
+        <Link to={`/updateEvent/${id}`}>
           <Text>Venue:{Venue.name}</Text><br />
         </Link>
-        <Text>Dates:{fromToCardDate}</Text><br />
+        <Link to={`/events/${id}`}>
+          <Text>Dates:{fromToCardDate}</Text><br />
+        </Link>
         <Text>Time {new Date(dates.time).getHours() + ':' + new Date(dates.time).getMinutes()}</Text><br />
         <Text>Precio:{price}</Text><br />
       </Box>
