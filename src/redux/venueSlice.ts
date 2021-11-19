@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getVenueById, getVenues } from '../utils/venueClient'
+import { getVenueById, getVenues, postVenue } from '../utils/venueClient'
 
 import { VenueReducer, StoreState } from './stateTypes'
-import { Status } from './types'
+import { CreateVenue, Status } from './types'
 
 
 const initialState: VenueReducer = {
@@ -26,6 +26,13 @@ export const fetchVenueById = createAsyncThunk(
   'venue/fetchById',
   async (venueId: string) => {
     return await getVenueById(venueId)
+  },
+)
+
+export const createVenue = createAsyncThunk(
+  'events/postEvents',
+  async (body: CreateVenue) => {
+    return await postVenue(body)
   },
 )
 

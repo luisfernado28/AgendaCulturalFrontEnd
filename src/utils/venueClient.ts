@@ -1,4 +1,4 @@
-import { Venue } from '../redux/types';
+import { CreateVenue, Venue } from '../redux/types';
 
 let routes: string
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
@@ -33,3 +33,19 @@ export async function getVenues(): Promise<Venue[]> {
     }
   }
   
+export async function postVenue(params: CreateVenue): Promise<Venue> {
+  try {
+    const { ...body } = params
+    const res = await fetch(routes, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const result = await res.json()
+    return result
+  } catch (error) {
+    throw new Error();
+  }
+}

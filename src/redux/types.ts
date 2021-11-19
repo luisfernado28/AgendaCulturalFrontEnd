@@ -70,5 +70,13 @@ export interface Venue {
   facebook: string,
   twitter: string,
   instagram: string
+}
 
+export interface CreateVenue {
+  name: string,
+  address: string,
+  website: string,
+  facebook: string,
+  twitter: string,
+  instagram: string
 }
