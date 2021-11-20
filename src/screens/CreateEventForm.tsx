@@ -15,15 +15,13 @@ import React from 'react'
 import RadioButton from '../components/RadioButton'
 import CalendarItem from '../components/CalendarItem'
 import TimePickerItem from '../components/TimeItem'
-
+import "yup-phone";
 
 export interface Values {
     title: string,
     artist: string,
     venueId: string,
-    // status: number,
     price: number,
-    // id: string,
     phone: string,
     type: EventStatus,
     description: string,
@@ -32,9 +30,6 @@ export interface Values {
     twitter: string,
     instagram: string,
     imageUrl?: string,
-    // dates: string[],
-    // tagsId?: string[],
-    // time?: string
 }
 
 
@@ -58,17 +53,17 @@ const CreateEventSchema = Yup.object().shape({
     twitter: Yup.string().url('Link debe ser una URL valida de Twitter'),
     facebook: Yup.string().url('Link debe ser una URL valida de Facebook'),
     instagram: Yup.string().url('Link debe ser una URL valida de Instagra'),
-
+    phone: Yup.string()
 
 })
 function CreateEventForm(): JSX.Element {
     const dispatch = useDispatch()
     const [image, setImage] = useState<File>();
-    const { venues, status } = useSelector(selectAllVenues);
+    const { venues} = useSelector(selectAllVenues);
     const [venueIdValue, setValueDropdown] = React.useState("--Select--");
     const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
     const [calendarValue, setCalendarValue] = useState([new Date()]);
-    const [timeValue, settimeValue] = useState(new Date());
+    const [timeValue, settimeValue] = useState(new Date().setTime(2211665449509));
     const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState('true');
 
     const handlerangeOrMultipleValue = (e: any) => {
@@ -100,7 +95,6 @@ function CreateEventForm(): JSX.Element {
 
     const handleSubmit = async (
         values: Values,
-        // { setSubmitting }: FormikHelpers<Values>,
     ) => {
         let newImageUrl: string = '';
         if (image) {
@@ -129,20 +123,15 @@ function CreateEventForm(): JSX.Element {
         title: '',
         artist: '',
         venueId: '',
-        // status: 0,
         price: 56,
-        // id: '',
-        phone: '',
-        type: EventStatus.HYBRID,
+        type: EventStatus.LIVE,
         description: '',
         website: '',
         facebook: '',
         twitter: '',
         instagram: '',
         imageUrl: '',
-        // dates: [''],
-        // tagsId: [''],
-        // time: ''
+        phone: '',
     }
 
     const venuesListDrop = venues.map((venue: Venue) => {
@@ -214,14 +203,17 @@ function CreateEventForm(): JSX.Element {
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventStatus.LIVE}
+                                            defaultChecked={initialValues.type === EventStatus.LIVE}
+
                                         />
                                         <RadioButton
                                             id="Virtual"
                                             label="Virtual"
                                             name="statusValue"
                                             onChange={handleChange}
-
                                             value={EventStatus.VIRTUAL}
+                                            defaultChecked={initialValues.type === EventStatus.VIRTUAL}
+
                                         />
                                         <RadioButton
                                             id="Hibrido"
@@ -229,6 +221,8 @@ function CreateEventForm(): JSX.Element {
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventStatus.HYBRID}
+                                            defaultChecked={initialValues.type === EventStatus.HYBRID}
+
                                         />
                                     </Container>
                                     <Container >

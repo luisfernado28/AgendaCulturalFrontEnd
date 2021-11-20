@@ -3,16 +3,15 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Router from './components/Router';
 import { BrowserRouter } from 'react-router-dom';
+import LayoutWrapper from './components/Layoutwrapper';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
-        <header className="App-header">
-          <Router />
-        </header>
-        <Footer />
+        <LayoutWrapper>
+            <Router />
+        </LayoutWrapper>
       </BrowserRouter>
     </div>
   );

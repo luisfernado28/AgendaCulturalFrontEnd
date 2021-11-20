@@ -6,7 +6,7 @@ import TextAreaInput from '../components/TextAreaInput'
 import TextInput from '../components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { createEvent } from '../redux/eventsSlice'
-import { CreateEvent,  EventStatus, Event, Venue } from '../redux/types'
+import { CreateEvent,  EventStatus, Event, Venue, UpdateEvent } from '../redux/types'
 import ImageUpload from '../components/ImageUpload'
 import { useState,  useEffect } from 'react'
 import { postImage } from '../utils/blobStorageClient'
@@ -16,7 +16,9 @@ import RadioButton from '../components/RadioButton'
 import CalendarItem from '../components/CalendarItem'
 import TimePickerItem from '../components/TimeItem'
 import { RouteComponentProps } from 'react-router-dom'
-import { fetchEventById, singleEvent } from '../redux/eventSlice'
+import { fetchEventById, modifyEvent, singleEvent } from '../redux/eventSlice'
+import { date } from 'yup/lib/locale'
+import { Update } from '@reduxjs/toolkit'
 
 
 export interface Values {
@@ -67,11 +69,15 @@ function UpdateEventForm({
     const [image, setImage] = useState<File>();
     const { venues } = useSelector(selectAllVenues);
     const { event } = useSelector(singleEvent);
-    const [venueIdValue, setValueDropdown] = React.useState("--Select--");
+    useEffect(() => {
+        dispatch(fetchVenues())
+        dispatch(fetchEventById(match.params.id))
+    }, [dispatch,match.params.id])
+    const [venueIdValue, setValueDropdown] = React.useState(event.venueId);
     const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
-    const [calendarValue, setCalendarValue] = useState([new Date()]);
-    const [timeValue, settimeValue] = useState(new Date());
-    const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState('true');
+    const [calendarValue, setCalendarValue] = useState(event.dates.dates.map((date)=>{return new Date(date)}));
+    const [timeValue, settimeValue] = useState(new Date(event.dates.time));
+    const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState(event.dates.areindependent.toString());
 
     const handlerangeOrMultipleValue = (e: any) => {
         setrangeOrMultipleValue(e.target.value);
@@ -96,11 +102,6 @@ function UpdateEventForm({
         return timeOfEvent.toISOString();
     }
 
-    useEffect(() => {
-        dispatch(fetchVenues())
-        dispatch(fetchEventById(match.params.id))
-    }, [dispatch,match.params.id])
-
     const handleSubmit = async (
         values: Values,
     ) => {
@@ -109,7 +110,7 @@ function UpdateEventForm({
             newImageUrl = await postImage(image)
         }
         values.type = statusValue;
-        const newEvent: CreateEvent = {
+        const updatedEvent: UpdateEvent = {
             ...values,
             status: 1,
             venueId: venueIdValue,
@@ -124,27 +125,22 @@ function UpdateEventForm({
         }
 
         // console.log(newEvent);
-        await dispatch(createEvent(newEvent))
+        await dispatch(modifyEvent({body:updatedEvent,eventId:event.id}))
     }
-
+   
     const initialValues: Values = {
         title: event.title,
         artist: event.artist,
         venueId: event.venueId,
-        // status: 0,
         price: event.price,
-        // id: '',
         phone: event.phone,
-        type: EventStatus.HYBRID,
+        type: (event.type === 'Hibrido')  ? EventStatus.HYBRID : (event.type === 'Hibrido')  ? EventStatus.LIVE : EventStatus.VIRTUAL,
         description: event.description,
         website: event.website,
         facebook: event.facebook,
         twitter: event.twitter,
         instagram: event.instagram,
         imageUrl: event.imageUrl,
-        // dates: [''],
-        // tagsId: [''],
-        // time: ''
     }
 
     const venuesListDrop = venues.map((venue: Venue) => {
@@ -216,14 +212,15 @@ function UpdateEventForm({
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventStatus.LIVE}
+                                            defaultChecked={initialValues.type === EventStatus.LIVE}
                                         />
                                         <RadioButton
                                             id="Virtual"
                                             label="Virtual"
                                             name="statusValue"
                                             onChange={handleChange}
-
                                             value={EventStatus.VIRTUAL}
+                                            defaultChecked={initialValues.type === EventStatus.VIRTUAL}
                                         />
                                         <RadioButton
                                             id="Hibrido"
@@ -231,6 +228,7 @@ function UpdateEventForm({
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventStatus.HYBRID}
+                                            defaultChecked={initialValues.type === EventStatus.HYBRID}
                                         />
                                     </Container>
                                     <Container >

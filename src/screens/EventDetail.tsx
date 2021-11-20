@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { fetchEventById, singleEvent } from '../redux/eventSlice'
-import { Box, Text,Image } from 'theme-ui'
+import { Box, Text, Image } from 'theme-ui'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice'
 
 
@@ -16,7 +16,7 @@ function EventsDetail({
 
     useEffect(() => {
         dispatch(fetchEventById(match.params.id))
-        if(!event.venueId.startsWith('-')){
+        if (!event.venueId.startsWith('-')) {
             dispatch(fetchVenueById(event.venueId))
         }
     }, [dispatch, event.venueId, match.params.id])
@@ -72,10 +72,14 @@ function EventsDetail({
                 Description: {"\n"}
                 {event.description}
             </Text>
-
-            <Box>
-                <Image src={`${process.env.REACT_APP_Blob_API}${event.imageUrl}`} variant="card"></Image>
-            </Box>
+            {(event.imageUrl === '')
+                ?
+                <Text>No image</Text>
+                :
+                <Box>
+                    <Image src={`${process.env.REACT_APP_Blob_API}${event.imageUrl}`} variant="card"></Image>
+                </Box>
+            }
         </Fragment>
     )
 }

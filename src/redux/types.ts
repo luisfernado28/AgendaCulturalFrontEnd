@@ -33,7 +33,7 @@ export interface Event {
 }
   
 export enum EventStatus {
-  HYBRID = 'Hibrido',
+  HYBRID = 'Hibrido' ,
   LIVE = 'Presencial',
   VIRTUAL = 'Virtual',
 }
@@ -79,4 +79,27 @@ export interface CreateVenue {
   facebook: string,
   twitter: string,
   instagram: string
+}
+
+export interface EventUpdateData {
+  body: UpdateEvent
+  eventId?: string
+}
+
+export interface UpdateEvent {
+  title: string,
+  artist: string,
+  venueId: string,
+  status: number,
+  price: number,
+  phone: string,
+  type: EventStatus,
+  description: string,
+  website: string,
+  facebook: string,
+  twitter: string,
+  instagram: string,
+  imageUrl?: string,
+  dates: Dates,
+  tags?: string[],
 }

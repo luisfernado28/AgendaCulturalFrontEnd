@@ -31,7 +31,9 @@ function EventCard({
 
   const { Venue } = useSelector(singleVenue)
   useEffect(() => {
-    dispatch(fetchVenueById(venueId))
+    if (venueId !== '--Select--') {
+      dispatch(fetchVenueById(venueId))
+    }
   }, [dispatch, venueId])
   function setDatesRange(): string {
     const first = new Date(dates.dates[0]);
@@ -55,8 +57,13 @@ function EventCard({
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Link to={`/updateEvent/${id}`}>
-          <Text>Venue:{Venue.name}</Text><br />
+          {(venueId == '--Select--')
+            ? <Text>Venue: Sin evento</Text>
+            : <Text>Venue:{Venue.name}</Text>
+          }
+
         </Link>
+        <br/>
         <Link to={`/events/${id}`}>
           <Text>Dates:{fromToCardDate}</Text><br />
         </Link>
