@@ -18,10 +18,8 @@ import { fetchVenueById, singleVenue } from '../redux/venueSlice';
 function EventCard({
   id,
   title,
-  artist,
   imageUrl,
   price,
-  description,
   dates,
   venueId
 }: Event): JSX.Element {
@@ -57,7 +55,7 @@ function EventCard({
       <Box>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Link to={`/updateEvent/${id}`}>
-          {(venueId == '--Select--')
+          {(venueId === '--Select--')
             ? <Text>Venue: Sin evento</Text>
             : <Text>Venue:{Venue.name}</Text>
           }

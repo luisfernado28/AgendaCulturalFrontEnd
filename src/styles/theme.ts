@@ -13,7 +13,7 @@ export const theme: Theme = {
   },
   cards: {
     primary: {
-      bg: '#F9F9F9',
+      bg: '#E4E4E4',
       borderRadius: 4,
       boxShadow: '0 0 8px rgba(0, 0, 0, 0.08)',
       transition: '0.6s ease',
