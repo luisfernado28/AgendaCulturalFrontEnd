@@ -87,6 +87,7 @@ export interface EventUpdateData {
 }
 
 export interface UpdateEvent {
+  id?: string,
   title: string,
   artist: string,
   venueId: string,
@@ -102,4 +103,12 @@ export interface UpdateEvent {
   imageUrl?: string,
   dates: Dates,
   tags?: string[],
+}
+
+export enum ModalTypes {
+  ConfirmDeleteModalValues = 'confirmDelete',
+  DeleteSucceededModalValues = 'deleteSucceeded',
+  ConfirmUpdateModalValues = 'confirmUpdate',
+  UpdateSucceededModalValues = 'updateSucceeded',
+  // SessionExpiredModal = 'sessionExpired',
 }

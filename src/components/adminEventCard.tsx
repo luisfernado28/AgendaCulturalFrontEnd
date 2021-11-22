@@ -5,19 +5,23 @@ import { faCoffee, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import {
     Card,
     Text,
     jsx,
     Box,
     Image,
-    Grid
+    Grid,
+    Button
 } from 'theme-ui'
 import { date } from 'yup/lib/locale';
+import ShowModal from './CustomModal'
 
-import { Event } from '../redux/types'
+
+import { Event, ModalTypes } from '../redux/types'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice';
+import { removeEvent } from '../redux/eventsSlice';
 
 function AdminEventCard({
     id,
@@ -33,6 +37,7 @@ function AdminEventCard({
     const frontCardDate = new Date(dates.dates[0]).getDay() + '/' + new Date(dates.dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
     const fromToCardDate = setDatesRange();
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const { Venue } = useSelector(singleVenue)
     useEffect(() => {
@@ -50,6 +55,17 @@ function AdminEventCard({
             return string;
         }
     }
+
+    const handleDelete = (id: string) => {
+        
+        dispatch(removeEvent(id))
+        ShowModal({
+          onSuccess: () => {
+            history.push('/')
+          },
+          type: ModalTypes.DeleteSucceededModalValues,
+        })
+      }
 
     return (
         <Card variant="primary" sx={{
@@ -106,11 +122,19 @@ function AdminEventCard({
                     </div>
                     <div>
                         <Link to={`/updateEvent/${id}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                            <FontAwesomeIcon icon={faEdit} />
                         </Link>
                     </div>
                     <div>
-                        <FontAwesomeIcon icon={faTrash} />
+                        <Button onClick={() =>
+                            ShowModal({
+                                type: ModalTypes.ConfirmDeleteModalValues,
+                                onSuccess: () => handleDelete(id),
+                            })
+                        }>
+                         <FontAwesomeIcon icon={faTrash} />
+
+                        </Button>
                     </div>
                 </Grid>
 
@@ -139,3 +163,4 @@ function AdminEventCard({
 }
 
 export default AdminEventCard
+

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getEvents, postEvent } from '../utils/client'
+import { deleteEvent, getEvents, postEvent } from '../utils/client'
 import { EventsReducer, StoreState } from './stateTypes'
 import { CreateEvent, Event, Status } from './types'
 
@@ -28,6 +28,13 @@ export const createEvent = createAsyncThunk(
   },
 )
 
+export const removeEvent = createAsyncThunk(
+  'events/deleteEvent',
+  async (data: string) => {
+    return await deleteEvent(data)
+  },
+)
+
 export const eventsSlice = createSlice({
   name: 'events',
   initialState,
@@ -43,6 +50,10 @@ export const eventsSlice = createSlice({
     })
     builder.addCase(fetchEvents.rejected, state => {
       state.status = Status.FAILED
+    })
+    builder.addCase(createEvent.fulfilled, (state, { payload }) => {
+      state.status = Status.SUCCEEDED
+      state.events.push(payload)
     })
 
   },

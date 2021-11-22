@@ -10,7 +10,7 @@ const initialState: EventReducer = {
     code: '',
     message: '',
   },
-  event:{
+  event: {
     title: "",
     artist: "",
     venueId: "",
@@ -65,6 +65,8 @@ export const eventSlice = createSlice({
     builder.addCase(fetchEventById.rejected, state => {
       state.eventStatus = Status.FAILED
     })
+    
+
   },
 })
 

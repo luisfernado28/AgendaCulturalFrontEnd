@@ -68,3 +68,16 @@ export async function putEvent({
     throw new Error()
   }
 }
+
+export async function deleteEvent(eventId: string): Promise<void> {
+  try {
+    await fetch(`${routes}/${eventId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (error) {
+    throw new Error()
+  }
+}
