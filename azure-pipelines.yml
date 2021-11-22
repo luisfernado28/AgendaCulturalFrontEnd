@@ -15,7 +15,7 @@ variables:
   containerRegistry: 'agendaculturalcontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
-  REACT_APP_EVENTS_API: $(EventsAPI)
+  
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
