@@ -42,7 +42,7 @@ stages:
     displayName: web
     pool:
       vmImage: $(vmImageName)
-    environment:  
+    environment:
       resourceType: VirtualMachine
       resourceName: 'ubuntuVM'
       tags: 'ubuntu'
