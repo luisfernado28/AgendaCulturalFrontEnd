@@ -42,9 +42,10 @@ stages:
     displayName: web
     pool:
       vmImage: $(vmImageName)
-    environment:
-      name:  'ubuntuVM'
+    environment:  
       resourceType: VirtualMachine
+      resourceName: 'ubuntuVM'
+      tags: 'ubuntu'
     strategy:
       runOnce:
         deploy:
