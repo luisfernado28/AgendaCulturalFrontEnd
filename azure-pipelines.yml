@@ -45,7 +45,7 @@ stages:
     environment:
       name: 'ubuntuVM'
       resourceType: VirtualMachine
-      tags: ubuntu
+      tags: 'ubuntu'
     strategy:
       runOnce:
         deploy:
