@@ -43,7 +43,8 @@ stages:
     pool:
       vmImage: $(vmImageName)
     environment:
-      name: 'ubuntuVM'
+      name: 'ubuntu VM'
+      resourceName: 'ubuntuVM'
       resourceType: VirtualMachine
       tags: 'ubuntu'
     strategy:
