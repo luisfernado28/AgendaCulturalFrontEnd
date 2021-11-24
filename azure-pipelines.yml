@@ -38,6 +38,10 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    
+- stage: Deploy
+  displayName: Deploy on VM 
+  jobs:
   - deployment: VMDeploy
     displayName: web
     pool:
