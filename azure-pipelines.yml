@@ -44,7 +44,7 @@ stages:
       vmImage: $(vmImageName)
     environment:
       name: ubuntuVM
-      resourceName: ubuntuVM
+      resourceName: 'ubuntuVM'
       resourceType: VirtualMachine
       tags: ubuntu
     strategy:
