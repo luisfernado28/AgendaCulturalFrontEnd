@@ -6,6 +6,7 @@ WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
+ENV REACT_APP_EVENTS_API = http://40.71.89.253:5000/v1.0
 
 # install app dependencies
 COPY package.json ./
