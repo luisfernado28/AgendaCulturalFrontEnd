@@ -1,7 +1,7 @@
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { faCoffee, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ import {
     Grid,
     Button
 } from 'theme-ui'
-import { date } from 'yup/lib/locale';
 import ShowModal from './CustomModal'
 
 
@@ -34,8 +33,6 @@ function AdminEventCard({
     venueId,
     type
 }: Event): JSX.Element {
-    const frontCardDate = new Date(dates.dates[0]).getDay() + '/' + new Date(dates.dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
-    const fromToCardDate = setDatesRange();
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -45,16 +42,7 @@ function AdminEventCard({
             dispatch(fetchVenueById(venueId))
         }
     }, [dispatch, venueId])
-    function setDatesRange(): string {
-        const first = new Date(dates.dates[0]);
-        if (dates.dates.length === 1) {
-            return first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' });
-        } else {
-            const last = new Date(dates.dates[dates.dates.length - 1]);
-            const string = 'Desde ' + first.getDay() + ' de ' + first.toLocaleString('default', { month: 'long' }) + ' hasta el ' + last.getDay() + ' de ' + last.toLocaleString('default', { month: 'long' });
-            return string;
-        }
-    }
+    
 
     const handleDelete = (id: string) => {
         
@@ -116,7 +104,7 @@ function AdminEventCard({
                 >
 
                     <div>
-                        <Box>
+                        <Box >
                             <Image src={`${process.env.REACT_APP_Blob_API}${imageUrl}`} variant="card"></Image>
                         </Box>
                     </div>
