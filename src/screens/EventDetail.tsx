@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { fetchEventById, singleEvent } from '../redux/eventSlice'
@@ -76,9 +76,9 @@ function EventsDetail({
                 ?
                 <Text>No image</Text>
                 :
-                <Box>
+                <div>
                     <Image src={`${process.env.REACT_APP_Blob_API}${event.imageUrl}`} variant="card"></Image>
-                </Box>
+                </div>
             }
         </Fragment>
     )

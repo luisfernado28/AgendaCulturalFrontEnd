@@ -104,9 +104,9 @@ function AdminEventCard({
                 >
 
                     <div>
-                        <Box >
+                        <div>
                             <Image src={`${process.env.REACT_APP_Blob_API}${imageUrl}`} variant="card"></Image>
-                        </Box>
+                        </div>
                     </div>
                     <div>
                         <Link to={`/updateEvent/${id}`}>

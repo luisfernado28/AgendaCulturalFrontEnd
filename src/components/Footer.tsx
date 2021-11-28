@@ -1,18 +1,18 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
-import { Box,jsx } from 'theme-ui'
+/** @jsxImportSource theme-ui */
+import { Box, jsx } from 'theme-ui'
 
 
 const Footer = (): JSX.Element => {
 
     return (
-        <Box sx={{
+        <div sx={{
             backgroundImage: theme => `linear-gradient(to right, #00923D, #3BB2B5 )`,
             height: '100px'
         }}>
-            <Box> Copyright 2021</Box>
-        </Box>
+            <div >
+                Copyright 2021
+            </div>
+        </div>
     )
 }
 

@@ -49,10 +49,10 @@ function EventCard({
       maxWidth: 400,
       height: '350px',
     }}>
-      <Box>
+      <div>
         <Image src={`${process.env.REACT_APP_Blob_API}${imageUrl}`} variant="card"></Image>
-      </Box>
-      <Box>
+      </div>
+      <div>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Link to={`/updateEvent/${id}`}>
           {(venueId === '--Select--')
@@ -67,7 +67,7 @@ function EventCard({
         </Link>
         <Text>Time {new Date(dates.time).getHours() + ':' + new Date(dates.time).getMinutes()}</Text><br />
         <Text>Precio:{price}</Text><br />
-      </Box>
+      </div>
     </Card>
   )
 }
