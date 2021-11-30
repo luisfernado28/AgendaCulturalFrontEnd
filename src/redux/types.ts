@@ -69,7 +69,8 @@ export interface Venue {
   website: string,
   facebook: string,
   twitter: string,
-  instagram: string
+  instagram: string,
+  description: string,
 }
 
 export interface CreateVenue {

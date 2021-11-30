@@ -4,6 +4,7 @@ FROM node:15-alpine AS builder
 # Set working directory
 WORKDIR /app
 
+ENV REACT_APP_EVENTS_API http://40.71.89.253:5000/v1.0
 # Copy our node module specification
 COPY package.json package.json
 COPY package-lock.json package-lock.json
