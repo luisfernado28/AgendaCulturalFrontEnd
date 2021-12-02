@@ -71,6 +71,12 @@ export interface Venue {
   twitter: string,
   instagram: string,
   description: string,
+  location: GoogleLocation 
+}
+
+export interface GoogleLocation{
+  type: string,
+  coordinates: number[]
 }
 
 export interface CreateVenue {

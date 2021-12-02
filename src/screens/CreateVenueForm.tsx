@@ -3,10 +3,12 @@ import { Button, Container, Grid, jsx, Text } from 'theme-ui'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextInput from '../components/TextInput'
-import { useDispatch} from 'react-redux'
-import { createVenue} from '../redux/venueSlice'
-import { CreateVenue } from '../redux/types'
+import { useDispatch } from 'react-redux'
+import { createVenue } from '../redux/venueSlice'
+import { CreateVenue, GoogleLocation } from '../redux/types'
+import TextAreaInput from '../components/TextAreaInput'
 
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 export interface Values {
     name: string,
@@ -15,6 +17,8 @@ export interface Values {
     facebook: string,
     twitter: string,
     instagram: string,
+    description: string,
+    location?: GoogleLocation
 }
 
 
@@ -31,7 +35,9 @@ const CreateEventSchema = Yup.object().shape({
     twitter: Yup.string().url('Link debe ser una URL valida de Twitter'),
     facebook: Yup.string().url('Link debe ser una URL valida de Facebook'),
     instagram: Yup.string().url('Link debe ser una URL valida de Instagra'),
-
+    description: Yup.string()
+        .max(1000, 'La descripcion no puede tener mas de 1000 Characteres ')
+       
 
 })
 function CreateVemueForm(): JSX.Element {
@@ -53,10 +59,15 @@ function CreateVemueForm(): JSX.Element {
         website: '',
         facebook: '',
         twitter: '',
-        instagram: ''
+        instagram: '',
+        description: '',
+        location: {
+            type: '',
+            coordinates: []
+        }
     }
 
-   
+
     return (
         <div >
             <Text>Crea un nuevo evento!</Text>
@@ -82,7 +93,12 @@ function CreateVemueForm(): JSX.Element {
                                         placeholder="Artista"
                                         type="text"
                                     />
-                                   
+                                    <TextAreaInput
+                                        name="description"
+                                        label="Descripción"
+                                        placeholder="Descripción del espacio"
+                                        type="text"
+                                    />
                                 </Container>
                                 <Container>
                                     <Text> Redes Sociales</Text>
@@ -112,7 +128,6 @@ function CreateVemueForm(): JSX.Element {
                                     />
                                 </Container>
                             </Grid>
-
                             <Container
                                 sx={{
                                     display: 'flex',

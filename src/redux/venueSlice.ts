@@ -17,7 +17,12 @@ const initialState: VenueReducer = {
     website: "",
     facebook: "",
     twitter: "",
-    instagram: ""
+    instagram: "",
+    description: "",
+    location: {
+      type: "",
+      coordinates: []
+    }
   },
   venueStatus: Status.IDLE,
 }
