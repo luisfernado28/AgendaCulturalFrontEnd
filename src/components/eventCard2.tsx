@@ -12,7 +12,7 @@ import {
   Image
 } from 'theme-ui'
 
-import { Event } from '../redux/types'
+import { Event, Venue } from '../redux/types'
 import { fetchVenueById, singleVenue } from '../redux/venueSlice';
 
 function EventCard({
@@ -22,7 +22,7 @@ function EventCard({
   price,
   dates,
   venueId
-}: Event): JSX.Element {
+}: Event, { name }: Venue): JSX.Element {
   const frontCardDate = new Date(dates.dates[0]).getDay() + '/' + new Date(dates.dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
   const fromToCardDate = setDatesRange();
   const dispatch = useDispatch()
@@ -57,9 +57,10 @@ function EventCard({
       <div>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Link to={`/updateEvent/${id}`}>
-          {(venueId === '--Select--')
-            ? <Text>Venue: Sin evento</Text>
-            : <Text>Venue:{Venue.name}</Text>
+          {
+            (venueId === '--Select--')
+              ? <Text>Venue: Sin evento</Text>
+              : <Text>Venue:{Venue.name}</Text>
           }
 
         </Link>
