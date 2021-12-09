@@ -127,25 +127,7 @@ function AdminEventCard({
                 </Grid>
 
             </Grid>
-            {/* <Box>
-        <Image src={`${process.env.REACT_APP_Blob_API}${imageUrl}`} variant="card"></Image>
-      </Box>
-      <Box>
-        <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
-        <Link to={`/updateEvent/${id}`}>
-          {(venueId === '--Select--')
-            ? <Text>Venue: Sin evento</Text>
-            : <Text>Venue:{Venue.name}</Text>
-          }
 
-        </Link>
-        <br/>
-        <Link to={`/events/${id}`}>
-          <Text>Dates:{fromToCardDate}</Text><br />
-        </Link>
-        <Text>Time {new Date(dates.time).getHours() + ':' + new Date(dates.time).getMinutes()}</Text><br />
-        <Text>Precio:{price}</Text><br />
-      </Box> */}
         </Card>
     )
 }

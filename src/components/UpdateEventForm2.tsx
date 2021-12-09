@@ -6,7 +6,7 @@ import TextAreaInput from '../components/TextAreaInput'
 import TextInput from '../components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { createEvent } from '../redux/eventsSlice'
-import { CreateEvent,  EventStatus, Event, Venue, UpdateEvent } from '../redux/types'
+import { CreateEvent,  EventStatus, Event, Venue, UpdateEvent, Dates } from '../redux/types'
 import ImageUpload from '../components/ImageUpload'
 import { useState,  useEffect } from 'react'
 import { postImage } from '../utils/blobStorageClient'
@@ -18,6 +18,23 @@ import TimePickerItem from '../components/TimeItem'
 import { RouteComponentProps } from 'react-router-dom'
 import { fetchEventById, modifyEvent, singleEvent } from '../redux/eventSlice'
 
+
+export interface FormProps{
+    title: string,
+    artist: string,
+    venueId: string,
+    price: number,
+    phone: string,
+    type: EventStatus,
+    description: string,
+    website: string,
+    facebook: string,
+    twitter: string,
+    instagram: string,
+    imageUrl?: string,
+    dates: Dates,
+    event: Event
+}
 
 export interface Values {
     title: string,
@@ -59,22 +76,25 @@ const CreateEventSchema = Yup.object().shape({
 
 
 })
-function UpdateEventForm({
-    match,
-}: RouteComponentProps<{ id: string }>): JSX.Element {
+function UpdateEventForm2({
+    title,
+    venueId,
+    type,
+    dates,
+    event
+}: FormProps): JSX.Element {
     const dispatch = useDispatch()
     const [image, setImage] = useState<File>();
+    
     const { venues } = useSelector(selectAllVenues);
-    const { event } = useSelector(singleEvent);
-    useEffect(() => {
-        dispatch(fetchVenues())
-        dispatch(fetchEventById(match.params.id))
-    }, [dispatch,match.params.id])
-    const [venueIdValue, setValueDropdown] = React.useState(event.venueId);
+    const [newEvent, setNewEvent] = useState<Event>({
+        ...event,
+      })
+    const [venueIdValue, setValueDropdown] = React.useState(venueId);
     const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
-    const [calendarValue, setCalendarValue] = useState(event.dates.dates.map((date)=>{return new Date(date)}));
-    const [timeValue, settimeValue] = useState(new Date(event.dates.time));
-    const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState(event.dates.areindependent.toString());
+    const [calendarValue, setCalendarValue] = useState(dates.dates.map((date)=>{return new Date(date)}));
+    const [timeValue, settimeValue] = useState(new Date(dates.time));
+    const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState(dates.areindependent.toString());
 
     const handlerangeOrMultipleValue = (e: any) => {
         setrangeOrMultipleValue(e.target.value);
@@ -126,18 +146,18 @@ function UpdateEventForm({
     }
    
     const initialValues: Values = {
-        title: event.title,
-        artist: event.artist,
-        venueId: event.venueId,
-        price: event.price,
-        phone: event.phone,
-        type: (event.type === 'Hibrido')  ? EventStatus.HYBRID : (event.type === 'Hibrido')  ? EventStatus.LIVE : EventStatus.VIRTUAL,
-        description: event.description,
-        website: event.website,
-        facebook: event.facebook,
-        twitter: event.twitter,
-        instagram: event.instagram,
-        imageUrl: event.imageUrl,
+        title: newEvent.title,
+        artist: newEvent.artist,
+        venueId: newEvent.venueId,
+        price: newEvent.price,
+        phone: newEvent.phone,
+        type: (newEvent.type === 'Hibrido')  ? EventStatus.HYBRID : (newEvent.type === 'Hibrido')  ? EventStatus.LIVE : EventStatus.VIRTUAL,
+        description: newEvent.description,
+        website: newEvent.website,
+        facebook: newEvent.facebook,
+        twitter: newEvent.twitter,
+        instagram: newEvent.instagram,
+        imageUrl: newEvent.imageUrl,
     }
 
     const venuesListDrop = venues.map((venue: Venue) => {
@@ -305,4 +325,4 @@ function UpdateEventForm({
         </div >
     )
 }
-export default UpdateEventForm
+export default UpdateEventForm2

@@ -15,7 +15,6 @@ function AdminEventsList(): JSX.Element {
     useEffect(() => {
         dispatch(fetchEvents())
     }, [dispatch])
-    console.log(events);
     const eventsList = events.map((event: Event) => {
         return (
             <div key={event.id} >
