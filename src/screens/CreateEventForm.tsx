@@ -6,9 +6,9 @@ import TextAreaInput from '../components/TextAreaInput'
 import TextInput from '../components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { createEvent } from '../redux/eventsSlice'
-import { CreateEvent,  EventStatus,  Venue } from '../redux/types'
+import { CreateEvent, EventStatus, EventTypeStatus, Venue } from '../redux/types'
 import ImageUpload from '../components/ImageUpload'
-import { useState,  useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { postImage } from '../utils/blobStorageClient'
 import { fetchVenues, selectAllVenues } from '../redux/venuesSlice'
 import React from 'react'
@@ -23,7 +23,7 @@ export interface Values {
     venueId: string,
     price: number,
     phone: string,
-    type: EventStatus,
+    type: EventTypeStatus,
     description: string,
     website: string,
     facebook: string,
@@ -59,9 +59,9 @@ const CreateEventSchema = Yup.object().shape({
 function CreateEventForm(): JSX.Element {
     const dispatch = useDispatch()
     const [image, setImage] = useState<File>();
-    const { venues} = useSelector(selectAllVenues);
+    const { venues } = useSelector(selectAllVenues);
     const [venueIdValue, setValueDropdown] = React.useState("--Select--");
-    const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
+    const [statusValue, setValueRadio] = React.useState(EventTypeStatus.HYBRID);
     const [calendarValue, setCalendarValue] = useState([new Date()]);
     const [timeValue, settimeValue] = useState(new Date().setTime(2211665449509));
     const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState('true');
@@ -124,7 +124,7 @@ function CreateEventForm(): JSX.Element {
         artist: '',
         venueId: '',
         price: 56,
-        type: EventStatus.LIVE,
+        type: EventTypeStatus.LIVE,
         description: '',
         website: '',
         facebook: '',
@@ -198,31 +198,26 @@ function CreateEventForm(): JSX.Element {
                                             },
                                         }}>
                                         <RadioButton
+                                            id="Hibrido"
+                                            label="Hibrido"
+                                            name="statusValue"
+                                            onChange={handleChange}
+                                            value={EventTypeStatus.HYBRID}
+                                            defaultChecked={true}
+                                        />
+                                        <RadioButton
                                             id="Presencial"
                                             label="Presencial"
                                             name="statusValue"
                                             onChange={handleChange}
-                                            value={EventStatus.LIVE}
-                                            defaultChecked={initialValues.type === EventStatus.LIVE}
-
+                                            value={EventTypeStatus.LIVE}
                                         />
                                         <RadioButton
                                             id="Virtual"
                                             label="Virtual"
                                             name="statusValue"
                                             onChange={handleChange}
-                                            value={EventStatus.VIRTUAL}
-                                            defaultChecked={initialValues.type === EventStatus.VIRTUAL}
-
-                                        />
-                                        <RadioButton
-                                            id="Hibrido"
-                                            label="Hibrido"
-                                            name="statusValue"
-                                            onChange={handleChange}
-                                            value={EventStatus.HYBRID}
-                                            defaultChecked={initialValues.type === EventStatus.HYBRID}
-
+                                            value={EventTypeStatus.VIRTUAL}
                                         />
                                     </Container>
                                     <Container >

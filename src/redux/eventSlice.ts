@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getEventById, putEvent } from '../utils/client'
 
 import { StoreState, EventReducer } from './stateTypes'
-import { EventUpdateData, Status } from './types'
+import { EventTypeStatus, EventUpdateData, Status } from './types'
 
 
 const initialState: EventReducer = {
@@ -18,7 +18,7 @@ const initialState: EventReducer = {
     price: 0,
     id: "",
     phone: "",
-    type: "",
+    type: EventTypeStatus.HYBRID,
     description: "",
     website: "",
     facebook: "",

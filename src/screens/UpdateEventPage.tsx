@@ -6,7 +6,7 @@ import TextAreaInput from '../components/TextAreaInput'
 import TextInput from '../components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { createEvent } from '../redux/eventsSlice'
-import { CreateEvent, EventStatus, Event, Venue, UpdateEvent, Status } from '../redux/types'
+import { CreateEvent, EventStatus, Event, Venue, UpdateEvent, Status, EventTypeStatus } from '../redux/types'
 import ImageUpload from '../components/ImageUpload'
 import { useState, useEffect, Fragment } from 'react'
 import { postImage } from '../utils/blobStorageClient'
@@ -49,10 +49,8 @@ function UpdateEventPage({
         dispatch(fetchEventById(match.params.id))
     }, [dispatch, match.params.id])
 
-    console.log(event);
-    console.log(eventStatus);
 
-
+    const typeEvent : EventTypeStatus = EventTypeStatus[event.type.toString()];
     return (
         <Fragment>
             {eventStatus === Status.IDLE ? (
@@ -65,7 +63,7 @@ function UpdateEventPage({
                 <UpdateEventForm2
                     title={event.title}
                     venueId={event.venueId}
-                    type={EventStatus.FINISHED}
+                    type={typeEvent}
                     dates={event.dates}
                     event={event}
                     artist={event.artist}

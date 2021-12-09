@@ -4,13 +4,14 @@
 import { useField } from 'formik'
 import { Fragment } from 'react'
 import { jsx, Label, Radio } from 'theme-ui'
+import { EventTypeStatus } from '../redux/types'
 
 interface RadioButtonProperties {
     id?: string
     label: string
     defaultChecked?: boolean
     name: string
-    value: string
+    value: string | EventTypeStatus | number
     onChange?: (e: any) => void
 
 }

@@ -20,7 +20,7 @@ export interface Event {
   price: number,
   id: string,
   phone: string,
-  type: string,
+  type: EventTypeStatus,
   description: string,
   website: string,
   facebook: string,
@@ -33,10 +33,10 @@ export interface Event {
   venueName?: string,
 }
   
-export enum EventStatus {
-  HYBRID = 'Hibrido' ,
-  LIVE = 'Presencial',
-  VIRTUAL = 'Virtual',
+export enum EventTypeStatus {
+  HYBRID  ,
+  LIVE ,
+  VIRTUAL ,
 }
 
 export interface CreateEvent {
@@ -46,7 +46,7 @@ export interface CreateEvent {
   status: number,
   price: number,
   phone: string,
-  type: EventStatus,
+  type: EventTypeStatus,
   description: string,
   website: string,
   facebook: string,
@@ -102,7 +102,7 @@ export interface UpdateEvent {
   status: number,
   price: number,
   phone: string,
-  type: EventStatus,
+  type: EventTypeStatus,
   description: string,
   website: string,
   facebook: string,
