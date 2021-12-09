@@ -4,11 +4,11 @@ import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextInput from '../components/TextInput'
 import { useDispatch } from 'react-redux'
-import { createVenue } from '../redux/venueSlice'
 import { CreateVenue, GoogleLocation } from '../redux/types'
 import TextAreaInput from '../components/TextAreaInput'
 
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import { useHistory } from 'react-router-dom'
+import { createVenue } from '../redux/venuesSlice'
 
 export interface Values {
     name: string,
@@ -37,12 +37,10 @@ const CreateEventSchema = Yup.object().shape({
     instagram: Yup.string().url('Link debe ser una URL valida de Instagra'),
     description: Yup.string()
         .max(1000, 'La descripcion no puede tener mas de 1000 Characteres ')
-       
-
 })
 function CreateVemueForm(): JSX.Element {
     const dispatch = useDispatch()
-
+    const history = useHistory()
 
     const handleSubmit = async (
         values: Values,
@@ -51,6 +49,8 @@ function CreateVemueForm(): JSX.Element {
             ...values
         }
         await dispatch(createVenue(newVenue))
+        history.goBack()
+        // history.push('/adminEvents');
     }
 
     const initialValues: Values = {
@@ -137,7 +137,6 @@ function CreateVemueForm(): JSX.Element {
                                 <Button
                                     sx={{ marginLeft: '8px' }}
                                     type="submit"
-
                                 >
                                     Create
                                 </Button>

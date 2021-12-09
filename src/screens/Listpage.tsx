@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../redux/eventsSlice"
 import { Event } from "../redux/types"
 import EventCard from '../components/eventCard'
-import { fetchVenueById, singleVenue } from '../redux/venueSlice'
+import { singleVenue } from '../redux/venueSlice'
 import { Link } from 'react-router-dom'
 
 function ListPage(): JSX.Element {
