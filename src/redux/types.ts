@@ -30,6 +30,7 @@ export interface Event {
   dates: Dates,
   tagsId?: string[],
   time?: string
+  venueName?: string,
 }
   
 export enum EventStatus {

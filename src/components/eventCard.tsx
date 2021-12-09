@@ -13,7 +13,7 @@ import {
 } from 'theme-ui'
 
 import { Event } from '../redux/types'
-import { fetchVenueById, singleVenue } from '../redux/venueSlice';
+import { singleVenue } from '../redux/venueSlice';
 
 function EventCard({
   id,
@@ -21,7 +21,7 @@ function EventCard({
   imageUrl,
   price,
   dates,
-  venueId
+  venueName
 }: Event): JSX.Element {
   const frontCardDate = new Date(dates.dates[0]).getDay() + '/' + new Date(dates.dates[0]).toLocaleString('default', { month: 'short' }); //+ '/' + dateOfEvent.getFullYear();
   const fromToCardDate = setDatesRange();
@@ -29,10 +29,10 @@ function EventCard({
 
   const { Venue } = useSelector(singleVenue)
   useEffect(() => {
-    if (venueId !== '--Select--') {
-      dispatch(fetchVenueById(venueId))
-    }
-  }, [dispatch, venueId])
+    // if (venueId !== '--Select--') {
+    //   dispatch(fetchVenueById(venueId))
+    // }
+  }, [dispatch])
   function setDatesRange(): string {
     const first = new Date(dates.dates[0]);
     if (dates.dates.length === 1) {
@@ -57,11 +57,11 @@ function EventCard({
       <div>
         <Text sx={{ color: 'red' }}>{frontCardDate}</Text><Text>{title}</Text><br />
         <Link to={`/updateEvent/${id}`}>
-          {(venueId === '--Select--')
-            ? <Text>Venue: Sin evento</Text>
-            : <Text>Venue:{Venue.name}</Text>
+          {
+            (venueName !== '')
+              ? <Text>Venue: Sin evento</Text>
+              : <Text>Venue:{Venue.name}</Text>
           }
-
         </Link>
         <br />
         <Text>Dates:{fromToCardDate}</Text><br />

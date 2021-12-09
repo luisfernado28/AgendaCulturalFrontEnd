@@ -34,7 +34,11 @@ function EventsDetail({
             </Text>
             <Text>
                 Escenario: {"\n"}
-                {Venue.name}
+                {
+                    (event.venueId.startsWith('-')) 
+                    ? 'sin escenario' 
+                    : Venue.name
+                }
             </Text>
             <Text>
                 Precio: {"\n"}
