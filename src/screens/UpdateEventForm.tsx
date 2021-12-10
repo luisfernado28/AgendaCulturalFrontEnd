@@ -6,7 +6,7 @@ import TextAreaInput from '../components/TextAreaInput'
 import TextInput from '../components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { createEvent } from '../redux/eventsSlice'
-import { CreateEvent,  EventStatus, Event, Venue, UpdateEvent } from '../redux/types'
+import { CreateEvent,  EventStatus, Event, Venue, UpdateEvent, EventTypeStatus } from '../redux/types'
 import ImageUpload from '../components/ImageUpload'
 import { useState,  useEffect } from 'react'
 import { postImage } from '../utils/blobStorageClient'
@@ -26,7 +26,7 @@ export interface Values {
     // status: number,
     price: number,
     phone: string,
-    type: EventStatus,
+    type: EventTypeStatus,
     description: string,
     website: string,
     facebook: string,
@@ -71,7 +71,7 @@ function UpdateEventForm({
         dispatch(fetchEventById(match.params.id))
     }, [dispatch,match.params.id])
     const [venueIdValue, setValueDropdown] = React.useState(event.venueId);
-    const [statusValue, setValueRadio] = React.useState(EventStatus.FINISHED);
+    const [statusValue, setValueRadio] = React.useState(EventTypeStatus.HYBRID);
     const [calendarValue, setCalendarValue] = useState(event.dates.dates.map((date)=>{return new Date(date)}));
     const [timeValue, settimeValue] = useState(new Date(event.dates.time));
     const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState(event.dates.areindependent.toString());
@@ -131,7 +131,7 @@ function UpdateEventForm({
         venueId: event.venueId,
         price: event.price,
         phone: event.phone,
-        type: (event.type === 'Hibrido')  ? EventStatus.HYBRID : (event.type === 'Hibrido')  ? EventStatus.LIVE : EventStatus.VIRTUAL,
+        type: EventTypeStatus.LIVE,//(event.type === 'Hibrido')  ? EventStatus.HYBRID : (event.type === 'Hibrido')  ? EventStatus.LIVE : EventStatus.VIRTUAL,
         description: event.description,
         website: event.website,
         facebook: event.facebook,
@@ -208,24 +208,24 @@ function UpdateEventForm({
                                             label="Presencial"
                                             name="statusValue"
                                             onChange={handleChange}
-                                            value={EventStatus.LIVE}
-                                            defaultChecked={initialValues.type === EventStatus.LIVE}
+                                            value={EventTypeStatus.LIVE}
+                                            defaultChecked={initialValues.type === EventTypeStatus.LIVE}
                                         />
                                         <RadioButton
                                             id="Virtual"
                                             label="Virtual"
                                             name="statusValue"
                                             onChange={handleChange}
-                                            value={EventStatus.VIRTUAL}
-                                            defaultChecked={initialValues.type === EventStatus.VIRTUAL}
+                                            value={EventTypeStatus.VIRTUAL}
+                                            defaultChecked={initialValues.type === EventTypeStatus.VIRTUAL}
                                         />
                                         <RadioButton
                                             id="Hibrido"
                                             label="Hibrido"
                                             name="statusValue"
                                             onChange={handleChange}
-                                            value={EventStatus.HYBRID}
-                                            defaultChecked={initialValues.type === EventStatus.HYBRID}
+                                            value={EventTypeStatus.HYBRID}
+                                            defaultChecked={initialValues.type === EventTypeStatus.HYBRID}
                                         />
                                     </Container>
                                     <Container >

@@ -1,12 +1,11 @@
 /** @jsxImportSource theme-ui */
-import { Button, Container, Grid, jsx, Label, Radio, Select, Text } from 'theme-ui'
+import { Button, Container, Grid, jsx, Select, Text } from 'theme-ui'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextAreaInput from '../components/TextAreaInput'
 import TextInput from '../components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
-import { createEvent } from '../redux/eventsSlice'
-import { CreateEvent, EventStatus, Event, Venue, UpdateEvent, Dates, EventTypeStatus } from '../redux/types'
+import {  Event, Venue, UpdateEvent, Dates, EventTypeStatus, Status } from '../redux/types'
 import ImageUpload from '../components/ImageUpload'
 import { useState, useEffect } from 'react'
 import { postImage } from '../utils/blobStorageClient'
@@ -15,8 +14,8 @@ import React from 'react'
 import RadioButton from '../components/RadioButton'
 import CalendarItem from '../components/CalendarItem'
 import TimePickerItem from '../components/TimeItem'
-import { RouteComponentProps } from 'react-router-dom'
-import { fetchEventById, modifyEvent, singleEvent } from '../redux/eventSlice'
+import { modifyEvent } from '../redux/eventSlice'
+import PageSpinner from './Spinner'
 
 
 export interface FormProps {
@@ -85,9 +84,8 @@ function UpdateEventForm2({
 }: FormProps): JSX.Element {
     const dispatch = useDispatch()
     const [image, setImage] = useState<File>();
-
-    const { venues } = useSelector(selectAllVenues);
-    const [newEvent, setNewEvent] = useState<Event>({
+    const { venues, status } = useSelector(selectAllVenues);
+    const [newEvent] = useState<Event>({
         ...event,
     })
     const [venueIdValue, setValueDropdown] = React.useState(venueId);
@@ -96,6 +94,10 @@ function UpdateEventForm2({
     const [timeValue, settimeValue] = useState(new Date(dates.time));
     const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState(dates.areindependent.toString());
 
+    useEffect(() => {
+        dispatch(fetchVenues())
+    }, [dispatch])
+
     const handlerangeOrMultipleValue = (e: any) => {
         setrangeOrMultipleValue(e.target.value);
     }
@@ -103,19 +105,18 @@ function UpdateEventForm2({
     const handleChange = (e: any) => {
         setValueRadio(e.target.value);
     }
-    const handletimeChange = (e: any) => {
+    const handletimeChange = (e: Date) => {
         settimeValue(e);
     }
 
     const calendarOnChange = (e: any) => {
         setCalendarValue(e);
     }
-    function setTime(): string {
-        const value = timeValue.toString().split(":");
+    function setTime(updatedTime: Date): string {
+        const current = new Date(updatedTime);
         const timeOfEvent = new Date();
-        timeOfEvent.setHours(parseInt(value[0], 10));
-        timeOfEvent.setMinutes(parseInt(value[1], 10));
-        console.log(timeOfEvent.toISOString())
+        timeOfEvent.setHours(current.getHours());
+        timeOfEvent.setMinutes(current.getMinutes());
         return timeOfEvent.toISOString();
     }
 
@@ -123,24 +124,24 @@ function UpdateEventForm2({
         values: Values,
     ) => {
         let newImageUrl: string = '';
-        if (image) {
-            newImageUrl = await postImage(image)
-        }
         values.type = statusValue;
         const updatedEvent: UpdateEvent = {
             ...values,
             status: 1,
             venueId: venueIdValue,
-            imageUrl: newImageUrl,
+            imageUrl: '',
             dates: {
                 areindependent: (rangeOrMultipleValue === 'true'),
                 dates: calendarValue.map((date) => {
                     return new Date(date.toString()).toISOString();
                 }),
-                time: setTime()
+                time: setTime(timeValue)
             }
         }
-
+        if (image) {
+            newImageUrl = await postImage(image)
+            updatedEvent.imageUrl = "/eventsimages/" + newImageUrl
+        }
         // console.log(newEvent);
         await dispatch(modifyEvent({ body: updatedEvent, eventId: event.id }))
     }
@@ -151,7 +152,7 @@ function UpdateEventForm2({
         venueId: newEvent.venueId,
         price: newEvent.price,
         phone: newEvent.phone,
-        type: newEvent.type,  //(newEvent.type === 'Hibrido')  ? EventStatus.HYBRID : (newEvent.type === 'Hibrido')  ? EventStatus.LIVE : EventStatus.VIRTUAL,
+        type: newEvent.type,
         description: newEvent.description,
         website: newEvent.website,
         facebook: newEvent.facebook,
@@ -159,12 +160,21 @@ function UpdateEventForm2({
         instagram: newEvent.instagram,
         imageUrl: newEvent.imageUrl,
     }
-
     const venuesListDrop = venues.map((venue: Venue) => {
         return (
             <option value={venue.id} key={venue.id}>{venue.name}</option>
         )
     })
+
+    if (status === Status.IDLE) {
+        return <div></div>
+    }
+    if (status === Status.LOADING) {
+        return <PageSpinner />
+    }
+    if (status === Status.FAILED) {
+        return <div> Failure Fetching Data</div>
+    }
     return (
         <div >
             <Text>Actualiza un evento</Text>
@@ -176,10 +186,18 @@ function UpdateEventForm2({
                 {
                     ({ handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
-                            <ImageUpload
-                                fromChild={(local: File) => setImage(local)}
-                                alt={''}
-                            />
+                            {(initialValues.imageUrl === ''
+                                ?
+                                <ImageUpload
+                                    fromChild={(local: File) => setImage(local)}
+                                    alt={''}
+                                />
+                                :
+                                <ImageUpload
+                                    fromChild={(local: File) => setImage(local)}
+                                    alt={`${process.env.REACT_APP_Blob_API}${initialValues.imageUrl}`}
+                                />
+                            )}
                             <Grid columns={[2]}>
                                 <Container>
                                     <TextInput
@@ -229,16 +247,15 @@ function UpdateEventForm2({
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventTypeStatus.HYBRID}
-                                            defaultChecked={EventTypeStatus[initialValues.type.toString()] === EventTypeStatus.HYBRID}
+                                            defaultChecked={parseInt(initialValues.type.toString()) === EventTypeStatus.HYBRID}
                                         />
-                                        
                                         <RadioButton
                                             id="Presencial"
                                             label="Presencial"
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventTypeStatus.LIVE}
-                                            defaultChecked={EventTypeStatus[initialValues.type.toString()] === EventTypeStatus.LIVE}
+                                            defaultChecked={parseInt(initialValues.type.toString()) === EventTypeStatus.LIVE}
                                         />
                                         <RadioButton
                                             id="Virtual"
@@ -246,7 +263,7 @@ function UpdateEventForm2({
                                             name="statusValue"
                                             onChange={handleChange}
                                             value={EventTypeStatus.VIRTUAL}
-                                            defaultChecked={EventTypeStatus[initialValues.type.toString()] === EventTypeStatus.VIRTUAL}
+                                            defaultChecked={parseInt(initialValues.type.toString()) === EventTypeStatus.VIRTUAL}
                                         />
                                     </Container>
                                     <Container >

@@ -49,7 +49,6 @@ function UpdateEventPage({
         dispatch(fetchEventById(match.params.id))
     }, [dispatch, match.params.id])
 
-
     const typeEvent : EventTypeStatus = EventTypeStatus[event.type.toString()];
     return (
         <Fragment>
