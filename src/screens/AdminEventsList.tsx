@@ -3,22 +3,76 @@ import { Grid, jsx, Text } from 'theme-ui'
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../redux/eventsSlice"
-import { Event } from "../redux/types"
+import { Event, EventStatus, Status } from "../redux/types"
 import AdminEventCard from '../components/adminEventCard'
 import { Link } from 'react-router-dom'
+import { fetchVenueById, singleVenue } from '../redux/venueSlice'
+import PageSpinner from '../components/Spinner'
 
 
 function AdminEventsList(): JSX.Element {
     const dispatch = useDispatch()
     const { events, status } = useSelector(selectAllEvents)
+    const { Venue, venueStatus } = useSelector(singleVenue)
 
     useEffect(() => {
         dispatch(fetchEvents())
     }, [dispatch])
     const eventsList = events.map((event: Event) => {
+        if (event.venueId !== 'No Venue') {
+        }
+        // console.log(event.venueId)
+        // if (event.venueId !== '--Select--') {
+        //     
+        //     if (venueStatus === Status.IDLE) {
+        //         <div></div>
+        //     } else if (venueStatus === Status.LOADING) {
+        //         < PageSpinner />
+        //     } else if (venueStatus === Status.FAILED) {
+        //         <Text>Failure Fetching Data</Text>
+        //     } else {
+        //         return (
+        //             <div key={event.id} >
+        //                 <AdminEventCard
+        //                     title={event.title}
+        //                     artist={event.artist}
+        //                     venueId={event.venueId}
+        //                     status={event.status}
+        //                     price={event.price}
+        //                     id={event.id}
+        //                     phone={event.phone}
+        //                     type={1}
+        //                     description={event.description}
+        //                     website={event.website}
+        //                     facebook={event.facebook}
+        //                     twitter={event.twitter}
+        //                     instagram={event.instagram}
+        //                     dates={event.dates}
+        //                     venueName={Venue.name}
+        //                 />
+        //             </div>
+        //         )
+        //     }
+        // }
         return (
             <div key={event.id} >
-                <AdminEventCard {...event} />
+                <AdminEventCard
+                    title={event.title}
+                    artist={event.artist}
+                    venueId={event.venueId}
+                    status={event.status}
+                    price={event.price}
+                    id={event.id}
+                    phone={event.phone}
+                    type={event.type}
+                    description={event.description}
+                    website={event.website}
+                    facebook={event.facebook}
+                    twitter={event.twitter}
+                    instagram={event.instagram}
+                    dates={event.dates}
+                    imageUrl={event.imageUrl}
+                />
             </div>
         )
     })
