@@ -120,3 +120,24 @@ export enum ModalTypes {
   UpdateSucceededModalValues = 'updateSucceeded',
   // SessionExpiredModal = 'sessionExpired',
 }
+
+export interface Filter {
+  title?: string,
+  artist?: string,
+  venueId?: string,
+  status?: number,
+  price?: number,
+  id?: string,
+  phone?: string,
+  type?: EventTypeStatus,
+  description?: string,
+  website?: string,
+  facebook?: string,
+  twitter?: string,
+  instagram?: string,
+  imageUrl?: string,
+  dates?: Dates,
+  tagsId?: string[],
+  time?: string
+  venueName?: string,
+}

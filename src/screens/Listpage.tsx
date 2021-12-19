@@ -7,6 +7,7 @@ import { Event, EventTypeStatus } from "../redux/types"
 import EventCard from '../components/eventCard'
 import { singleVenue } from '../redux/venueSlice'
 import { Link } from 'react-router-dom'
+import { buildQueryParams } from '../utils/buildOdataParams'
 
 function ListPage(): JSX.Element {
     const dispatch = useDispatch()
@@ -16,7 +17,10 @@ function ListPage(): JSX.Element {
     useEffect(() => {
         dispatch(fetchEvents())
     }, [dispatch])
-
+    buildQueryParams({
+        title:'testTitle',
+        artist: 'testArtist'
+    })
     const eventsList = events.map((event: Event) => {
 
         if (event.venueId !== '--Select--') {
