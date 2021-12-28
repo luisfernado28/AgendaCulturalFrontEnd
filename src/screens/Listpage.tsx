@@ -1,6 +1,6 @@
 /** @jsxImportSource theme-ui */
-import { Button, Grid, jsx, Text } from 'theme-ui'
-import { useEffect } from "react"
+import { Button, Grid, jsx, Select, Text } from 'theme-ui'
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../redux/eventsSlice"
 import { Event, EventTypeStatus, Filter, QueryParams } from "../redux/types"
@@ -21,6 +21,7 @@ function ListPage(): JSX.Element {
     const dispatch = useDispatch()
     const { events, status } = useSelector(selectAllEvents)
     const { Venue } = useSelector(singleVenue)
+    const [sortValue, setSortValueDropdown] = useState("");
 
     const initialValues: Values = {
         searchBar: '',
@@ -72,8 +73,8 @@ function ListPage(): JSX.Element {
             }
             queryParams.filter = filter;
         }
-        if (true) {
-            const orderby: string[] = ['title asc', 'artist desc']
+        if (sortValue !== 'Ordenar') {
+            const orderby: string[] = [sortValue]
             queryParams.orderby = orderby;
         }
         if (Object.keys(queryParams).length === 0) {
@@ -83,7 +84,6 @@ function ListPage(): JSX.Element {
 
         }
     }
-    // buildOrderBy(['title asc','artist desc'])
     return (
         <div >
             <Button>
@@ -105,6 +105,15 @@ function ListPage(): JSX.Element {
                                 placeholder="Busque! por titulo o artista"
                                 type="text"
                             />
+                            <span>Ordenar</span>
+                            <Select
+                                value={sortValue}
+                                onChange={e => setSortValueDropdown(e.currentTarget.value)}
+                            >
+                                <option key="Ordernar" value="Ordenar">Ordenar</option>
+                                <option key="Titulo Ascendente" value="title asc">Titulo Ascendente</option>
+                                <option key="Titulo Descendente" value="title desc">Titulo Descendente</option>
+                            </Select>
                             <Button onClick={(x) => console.log(x)}>
                                 Buscar
                             </Button>
@@ -112,14 +121,6 @@ function ListPage(): JSX.Element {
                     )
                 }
             </Formik>
-
-            <Button onClick={(x) => console.log(x)}>
-                Titulo ascendente
-            </Button>
-
-            <Button onClick={(x) => console.log(x)}>
-                Titulo ascendente
-            </Button>
             <Text>Eventos en tendencia</Text>
             <Grid
                 columns={[2]}
