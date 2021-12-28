@@ -140,4 +140,17 @@ export interface Filter {
   tagsId?: string[],
   time?: string
   venueName?: string,
+  orderby?: string[]
+}
+
+export interface Pagination{
+  top: number,
+  skip: number
+}
+
+export interface QueryParams{
+  filter? : Filter,
+  orderby?: string[],
+  pagination? : Pagination
+
 }

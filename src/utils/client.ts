@@ -1,4 +1,5 @@
-import { CreateEvent, Event, EventUpdateData, UpdateEvent } from '../redux/types';
+import { CreateEvent, Event, EventUpdateData, Filter, QueryParams, UpdateEvent } from '../redux/types';
+import { buildOrderBy, buildQueryParams } from './buildOdataParams';
 
 let routes: string;
 
@@ -6,9 +7,26 @@ let routes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
   routes = `${process.env.REACT_APP_EVENTS_API}/events`
 }
-export async function getEvents(): Promise<Event[]> {
+export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
   try {
-    const response = await fetch(routes);
+    let path = routes;
+    if (queryParams) {
+      const { filter, orderby, pagination } = queryParams
+      path = path + '?'
+      path = filter ? `${path}${buildQueryParams(filter)}` : path;
+      if (orderby) {
+        if (filter)
+          path = path + '&'
+        path = orderby ? `${path}${buildOrderBy(orderby)}` : path;
+      }
+      if (pagination) {
+        if (filter || orderby)
+          path = path + '&'
+        //code for pagination  
+      }
+
+    }
+    const response = await fetch(path)
     const results = await response.json();
     return results;
   } catch (error) {

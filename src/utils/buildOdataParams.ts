@@ -1,24 +1,25 @@
 import { Filter } from "../redux/types";
 
 export const buildQueryParams = (filter: Filter): string => {
-    let res: string = '?$filter=(';
-    const filterArray: string[] = [];
+    let res: string = '$filter=(';
     for (const field in filter) {
         const currentRule = buildRule(field, filter);
-        console.log(currentRule);
-        filterArray.push(currentRule)
+        res = res + currentRule + ' or ';
     }
-    for (var i = 0;i < filterArray.length;i++){
-        res = res+ filterArray[0];
-        if(i< filterArray.length-1){
-            res = res + ' or ';
-        }
-    }
-    console.log(res+ ')')
+    res = res.slice(0, -4);
     return res + ')';
-    // return '';
 }
 
 const buildRule = (rule: string, ruleArray: any): string => {
     return 'contains(' + rule + ', \'' + ruleArray[rule] + '\')';
+}
+
+
+export const buildOrderBy = (orderByFilters: string[]): string => {
+    let filter = '$orderby='
+    orderByFilters.forEach((field: string)=>{
+        filter = filter +' '+ field + ', ' 
+    })
+    filter= filter.slice(0,-2);
+    return filter;
 }

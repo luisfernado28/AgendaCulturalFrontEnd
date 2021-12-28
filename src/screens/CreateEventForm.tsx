@@ -17,7 +17,7 @@ import CalendarItem from '../components/CalendarItem'
 import TimePickerItem from '../components/TimeItem'
 import "yup-phone";
 
-export interface Values {
+interface Values {
     title: string,
     artist: string,
     venueId: string,
