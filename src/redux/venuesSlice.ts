@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {  getVenues, postVenue } from '../utils/venueClient'
+import { getVenues, postVenue } from '../utils/venueClient'
 
 import { VenuesReducer, StoreState } from './stateTypes'
 import { CreateVenue, Status } from './types'
@@ -10,7 +10,7 @@ const initialState: VenuesReducer = {
     code: '',
     message: '',
   },
-  venues:[],
+  venues: [],
   hasMore: true,
   status: Status.IDLE,
 }
@@ -44,7 +44,7 @@ export const venuesSlice = createSlice({
     builder.addCase(fetchVenues.rejected, state => {
       state.status = Status.FAILED
     })
-    
+
     builder.addCase(createVenue.fulfilled, (state, { payload }) => {
       state.status = Status.SUCCEEDED
       state.venues.push(payload)

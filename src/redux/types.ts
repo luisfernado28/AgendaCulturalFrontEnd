@@ -32,11 +32,11 @@ export interface Event {
   time?: string
   venueName?: string,
 }
-  
+
 export enum EventTypeStatus {
-  HYBRID  ,
-  LIVE ,
-  VIRTUAL ,
+  HYBRID,
+  LIVE,
+  VIRTUAL,
 }
 
 export interface CreateEvent {
@@ -57,7 +57,7 @@ export interface CreateEvent {
   tags?: string[],
 }
 
-export interface Dates{
+export interface Dates {
   areindependent: boolean,
   dates: string[]
   time: string
@@ -72,10 +72,10 @@ export interface Venue {
   twitter: string,
   instagram: string,
   description: string,
-  location: GoogleLocation 
+  location: GoogleLocation
 }
 
-export interface GoogleLocation{
+export interface GoogleLocation {
   type: string,
   coordinates: number[]
 }
@@ -143,14 +143,22 @@ export interface Filter {
   orderby?: string[]
 }
 
-export interface Pagination{
+export interface Pagination {
   top: number,
   skip: number
 }
 
-export interface QueryParams{
-  filter? : Filter,
+export interface QueryParams {
+  filter?: Filter,
   orderby?: string[],
-  pagination? : Pagination
+  pagination?: Pagination
+}
 
+export interface User {
+  Id: string,
+  Username: string,
+  FirstName: string,
+  LastName: string,
+  Password: string,
+  Admin: boolean
 }

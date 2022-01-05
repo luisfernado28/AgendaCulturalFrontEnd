@@ -11,6 +11,7 @@ import EventsDetail from '../screens/EventDetail'
 import ListPage from '../screens/Listpage'
 import UpdateEventForm from '../screens/UpdateEventForm'
 import UpdateEventPage from '../screens/UpdateEventPage'
+import UsersList from '../screens/UsersList'
 
 const Router = (): JSX.Element => {
 
@@ -18,6 +19,7 @@ const Router = (): JSX.Element => {
         <Switch>
             <Route exact path="/" component={ListPage} />
             <Route exact path="/adminEvents" component={AdminEventsList} />
+            <Route exact path="/usersList" component={UsersList} />
             <Route exact path="/createEvent" component={CreateEventForm} />
             <Route exact path="/createVenue" component={CreateVemueForm} />
             <Route exact path="/updateEvent/:id" component={UpdateEventPage} />

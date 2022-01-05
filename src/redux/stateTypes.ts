@@ -1,4 +1,4 @@
-import { Event , Venue} from './types'
+import { Event , User, Venue} from './types'
 
 
 export interface Error {
@@ -29,10 +29,16 @@ export interface VenueReducer {
   Venue: Venue
   venueStatus: string
 }
-
+export interface UsersReducer {
+  error: Error
+  users: User[]
+  hasMore: boolean
+  status: string
+}
 export interface StoreState {
   event: EventReducer
   events: EventsReducer
   venue: VenueReducer
   venues: VenuesReducer
+  users: UsersReducer
 }
