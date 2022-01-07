@@ -155,10 +155,10 @@ export interface QueryParams {
 }
 
 export interface User {
-  Id: string,
-  Username: string,
-  FirstName: string,
-  LastName: string,
-  Password: string,
-  Admin: boolean
+  id: string,
+  username: string,
+  firstname: string,
+  lastname: string,
+  password: string,
+  admin: boolean
 }
