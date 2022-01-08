@@ -3,10 +3,12 @@
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { Button, Card, Container, Grid } from "theme-ui";
 import { Text, jsx } from "theme-ui";
 import { ModalTypes } from "../redux/types";
+import { removeUser } from "../redux/usersSlice";
 import ShowModal from "./CustomModal";
 
 interface UserProps {
@@ -25,15 +27,17 @@ function UserCard({
 	admin,
 	id,
 }: UserProps): JSX.Element {
+	const dispatch = useDispatch();
+	const history = useHistory();
+
 	const handleDelete = (id: string) => {
-		console.log("exito borrando!");
-		// dispatch(removeEvent(id))
-		// ShowModal({
-		//     onSuccess: () => {
-		//         history.push('/adminEvents')
-		//     },
-		//     type: ModalTypes.DeleteSucceededModalValues,
-		// })
+		dispatch(removeUser(id))
+		ShowModal({
+		    onSuccess: () => {
+		        history.push('/usersList')
+		    },
+		    type: ModalTypes.DeleteSucceededModalValues,
+		})
 	};
 
 	return (
