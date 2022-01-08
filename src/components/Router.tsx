@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import AdminEventsList from '../screens/AdminEventsList'
 import CreateEventForm from '../screens/CreateEventForm'
+import CreateUserForm from '../screens/CreateUserForm'
 import CreateVemueForm from '../screens/CreateVenueForm'
 import EventsDetail from '../screens/EventDetail'
 import ListPage from '../screens/Listpage'
@@ -22,6 +23,7 @@ const Router = (): JSX.Element => {
             <Route exact path="/usersList" component={UsersList} />
             <Route exact path="/createEvent" component={CreateEventForm} />
             <Route exact path="/createVenue" component={CreateVemueForm} />
+            <Route exact path="/createUser" component={CreateUserForm} />
             <Route exact path="/updateEvent/:id" component={UpdateEventPage} />
             <Route exact path="/events/:id" component={EventsDetail} />
         </Switch>

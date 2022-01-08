@@ -4,6 +4,7 @@ import { Status, User } from "../redux/types";
 import { fetchUsers, selectAllUsers } from "../redux/usersSlice";
 import { Button, Grid, Text } from "theme-ui";
 import UserCard from "../components/UserCard";
+import { Link } from "react-router-dom";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
@@ -31,9 +32,7 @@ function UsersList(): JSX.Element {
 		<div>
 			<Text>Usuarios</Text>
 			<Button>
-				{/* <Link to='/adminEvents'> */}
-				Administrar eventos
-				{/* </Link> */}
+				<Link to="/createUser">Crear Usuario</Link>
 			</Button>
 			<Grid
 				columns={[1]}
