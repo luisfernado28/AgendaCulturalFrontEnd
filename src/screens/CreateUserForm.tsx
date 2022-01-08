@@ -5,6 +5,8 @@ import { Button, Container, Grid, jsx, Switch, Text } from "theme-ui";
 import TextInput from "../components/TextInput";
 import { CreateUser} from "../redux/types";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { createUser } from "../redux/usersSlice";
 
 interface Values {
 	username: string;
@@ -32,15 +34,15 @@ const CreateUserSchema = Yup.object().shape({
 		.required("Password requerida"),
 });
 function CreateUserForm(): JSX.Element {
+    const dispatch = useDispatch();
 	const [adminValue, setAdminValue] = useState(false);
 	const handleSubmit = async (values: Values) => {
 		const newUser: CreateUser = {
 			...values,
 			admin: adminValue,
 		};
-
 		console.log(newUser);
-		// await dispatch(createEvent(newEvent));
+		await dispatch(createUser(newUser));
 	};
 	const initialValues: Values = {
 		username: "",
@@ -98,7 +100,7 @@ function CreateUserForm(): JSX.Element {
 							}}
 						>
 							<Button sx={{ marginLeft: "8px" }} type="submit">
-								Crear nuevo Evento!
+								Crear nuevo Usuario!
 							</Button>
 						</Container>
 					</Form>

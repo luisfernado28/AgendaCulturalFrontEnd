@@ -1,4 +1,4 @@
-import { User } from '../redux/types';
+import { CreateUser, User } from '../redux/types';
 
 let routes: string
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
@@ -14,3 +14,35 @@ export async function getUsers(): Promise<User[]> {
         throw new Error();
     }
 }
+
+
+export async function postUser(params: CreateUser): Promise<User> {
+    try {
+      const { ...body } = params
+      const res = await fetch(routes, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const result = await res.json()
+      return result
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+export async function deleteUser(userId: string): Promise<void> {
+    try {
+      await fetch(`${routes}/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    } catch (error) {
+      throw new Error()
+    }
+  }
+  
