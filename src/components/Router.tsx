@@ -12,6 +12,7 @@ import EventsDetail from '../screens/EventDetail'
 import ListPage from '../screens/Listpage'
 import UpdateEventForm from '../screens/UpdateEventForm'
 import UpdateEventPage from '../screens/UpdateEventPage'
+import UpdateUserPage from '../screens/UpdateUserPage'
 import UsersList from '../screens/UsersList'
 
 const Router = (): JSX.Element => {
@@ -26,6 +27,7 @@ const Router = (): JSX.Element => {
             <Route exact path="/createUser" component={CreateUserForm} />
             <Route exact path="/updateEvent/:id" component={UpdateEventPage} />
             <Route exact path="/events/:id" component={EventsDetail} />
+            <Route exact path="/updateUser/:id" component={UpdateUserPage} />
         </Switch>
     )
 }

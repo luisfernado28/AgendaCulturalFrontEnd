@@ -2,10 +2,9 @@
 /** @jsx jsx */
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Button, Card, Container, Grid } from "theme-ui";
+import { Button, Card, Grid } from "theme-ui";
 import { Text, jsx } from "theme-ui";
 import { ModalTypes } from "../redux/types";
 import { removeUser } from "../redux/usersSlice";
@@ -77,7 +76,7 @@ function UserCard({
 					}}
 				>
 					<div>
-						<Link to={`/updateEvent/${id}`}>
+						<Link to={`/updateUser/${id}`}>
 							<FontAwesomeIcon icon={faEdit} />
 						</Link>
 					</div>

@@ -5,16 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Card, Text, jsx, Box, Image, Grid, Button } from "theme-ui";
+import { Card, Text, jsx, Image, Grid, Button } from "theme-ui";
 import ShowModal from "./CustomModal";
 
-import {
-	Dates,
-	Event,
-	EventTypeStatus,
-	ModalTypes,
-	Status,
-} from "../redux/types";
+import { Dates, EventTypeStatus, ModalTypes, Status } from "../redux/types";
 import { fetchVenueById, singleVenue } from "../redux/venueSlice";
 import { removeEvent } from "../redux/eventsSlice";
 import PageSpinner from "./Spinner";

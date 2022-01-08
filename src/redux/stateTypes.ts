@@ -35,10 +35,17 @@ export interface UsersReducer {
   hasMore: boolean
   status: string
 }
+export interface UserReducer {
+  error: Error
+  user: User
+  userStatus: string
+}
 export interface StoreState {
   event: EventReducer
   events: EventsReducer
   venue: VenueReducer
   venues: VenuesReducer
   users: UsersReducer
+  user: UserReducer
+
 }

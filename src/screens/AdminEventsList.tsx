@@ -3,17 +3,15 @@ import { Grid, jsx, Text } from 'theme-ui'
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchEvents, selectAllEvents } from "../redux/eventsSlice"
-import { Event, EventStatus, Status } from "../redux/types"
+import { Event } from "../redux/types"
 import AdminEventCard from '../components/adminEventCard'
 import { Link } from 'react-router-dom'
-import { fetchVenueById, singleVenue } from '../redux/venueSlice'
-import PageSpinner from '../components/Spinner'
 
 
 function AdminEventsList(): JSX.Element {
     const dispatch = useDispatch()
-    const { events, status } = useSelector(selectAllEvents)
-    const { Venue, venueStatus } = useSelector(singleVenue)
+    const { events } = useSelector(selectAllEvents)
+    //const { Venue, venueStatus } = useSelector(singleVenue)
 
     useEffect(() => {
         dispatch(fetchEvents())

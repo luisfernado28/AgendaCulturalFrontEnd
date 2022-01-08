@@ -162,11 +162,23 @@ export interface User {
   password: string,
   admin: boolean
 }
-
 export interface CreateUser {
   username: string,
   firstname: string,
   lastname: string,
   password: string,
   admin: boolean
+}
+export interface UpdateUser {
+  username: string,
+  firstname: string,
+  lastname: string,
+  password: string,
+  admin: boolean
+}
+
+
+export interface UserUpdateData {
+  body: UpdateUser
+  userId?: string
 }

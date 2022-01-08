@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Status, User } from "../redux/types";
+import { User } from "../redux/types";
 import { fetchUsers, selectAllUsers } from "../redux/usersSlice";
 import { Button, Grid, Text } from "theme-ui";
 import UserCard from "../components/UserCard";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
-	const { users, status } = useSelector(selectAllUsers);
+	const { users} = useSelector(selectAllUsers);
 
 	useEffect(() => {
 		dispatch(fetchUsers());

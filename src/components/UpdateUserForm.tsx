@@ -1,12 +1,11 @@
-/** @jsxImportSource theme-ui */
 import { Form, Formik } from "formik";
 import { useState } from "react";
-import { Button, Container, Grid, jsx, Switch, Text } from "theme-ui";
-import TextInput from "../components/TextInput";
-import { CreateUser} from "../redux/types";
-import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { createUser } from "../redux/usersSlice";
+import { Button, Container, Text, Grid, Switch } from "theme-ui";
+import TextInput from "./TextInput";
+import * as Yup from "yup";
+import { UpdateUser, UserUpdateData } from "../redux/types";
+import { modifyUser } from "../redux/userSlice";
 
 interface Values {
 	username: string;
@@ -18,37 +17,58 @@ interface Values {
 const CreateUserSchema = Yup.object().shape({
 	username: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El titulo no puede tener mas que 50 caracteres ")
+		.max(50, "Username de al menos 50 caracteres ")
 		.required("Username requerido"),
 	firstname: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El artista no puede tener mas que 50 caracteres ")
+		.max(50, "El nombre no puede ser de mas que 50 caracteres ")
 		.required("Nombre requerido"),
 	lastname: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El artista no puede tener mas que 50 caracteres ")
+		.max(50, "El apellido  no puede tener mas que 50 caracteres ")
 		.required("Apellido es requerido"),
 	password: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El artista no puede tener mas que 50 caracteres ")
+		.max(5000, "Contrasena muy larga ")
 		.required("Password requerida"),
 });
-function CreateUserForm(): JSX.Element {
-    const dispatch = useDispatch();
+
+interface FormProps {
+	id: string;
+	username: string;
+	firstname: string;
+	lastname: string;
+	password: string;
+	admin: boolean;
+}
+
+function UpdateUserForm({
+	id,
+	username,
+	firstname,
+	lastname,
+	password,
+	admin,
+}: FormProps): JSX.Element {
+	const dispatch = useDispatch();
 	const [adminValue, setAdminValue] = useState(false);
 	const handleSubmit = async (values: Values) => {
-		const newUser: CreateUser = {
+		const newUser: UpdateUser = {
 			...values,
 			admin: adminValue,
 		};
 		console.log(newUser);
-		await dispatch(createUser(newUser));
+		const updateData: UserUpdateData = {
+			userId: id,
+			body: newUser,
+		};
+		await dispatch(modifyUser(updateData));
 	};
 	const initialValues: Values = {
-		username: "",
-		firstname: "",
-		lastname: "",
-		password: "",
+		username: username,
+		firstname: firstname,
+		lastname: lastname,
+		password: password,
 	};
 	return (
 		<div>
@@ -84,7 +104,8 @@ function CreateUserForm(): JSX.Element {
 									name="password"
 									label="Contrasena"
 									placeholder="Contrasena"
-									type="text"
+									type="password"
+									disabled={true}
 								/>
 								<Switch
 									label="Administrador?"
@@ -100,7 +121,7 @@ function CreateUserForm(): JSX.Element {
 							}}
 						>
 							<Button sx={{ marginLeft: "8px" }} type="submit">
-								Crear nuevo Usuario!
+								Actualizar usuario
 							</Button>
 						</Container>
 					</Form>
@@ -109,4 +130,5 @@ function CreateUserForm(): JSX.Element {
 		</div>
 	);
 }
-export default CreateUserForm;
+
+export default UpdateUserForm;
