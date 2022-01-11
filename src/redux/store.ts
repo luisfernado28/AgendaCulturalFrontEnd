@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
+import authSlice from "./authSlice";
 import eventSlice from "./eventSlice";
 import eventsSlice from "./eventsSlice"
 import userSlice from "./userSlice";
@@ -8,6 +9,7 @@ import venuesSlice from "./venuesSlice";
 
 const store = configureStore({
   reducer: {
+    auth: authSlice,
     event: eventSlice,
     events: eventsSlice,
     venue: venueSlice,

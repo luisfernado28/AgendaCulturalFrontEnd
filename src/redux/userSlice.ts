@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserById, patchtUser } from "../utils/authClient";
+import { getUserById, patchtUser, postAuth } from "../utils/authClient";
 import { StoreState, UserReducer } from "./stateTypes";
-import { Status, UserUpdateData } from "./types";
+import { Status, UserCredentials, UserUpdateData } from "./types";
 
 const initialState: UserReducer = {
 	error: {

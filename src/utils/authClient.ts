@@ -1,4 +1,4 @@
-import { CreateUser, UpdateUser, User, UserUpdateData } from "../redux/types";
+import { CreateUser, UpdateUser, User, UserCredentials, UserUpdateData } from "../redux/types";
 
 let routes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
@@ -78,3 +78,20 @@ export async function deleteUser(userId: string): Promise<void> {
 		throw new Error();
 	}
 }
+
+
+export async function postAuth(body: UserCredentials) {
+	try {
+	  const res = await fetch(`${routes}/token`, {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: {
+		  'Content-Type': 'application/json',
+		},
+	  })
+	  const result = await res.json()
+	  return { result, status: res.status }
+	} catch (error) {
+	//   throw new Error(error.toString())
+	}
+  }

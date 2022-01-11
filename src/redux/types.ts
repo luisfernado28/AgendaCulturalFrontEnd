@@ -182,3 +182,8 @@ export interface UserUpdateData {
   body: UpdateUser
   userId?: string
 }
+
+export interface UserCredentials {
+  password: string
+  username: string
+}
