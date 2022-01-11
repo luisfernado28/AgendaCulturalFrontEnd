@@ -40,6 +40,21 @@ export interface UserReducer {
   user: User
   userStatus: string
 }
+export interface Authentication {
+  loggedIn: boolean
+  requestError?: string
+  requestErrorCode?: number
+  requestStatus: string
+  userInfo: userInfo
+}
+export interface userInfo {
+  id: string,
+  username: string,
+  firstname: string,
+  lastname: string,
+  admin: boolean,
+  token?: string
+}
 export interface StoreState {
   event: EventReducer
   events: EventsReducer
@@ -47,5 +62,6 @@ export interface StoreState {
   venues: VenuesReducer
   users: UsersReducer
   user: UserReducer
+  auth : Authentication 
 
 }

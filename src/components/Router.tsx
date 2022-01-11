@@ -10,6 +10,7 @@ import CreateUserForm from '../screens/CreateUserForm'
 import CreateVemueForm from '../screens/CreateVenueForm'
 import EventsDetail from '../screens/EventDetail'
 import ListPage from '../screens/Listpage'
+import SignIn from '../screens/SignIn'
 import UpdateEventForm from '../screens/UpdateEventForm'
 import UpdateEventPage from '../screens/UpdateEventPage'
 import UpdateUserPage from '../screens/UpdateUserPage'
@@ -20,6 +21,7 @@ const Router = (): JSX.Element => {
     return (
         <Switch>
             <Route exact path="/" component={ListPage} />
+            <Route exact path="/Signin" component={SignIn} />
             <Route exact path="/adminEvents" component={AdminEventsList} />
             <Route exact path="/usersList" component={UsersList} />
             <Route exact path="/createEvent" component={CreateEventForm} />
