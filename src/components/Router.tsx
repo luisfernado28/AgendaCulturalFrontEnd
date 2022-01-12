@@ -25,7 +25,6 @@ const Router = (): JSX.Element => {
 			<Route exact path="/Signin" component={SignIn} />
 			<Route exact path="/adminEvents" component={AdminEventsList} />
 			<Route exact path="/usersList" component={UsersList} />
-			{/* <Route exact path="/createEvent" component={CreateEventForm} /> */}
 			<PrivateRoute exact path="/createEvent">
 				<CreateEventForm />
 			</PrivateRoute>
@@ -46,8 +45,6 @@ interface propTypes {
 }
 function PrivateRoute({ children, ...rest }: propTypes): JSX.Element {
 	const userState = useSelector(authUsers);
-	const history = useHistory();
-	console.log(userState);
 	const auth = userState.userInfo.token;
 	return (
 		<Route
