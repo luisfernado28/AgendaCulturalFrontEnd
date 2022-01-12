@@ -21,12 +21,6 @@ const SignIn = (): JSX.Element => {
 		};
 		dispatch(authUser(credentials));
 	};
-	console.log('------------------------------------------')
-	console.log('Status:  '+requestStatus);
-	console.log('Request error:  '+requestError);
-	console.log('Error code:  '+requestErrorCode);
-	console.log('UserInfo:  '+userInfo.username);
-	console.log('LoggedIn:  '+loggedIn);
 	const handleSubmit = async (
 		values: UserCredentials,
 		{ setSubmitting }: FormikHelpers<UserCredentials>

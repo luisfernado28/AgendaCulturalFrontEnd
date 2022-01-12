@@ -69,7 +69,7 @@ const SessionExpiredModal = {
   ConfirmButtonText: 'Okay',
   Icon: 'info',
   ShowCancelButton: false,
-  Text: 'Your session has expired, you will be redirected to Login Page.',
+  Text: 'Tu sesion expiro seras redirigido a la pagina de Log In!.',
   Title: 'Session Expired!',
 }
 
@@ -113,7 +113,7 @@ dictionary.set(
   ModalTypes.UpdateSucceededModalValues,
   UpdateSucceededModalValues,
 )
-// dictionary.set(ModalTypes.SessionExpiredModal, SessionExpiredModal)
+dictionary.set(ModalTypes.SessionExpiredModal, SessionExpiredModal)
 
 interface ModalOptions {
   type: string
