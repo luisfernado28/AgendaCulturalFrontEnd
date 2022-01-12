@@ -1,15 +1,12 @@
 import "./App.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Router from "./components/Router";
-import { BrowserRouter, useHistory } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import LayoutWrapper from "./components/Layoutwrapper";
 import { useIdleTimer } from "react-idle-timer";
 import { useDispatch } from "react-redux";
 import { LogOut } from "./redux/authSlice";
 
 function App() {
-	const history = useHistory();
 	const dispatch = useDispatch();
 	const handleOnIdle = () => {
 		dispatch(LogOut());

@@ -95,7 +95,6 @@ function UpdateEventForm({
         const timeOfEvent = new Date();
         timeOfEvent.setHours(parseInt(value[0], 10));
         timeOfEvent.setMinutes(parseInt(value[1], 10));
-        console.log(timeOfEvent.toISOString())
         return timeOfEvent.toISOString();
     }
 

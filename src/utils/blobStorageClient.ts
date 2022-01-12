@@ -1,11 +1,5 @@
 import { BlobServiceClient } from "@azure/storage-blob";
 
-let blobConnectionString: string;
-
-if (process.env.REACT_APP_Blob_API !== undefined) {
-    blobConnectionString = `${process.env.REACT_APP_Blob_API}`
-}
-
 
 //TODO code for blob containers
 //getImage();
@@ -14,7 +8,6 @@ async function uploadImage(file: File) {
     const account = process.env.REACT_APP_STORAGERESOURCENAME;
     const sas = process.env.REACT_APP_STORAGESASTOKEN;
     const containerName = "eventsimages";
-    const blobName = "cat.jpg";
 
     //services 
     const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net?${sas}`);

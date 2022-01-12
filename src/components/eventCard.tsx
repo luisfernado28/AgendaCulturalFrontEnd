@@ -8,7 +8,6 @@ import {
   Card,
   Text,
   jsx,
-  Box,
   Image
 } from 'theme-ui'
 

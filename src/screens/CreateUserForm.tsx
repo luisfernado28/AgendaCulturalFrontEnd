@@ -1,9 +1,9 @@
 /** @jsxImportSource theme-ui */
 import { Form, Formik } from "formik";
 import { useState } from "react";
-import { Button, Container, Grid, jsx, Switch, Text } from "theme-ui";
+import { Button, Container, Grid, Switch, Text } from "theme-ui";
 import TextInput from "../components/TextInput";
-import { CreateUser} from "../redux/types";
+import { CreateUser } from "../redux/types";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { createUser } from "../redux/usersSlice";
@@ -34,7 +34,7 @@ const CreateUserSchema = Yup.object().shape({
 		.required("Password requerida"),
 });
 function CreateUserForm(): JSX.Element {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const [adminValue, setAdminValue] = useState(false);
 	const handleSubmit = async (values: Values) => {
 		const newUser: CreateUser = {

@@ -3,11 +3,10 @@ import { Text } from "theme-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { EventStatus, Status, EventTypeStatus } from "../redux/types";
 import { useEffect, Fragment } from "react";
-import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { fetchEventById, singleEvent } from "../redux/eventSlice";
 import PageSpinner from "../components/Spinner";
 import UpdateEventForm2 from "../components/UpdateEventForm2";
-import { authUsers } from "../redux/authSlice";
 
 export interface Values {
 	title: string;
@@ -29,14 +28,12 @@ export interface Values {
 function UpdateEventPage({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
-	console.log(match);
 	const dispatch = useDispatch();
 	const { event, eventStatus } = useSelector(singleEvent);
 
 	useEffect(() => {
 		dispatch(fetchEventById(match.params.id));
 	}, [dispatch, match.params.id]);
-
 
 	const typeEvent: EventTypeStatus = EventTypeStatus[event.type.toString()];
 	return (

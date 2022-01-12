@@ -1,13 +1,13 @@
 /** @jsxImportSource theme-ui */
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Box, Flex, Grid, jsx } from "theme-ui";
+import { Grid } from "theme-ui";
 import { authUsers, LogOut } from "../redux/authSlice";
 
 const Header = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { userInfo, loggedIn } = useSelector(authUsers);
+	const { loggedIn } = useSelector(authUsers);
 	const handleLogout = () => {
 		dispatch(LogOut());
 		history.push("/Signin");

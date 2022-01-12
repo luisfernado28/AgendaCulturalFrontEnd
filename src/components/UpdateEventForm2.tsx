@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { Button, Container, Grid, jsx, Select, Text } from 'theme-ui'
+import { Button, Container, Grid,  Select, Text } from 'theme-ui'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextAreaInput from '../components/TextAreaInput'
