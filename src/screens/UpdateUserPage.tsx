@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import PageSpinner from "../components/Spinner";
 import { Status } from "../redux/types";
 import { fetchUserById, singleUser } from "../redux/userSlice";
@@ -36,4 +36,4 @@ function UpdateUserPage({
 		</Fragment>
 	);
 }
-export default UpdateUserPage;
+export default withRouter(UpdateUserPage);

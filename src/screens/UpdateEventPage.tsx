@@ -3,7 +3,7 @@ import { Text } from "theme-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { EventStatus, Status, EventTypeStatus } from "../redux/types";
 import { useEffect, Fragment } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { fetchEventById, singleEvent } from "../redux/eventSlice";
 import PageSpinner from "../components/Spinner";
 import UpdateEventForm2 from "../components/UpdateEventForm2";
@@ -29,9 +29,8 @@ export interface Values {
 function UpdateEventPage({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
+	console.log(match);
 	const dispatch = useDispatch();
-	const userinfo = useSelector(authUsers);
-	const history = useHistory()
 	const { event, eventStatus } = useSelector(singleEvent);
 
 	useEffect(() => {
@@ -68,4 +67,4 @@ function UpdateEventPage({
 		</Fragment>
 	);
 }
-export default UpdateEventPage;
+export default withRouter(UpdateEventPage);

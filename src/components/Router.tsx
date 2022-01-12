@@ -4,8 +4,6 @@ import {
 	Route,
 	Switch,
 	useHistory,
-	useLocation,
-	useParams,
 	withRouter,
 } from "react-router-dom";
 import { authUsers, LogOut } from "../redux/authSlice";
@@ -24,8 +22,6 @@ import ShowModal from "./CustomModal";
 import { ModalTypes } from "../redux/types";
 
 const Router = (): JSX.Element => {
-	let location = useLocation();
-
 	function ValidateToken() {
 		const history = useHistory();
 		const dispatch = useDispatch();
@@ -38,7 +34,7 @@ const Router = (): JSX.Element => {
 				ShowModal({
 					onSuccess: () => {
 						dispatch(LogOut());
-						history.push("/sign-in");
+						history.push("/Signin");
 					},
 					type: ModalTypes.SessionExpiredModal,
 				});
@@ -50,7 +46,6 @@ const Router = (): JSX.Element => {
 		<Switch>
 			<Route exact path="/" component={ListPage} />
 			<Route exact path="/events/:id" component={EventsDetail} />
-
 			<Route exact path="/Signin" component={SignIn} />
 			<PrivateRoute exact path="/usersList">
 				<UsersList />
@@ -67,18 +62,12 @@ const Router = (): JSX.Element => {
 			<PrivateRoute exact path="/createUser">
 				<CreateUserForm />
 			</PrivateRoute>
-			<Route exact path="/updateEvent/:id" component={UpdateEventPage} />
-			{/* <Route exact path="/updateEvent/:eventId">
+			<PrivateRoute exact path="/updateEvent/:id">
 				<UpdateEventPage />
-			</Route> */}
-			<Route exact path="/updateUser/:id" component={UpdateUserPage} />
-			{/* <PrivateRoute
-				exact
-				path="/updateEvent/:id"
-				prop={UpdateEventPage}
-			>
-				<UpdateEventPage/>
-				</PrivateRoute> */}
+			</PrivateRoute>
+			<PrivateRoute exact path="/updateUser/:id">
+				<UpdateUserPage />
+			</PrivateRoute>
 		</Switch>
 	);
 };

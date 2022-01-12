@@ -10,8 +10,13 @@ import { UserCredentials } from "../redux/types";
 
 const SignIn = (): JSX.Element => {
 	const dispatch = useDispatch();
-	const { requestStatus, requestError, requestErrorCode, userInfo , loggedIn} =
-		useSelector(authUsers);
+	const {
+		requestStatus,
+		requestError,
+		requestErrorCode,
+		userInfo,
+		loggedIn,
+	} = useSelector(authUsers);
 	const history = useHistory();
 
 	const callauth = () => {
@@ -26,13 +31,14 @@ const SignIn = (): JSX.Element => {
 		{ setSubmitting }: FormikHelpers<UserCredentials>
 	) => {
 		dispatch(authUser(values));
-		history.push('adminEvents');
+		
+		history.push("/");
 	};
 	return (
 		<div>
 			<Button onClick={() => callauth()} name="auth" title="auth" />
 			<LoginForm handleSubmit={handleSubmit} />
-			<Link to='/createEvent'>sadf</Link>
+			<Link to="/createEvent">sadf</Link>
 		</div>
 	);
 };
