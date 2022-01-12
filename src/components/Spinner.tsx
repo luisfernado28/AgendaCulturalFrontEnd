@@ -1,9 +1,10 @@
+/** @jsxImportSource theme-ui */
 
-import { Flex, Spinner } from 'theme-ui'
+import { Spinner } from 'theme-ui'
 
 function PageSpinner(): JSX.Element {
   return (
-    <Flex
+    <div
       sx={{
         alignItems: 'center',
         height: '85%',
@@ -15,7 +16,7 @@ function PageSpinner(): JSX.Element {
       }}
     >
       <Spinner sx={{ color: 'orange' }} />
-    </Flex>
+    </div>
   )
 }
 

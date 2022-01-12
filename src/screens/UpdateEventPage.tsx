@@ -35,7 +35,7 @@ function UpdateEventPage({
 		dispatch(fetchEventById(match.params.id));
 	}, [dispatch, match.params.id]);
 
-	const typeEvent: EventTypeStatus = EventTypeStatus[event.type.toString()];
+	const typeEvent: any = EventTypeStatus[event.type.toString()];
 	return (
 		<Fragment>
 			{eventStatus === Status.IDLE ? (

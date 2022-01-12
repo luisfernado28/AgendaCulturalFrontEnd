@@ -3,7 +3,7 @@
 import { UserCredentials } from "../redux/types";
 import { Form, Formik, FormikHelpers } from "formik";
 import TextInput from "./TextInput";
-import { Button, Flex, Text, jsx } from "theme-ui";
+import { Button, Text, jsx } from "theme-ui";
 import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
@@ -59,12 +59,7 @@ const LoginForm = ({ handleSubmit }: FormProps): JSX.Element => {
 						placeholder="Enter password"
 						type="password"
 					/>
-					<Flex
-						sx={{
-							justifyContent: "flex-end",
-							marginTop: "1rem",
-						}}
-					>
+					<div>
 						<Button
 							type="submit"
 							disabled={isSubmitting}
@@ -72,7 +67,7 @@ const LoginForm = ({ handleSubmit }: FormProps): JSX.Element => {
 						>
 							Sign In
 						</Button>
-					</Flex>
+					</div>
 				</Form>
 			)}
 		</Formik>
