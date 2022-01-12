@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
-import authSlice from "./authSlice";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { authSlice } from "./authSlice";
 import eventSlice from "./eventSlice";
 import eventsSlice from "./eventsSlice"
 import userSlice from "./userSlice";
@@ -7,9 +9,18 @@ import usersSlice from "./usersSlice";
 import venueSlice from "./venueSlice"
 import venuesSlice from "./venuesSlice";
 
+
+const persistConfig = {
+  blacklist: ['requestError', 'requestErrorCode', 'requestStatus'],
+  key: 'auth',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, authSlice.reducer)
+
 const store = configureStore({
   reducer: {
-    auth: authSlice,
+    auth: persistedReducer,
     event: eventSlice,
     events: eventsSlice,
     venue: venueSlice,

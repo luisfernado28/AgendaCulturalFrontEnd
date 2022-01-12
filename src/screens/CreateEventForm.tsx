@@ -16,6 +16,7 @@ import RadioButton from '../components/RadioButton'
 import CalendarItem from '../components/CalendarItem'
 import TimePickerItem from '../components/TimeItem'
 import "yup-phone";
+import { authUsers } from '../redux/authSlice'
 
 interface Values {
     title: string,

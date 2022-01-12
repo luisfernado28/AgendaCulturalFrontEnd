@@ -1,4 +1,11 @@
-import { CreateUser, UpdateUser, User, UserCredentials, UserUpdateData } from "../redux/types";
+import {
+	CreateUser,
+	UpdateUser,
+	User,
+	UserCredentials,
+	UserCredentialsResponse,
+	UserUpdateData,
+} from "../redux/types";
 
 let routes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
@@ -79,19 +86,19 @@ export async function deleteUser(userId: string): Promise<void> {
 	}
 }
 
-
-export async function postAuth(body: UserCredentials) {
+export async function postAuth(body: UserCredentials): Promise<{user:UserCredentialsResponse,status: number}> {
 	try {
-	  const res = await fetch(`${routes}/token`, {
-		method: 'POST',
-		body: JSON.stringify(body),
-		headers: {
-		  'Content-Type': 'application/json',
-		},
-	  })
-	  const result = await res.json()
-	  return { result, status: res.status }
+		const res = await fetch(`${routes}/token`, {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result : UserCredentialsResponse= await res.json();
+		return { user:result, status: res.status };
+		// return result;
 	} catch (error) {
-	//   throw new Error(error.toString())
+		throw new Error();
 	}
-  }
+}

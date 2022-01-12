@@ -187,3 +187,12 @@ export interface UserCredentials {
   password: string
   username: string
 }
+
+export interface UserCredentialsResponse{
+  id: string,
+  username: string,
+  firstname: string,
+  lastname: string,
+  admin: boolean,
+  token:string
+}

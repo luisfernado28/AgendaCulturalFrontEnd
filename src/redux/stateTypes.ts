@@ -63,5 +63,4 @@ export interface StoreState {
   users: UsersReducer
   user: UserReducer
   auth : Authentication 
-
 }

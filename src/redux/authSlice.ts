@@ -28,54 +28,58 @@ export const authUser = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-	name: "venues",
+	name: "auth",
 	initialState,
-	reducers: {},
+	reducers: {
+		LogOut(state) {
+			state.loggedIn = false;
+			state.userInfo = emptyUserData;
+			state.requestError = "";
+			state.requestErrorCode = undefined;
+			state.requestStatus = Status.IDLE;
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(authUser.pending, (state) => {
 			state.requestStatus = Status.LOADING;
 		});
-		builder.addCase(authUser.fulfilled, (state, {payload}) => {
+		builder.addCase(authUser.fulfilled, (state, { payload }) => {
 			state.requestStatus = Status.SUCCEEDED;
-			if (payload?.status === 200) {
-				const {
-				  token,
-				  userId,
-				  userName,
-				  firstname,
-				  lastname,
-				  admin
-				} = payload.result
+
+			if (payload.status === 200) {
+				const { token, id, username, firstname, lastname, admin } =
+					payload.user;
 				state.userInfo = {
-				  token,
-				  id:userId,
-				  username: userName,
-				  firstname,
-				  lastname,
-				  admin
-				}
-				state.loggedIn = true
-				state.requestError = ''
-				state.requestErrorCode = 200
-			  } else if (payload?.status === 401) {
-				state.requestError = "Wrong username or password"
-				state.requestErrorCode = payload.status
-				state.loggedIn = false
-				state.userInfo = emptyUserData
-			  } else {
-				state.requestError = 'Internal server error'
-				state.requestErrorCode = payload?.status
-				state.loggedIn = false
-				state.userInfo = emptyUserData
-			  }
+					token,
+					id,
+					username,
+					firstname,
+					lastname,
+					admin,
+				};
+				state.loggedIn = true;
+				state.requestError = "";
+				state.requestErrorCode = 200;
+			} else if (payload?.status === 401) {
+				state.requestError = "Wrong username or password";
+				state.requestErrorCode = payload.status;
+				state.loggedIn = false;
+				state.userInfo = emptyUserData;
+			} else {
+				state.requestError = "Internal server error";
+				state.requestErrorCode = payload?.status;
+				state.loggedIn = false;
+				state.userInfo = emptyUserData;
+			}
 		});
 		builder.addCase(authUser.rejected, (state) => {
 			state.requestStatus = Status.FAILED;
-			state.requestError = "Internal Server Error"
-			state.requestErrorCode = undefined
+			state.requestError = "Internal Server Error";
+			state.requestErrorCode = undefined;
 		});
 	},
 });
 
+export const { LogOut } = authSlice.actions;
 export const authUsers = ({ auth }: StoreState): Authentication => auth;
 export default authSlice.reducer;
