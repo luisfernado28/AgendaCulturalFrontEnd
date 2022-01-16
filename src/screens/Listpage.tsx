@@ -83,6 +83,9 @@ function ListPage(): JSX.Element {
 			<Button>
 				<Link to="/adminEvents">Administrar eventos</Link>
 			</Button>
+			<Button>
+				<Link to="/usersList">Administrar usuarios</Link>
+			</Button>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={CreateEventSchema}

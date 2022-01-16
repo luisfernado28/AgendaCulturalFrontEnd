@@ -12,26 +12,19 @@ const SignIn = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const callauth = () => {
-		const credentials: UserCredentials = {
-			username: "tes",
-			password: "testy",
-		};
-		dispatch(authUser(credentials));
-	};
 	const handleSubmit = async (
 		values: UserCredentials,
 		{ setSubmitting }: FormikHelpers<UserCredentials>
 	) => {
 		dispatch(authUser(values));
-		
 		history.push("/");
 	};
 	return (
 		<div>
-			<Button onClick={() => callauth()} name="auth" title="auth" />
+			<Button>
+				<Link to="/">Regresar a eventos</Link>
+			</Button>
 			<LoginForm handleSubmit={handleSubmit} />
-			<Link to="/createEvent">sadf</Link>
 		</div>
 	);
 };
