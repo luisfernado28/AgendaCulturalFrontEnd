@@ -30,8 +30,8 @@ export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 			let r = "";
 			if (filter) {
 				r = buildFilter(filter);
-
-				path2.query({ r });
+				console.log(r);
+				path2.query({ $filter: r });
 			}
 			console.log(path2);
 

@@ -24,11 +24,11 @@ export const buildOrderBy = (orderByFilters: string[]): string => {
 };
 
 export const buildFilter = (filter: Filter): string => {
-    let res: string = "$filter=(";
+    let res: string = "";
 	for (const field in filter) {
 		const currentRule = buildRule(field, filter);
 		res = res + currentRule + " or ";
 	}
 	res = res.slice(0, -4);
-	return res + ")";
+	return res + "";
 };
