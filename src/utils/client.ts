@@ -5,7 +5,12 @@ import {
 	QueryParams,
 	UpdateEvent,
 } from "../redux/types";
-import { buildOrderBy, buildQueryParams } from "./buildOdataParams";
+import {
+	buildFilter,
+	buildOrderBy,
+	buildQueryParams,
+} from "./buildOdataParams";
+import { o } from "odata";
 
 let routes: string;
 
@@ -15,18 +20,34 @@ if (process.env.REACT_APP_EVENTS_API !== undefined) {
 export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	try {
 		let path = routes;
+		const path2 = o(routes).get("events");
+
+		// const data1 = await o(routes).get("events")
+		//.query({ $top: 3 });
+		//console.log(data1);
 		if (queryParams) {
 			const { filter, orderby, pagination } = queryParams;
-			path = path + "?";
-			path = filter ? `${path}${buildQueryParams(filter)}` : path;
-			if (orderby) {
-				if (filter) path = path + "&";
-				path = orderby ? `${path}${buildOrderBy(orderby)}` : path;
+			let r = "";
+			if (filter) {
+				r = buildFilter(filter);
+
+				path2.query({ r });
 			}
-			if (pagination) {
-				if (filter || orderby) path = path + "&";
-				//code for pagination
-			}
+			console.log(path2);
+
+			const res = await o(routes).get("events").query({ r });
+			console.log(res);
+			// const { filter, orderby, pagination } = queryParams;
+			// path = path + "?";
+			// path = filter ? `${path}${buildQueryParams(filter)}` : path;
+			// if (orderby) {
+			// 	if (filter) path = path + "&";
+			// 	path = orderby ? `${path}${buildOrderBy(orderby)}` : path;
+			// }
+			// if (pagination) {
+			// 	if (filter || orderby) path = path + "&";
+			// 	//code for pagination
+			// }
 		}
 		const response = await fetch(path);
 		const results = await response.json();
