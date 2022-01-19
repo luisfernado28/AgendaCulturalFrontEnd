@@ -32,3 +32,12 @@ export const buildFilter = (filter: Filter): string => {
 	res = res.slice(0, -4);
 	return res + "";
 };
+
+export const buildOrderBy2 = (orderByFilters: string[]): string => {
+	let filter = "";
+	orderByFilters.forEach((field: string) => {
+		filter = filter + " " + field + ", ";
+	});
+	filter = filter.slice(0, -2);
+	return filter;
+};

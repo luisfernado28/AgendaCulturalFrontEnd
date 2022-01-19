@@ -5,12 +5,8 @@ import {
 	QueryParams,
 	UpdateEvent,
 } from "../redux/types";
-import {
-	buildFilter,
-	buildOrderBy,
-	buildQueryParams,
-} from "./buildOdataParams";
-import { o } from "odata";
+import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
+import { o, OdataQuery } from "odata";
 
 let routes: string;
 
@@ -19,42 +15,26 @@ if (process.env.REACT_APP_EVENTS_API !== undefined) {
 }
 export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	try {
-		let path = routes;
-		const path2 = o(routes).get("events");
-
-		// const data1 = await o(routes).get("events")
-		//.query({ $top: 3 });
-		//console.log(data1);
 		if (queryParams) {
-			const { filter, orderby, pagination } = queryParams;
-			let r = "";
-			if (filter) {
-				r = buildFilter(filter);
-				console.log(r);
-				path2.query({ $filter: r });
-			}
-			console.log(path2);
-
-			const res = await o(routes).get("events").query({ r });
-			console.log(res);
-			// const { filter, orderby, pagination } = queryParams;
-			// path = path + "?";
-			// path = filter ? `${path}${buildQueryParams(filter)}` : path;
-			// if (orderby) {
-			// 	if (filter) path = path + "&";
-			// 	path = orderby ? `${path}${buildOrderBy(orderby)}` : path;
-			// }
-			// if (pagination) {
-			// 	if (filter || orderby) path = path + "&";
-			// 	//code for pagination
-			// }
+			const params: OdataQuery = {};
+			const { filter, orderby } = queryParams;
+			if (filter) params.$filter = buildFilter(filter);
+			if (orderby) params.$orderby = buildOrderBy2(orderby);
+			const response = await o(routes).get("events").query(params);
+			const results = await response;
+			return results;
+		} else {
+			const response = await o(routes).get("events").query();
+			const results = await response;
+			return results;
 		}
-		const response = await fetch(path);
-		const results = await response.json();
-		return results;
-	} catch (error) {
-		throw new Error();
-		//throw new Error(error.toString())
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
 	}
 }
 
@@ -69,9 +49,13 @@ export async function getEventById(eventId: string): Promise<Event> {
 		});
 		const results = await response.json();
 		return results;
-	} catch (error) {
-		throw new Error();
-		//throw new Error(error.toString())
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
 	}
 }
 
@@ -87,8 +71,13 @@ export async function postEvent(params: CreateEvent): Promise<Event> {
 		});
 		const result = await res.json();
 		return result;
-	} catch (error) {
-		throw new Error();
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
 	}
 }
 
@@ -105,8 +94,13 @@ export async function putEvent({
 			},
 		});
 		return { ...body };
-	} catch (error) {
-		throw new Error();
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
 	}
 }
 
@@ -118,7 +112,12 @@ export async function deleteEvent(eventId: string): Promise<void> {
 				"Content-Type": "application/json",
 			},
 		});
-	} catch (error) {
-		throw new Error();
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
 	}
 }

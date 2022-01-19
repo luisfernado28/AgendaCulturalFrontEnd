@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { Button, Grid,  Select, Text } from "theme-ui";
+import { Button, Grid, Select, Text } from "theme-ui";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents, selectAllEvents } from "../redux/eventsSlice";
@@ -19,7 +19,7 @@ function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
 	const { events } = useSelector(selectAllEvents);
 	const { Venue } = useSelector(singleVenue);
-	const [sortValue, setSortValueDropdown] = useState("");
+	const [sortValue, setSortValueDropdown] = useState("title asc");
 
 	const initialValues: Values = {
 		searchBar: "",
@@ -106,9 +106,6 @@ function ListPage(): JSX.Element {
 								setSortValueDropdown(e.currentTarget.value)
 							}
 						>
-							<option key="Ordernar" value="Ordenar">
-								Ordenar
-							</option>
 							<option key="Titulo Ascendente" value="title asc">
 								Titulo Ascendente
 							</option>
@@ -116,7 +113,7 @@ function ListPage(): JSX.Element {
 								Titulo Descendente
 							</option>
 						</Select>
-						<Button onClick={(x) => console.log(x)}>Buscar</Button>
+						<Button>Buscar</Button>
 					</Form>
 				)}
 			</Formik>
