@@ -1,0 +1,39 @@
+# Log in to acr previously 
+version: '3.4'
+
+services:
+
+  mongodb:
+    image : mongo:latest
+    networks:
+        - agendacultural_project   
+    container_name: mongodbagendaculturalVM
+    volumes:
+        - mongodatabase:/data/db
+    ports:
+        - 27017:27017
+    restart: unless-stopped
+
+  eventsapi: 
+    image: agendaculturalcontainerregistry.azurecr.io/eventsapi:latest
+    networks:
+        - agendacultural_project 
+    container_name: eventsapiVM
+    ports:
+        - 5000:5000
+    depends_on:
+            - mongodb
+
+  agendaCulturalFrontEnd:
+    image: agendaculturalcontainerregistry.azurecr.io/reactagenda:latest
+    networks:
+        - agendacultural_project 
+    ports:
+        - 3000:80
+    container_name: reactVM
+    
+volumes:
+  mongodatabase:
+networks:
+    agendacultural_project: 
+      
