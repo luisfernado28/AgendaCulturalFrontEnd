@@ -45,7 +45,7 @@ function ListPage(): JSX.Element {
 					dates={event.dates}
 					venueName={Venue.name}
 					artist={""}
-					venueId={""}
+					venueId={event.venueId}
 					status={0}
 					phone={""}
 					type={event.type}
@@ -127,7 +127,11 @@ function ListPage(): JSX.Element {
 					columnGap: "50px",
 				}}
 			>
-				{eventsList}
+				{events.length !== 0 ? (
+					eventsList
+				) : (
+					<Text>No existen eventos con esas caracteristicas :c</Text>
+				)}
 			</Grid>
 		</div>
 	);
