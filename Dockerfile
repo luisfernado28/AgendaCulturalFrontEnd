@@ -1,7 +1,7 @@
 FROM node:15-alpine AS build-stage
 
 WORKDIR /app
-ENV REACT_APP_EVENTS_API http://40.71.89.253:5000/v1.0
+ENV REACT_APP_EVENTS_API http://20.127.86.173:5000/v1.0
 COPY package.json /app/
 COPY package-lock.json /app/
 RUN npm install --production
