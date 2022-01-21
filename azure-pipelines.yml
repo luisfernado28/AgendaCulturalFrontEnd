@@ -38,21 +38,3 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    
-- stage: Deploy
-  displayName: Deploy on VM 
-  jobs:
-  - deployment: VMDeploy
-    displayName: web
-    pool:
-      vmImage: $(vmImageName)
-    environment:
-      name: 'ubuntu VM'
-      resourceName: 'ubuntuVM'
-      resourceType: VirtualMachine
-      tags: 'ubuntu'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: echo my first deployment
