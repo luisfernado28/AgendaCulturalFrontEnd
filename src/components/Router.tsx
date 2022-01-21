@@ -59,9 +59,10 @@ const Router = (): JSX.Element => {
 			<PrivateRoute exact path="/createVenue">
 				<CreateVemueForm />
 			</PrivateRoute>
-			<PrivateRoute exact path="/createUser">
+			<Route exact path="/createUser" component={CreateUserForm} />
+			{/* <PrivateRoute exact path="/createUser">
 				<CreateUserForm />
-			</PrivateRoute>
+			</PrivateRoute> */}
 			<PrivateRoute exact path="/updateEvent/:id">
 				<UpdateEventPage />
 			</PrivateRoute>
