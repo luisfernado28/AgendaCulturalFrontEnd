@@ -86,7 +86,9 @@ export async function deleteUser(userId: string): Promise<void> {
 	}
 }
 
-export async function postAuth(body: UserCredentials): Promise<{user:UserCredentialsResponse,status: number}> {
+export async function postAuth(
+	body: UserCredentials
+): Promise<{ user: UserCredentialsResponse; status: number }> {
 	try {
 		const res = await fetch(`${routes}/token`, {
 			method: "POST",
@@ -95,9 +97,26 @@ export async function postAuth(body: UserCredentials): Promise<{user:UserCredent
 				"Content-Type": "application/json",
 			},
 		});
-		const result : UserCredentialsResponse= await res.json();
-		return { user:result, status: res.status };
+		const result: UserCredentialsResponse = await res.json();
+		return { user: result, status: res.status };
 		// return result;
+	} catch (error) {
+		throw new Error();
+	}
+}
+
+export async function logOutAuth(
+	currentUserCredentials: UserCredentialsResponse
+) {
+	try {
+		const res = await fetch(`${routes}/logoff`, {
+			method: "POST",
+			body: JSON.stringify(currentUserCredentials),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		return { status: res.status };
 	} catch (error) {
 		throw new Error();
 	}

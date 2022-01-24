@@ -33,8 +33,9 @@ function ListPage(): JSX.Element {
 		dispatch(fetchEvents());
 	}, [dispatch]);
 	const eventsList = events.map((event: Event) => {
-		if (event.venueId !== "--Select--") {
-		}
+		// if (!event.venueId.startsWith("N")) {
+		// dispatch(fetchVenueById(event.venueId));
+		// }
 		return (
 			<div key={event.id}>
 				<EventCard

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postAuth } from "../utils/authClient";
+import { logOutAuth, postAuth } from "../utils/authClient";
 import { Authentication, StoreState, userInfo } from "./stateTypes";
-import { Status, UserCredentials } from "./types";
+import { Status, UserCredentials, UserCredentialsResponse } from "./types";
 
 const emptyUserData: userInfo = {
 	id: "",
@@ -24,6 +24,13 @@ export const authUser = createAsyncThunk(
 	"auth/logUser",
 	async (body: UserCredentials) => {
 		return await postAuth(body);
+	}
+);
+
+export const logOutUser = createAsyncThunk(
+	"auth/logUser",
+	async (body: UserCredentialsResponse) => {
+		return await logOutAuth(body);
 	}
 );
 
@@ -75,6 +82,30 @@ export const authSlice = createSlice({
 		builder.addCase(authUser.rejected, (state) => {
 			state.requestStatus = Status.FAILED;
 			state.requestError = "Internal Server Error";
+			state.requestErrorCode = undefined;
+		});
+		builder.addCase(logOutUser.pending, (state) => {
+			state.requestStatus = Status.LOADING;
+		});
+		builder.addCase(logOutUser.fulfilled, (state, { payload }) => {
+			state.requestStatus = Status.SUCCEEDED;
+			if (payload.status === 200) {
+				state.userInfo = emptyUserData;
+				state.loggedIn = false;
+				state.requestError = "";
+				state.requestErrorCode = undefined;
+			} else {
+				const message = 'failed';
+				state.requestError = `Error: ${message}`;
+				state.requestErrorCode = payload.status;
+			}
+		});
+		builder.addCase(logOutUser.rejected, (state, action) => {
+			state.requestStatus = Status.FAILED;
+			const errorMessage = action.error.message
+				? action.error.message
+				: "Error: Failed request";
+			state.requestError = errorMessage;
 			state.requestErrorCode = undefined;
 		});
 	},
