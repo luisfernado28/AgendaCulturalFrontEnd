@@ -53,7 +53,7 @@ export interface userInfo {
   firstname: string,
   lastname: string,
   admin: boolean,
-  token?: string
+  token: string
 }
 export interface StoreState {
   event: EventReducer

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
-	const { users} = useSelector(selectAllUsers);
+	const { users } = useSelector(selectAllUsers);
 
 	useEffect(() => {
 		dispatch(fetchUsers());

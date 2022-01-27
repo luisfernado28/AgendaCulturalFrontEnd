@@ -8,11 +8,11 @@ import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
 	username: Yup.string()
-		.min(3, "The username cannot have less than 3 characters")
+		.min(2, "The username cannot have less than 3 characters")
 		.max(20, "The username cannot have more than 20 characters")
 		.required("Username field is required"),
 	password: Yup.string()
-		.min(3, "The password must have more than 2 characters")
+		.min(2, "The password must have more than 2 characters")
 		.required("Password field is required"),
 });
 

@@ -4,12 +4,12 @@ import { BrowserRouter } from "react-router-dom";
 import LayoutWrapper from "./components/Layoutwrapper";
 import { useIdleTimer } from "react-idle-timer";
 import { useDispatch } from "react-redux";
-import { LogOut } from "./redux/authSlice";
+import { timeOutLogOut } from "./redux/authSlice";
 
 function App() {
 	const dispatch = useDispatch();
 	const handleOnIdle = () => {
-		dispatch(LogOut());
+		dispatch(timeOutLogOut());
 	};
 
 	const { getRemainingTime, getLastActiveTime } = useIdleTimer({

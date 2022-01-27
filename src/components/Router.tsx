@@ -6,7 +6,7 @@ import {
 	useHistory,
 	withRouter,
 } from "react-router-dom";
-import { authUsers, LogOut } from "../redux/authSlice";
+import { authUsers, timeOutLogOut } from "../redux/authSlice";
 import AdminEventsList from "../screens/AdminEventsList";
 import CreateEventForm from "../screens/CreateEventForm";
 import CreateUserForm from "../screens/CreateUserForm";
@@ -33,7 +33,7 @@ const Router = (): JSX.Element => {
 			if (tokenDecoded.exp * 1000 < dateNow.getTime()) {
 				ShowModal({
 					onSuccess: () => {
-						dispatch(LogOut());
+						dispatch(timeOutLogOut());
 						history.push("/Signin");
 					},
 					type: ModalTypes.SessionExpiredModal,
@@ -60,9 +60,6 @@ const Router = (): JSX.Element => {
 				<CreateVemueForm />
 			</PrivateRoute>
 			<Route exact path="/createUser" component={CreateUserForm} />
-			{/* <PrivateRoute exact path="/createUser">
-				<CreateUserForm />
-			</PrivateRoute> */}
 			<PrivateRoute exact path="/updateEvent/:id">
 				<UpdateEventPage />
 			</PrivateRoute>
@@ -83,6 +80,8 @@ interface propTypes {
 function PrivateRoute({ children, ...rest }: propTypes): JSX.Element {
 	const userState = useSelector(authUsers);
 	const auth = userState.userInfo.token;
+	const adminRestrictedList = ["/usersList","/createUser","/updateEvent/:id"];	
+	console.log(rest.path)
 	return (
 		<Route
 			{...rest}

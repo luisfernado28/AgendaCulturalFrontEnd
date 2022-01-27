@@ -28,7 +28,7 @@ export const authUser = createAsyncThunk(
 );
 
 export const logOutUser = createAsyncThunk(
-	"auth/logUser",
+	"auth/logOutUser",
 	async (body: UserCredentialsResponse) => {
 		return await logOutAuth(body);
 	}
@@ -38,7 +38,7 @@ export const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		LogOut(state) {
+		timeOutLogOut(state) {
 			state.loggedIn = false;
 			state.userInfo = emptyUserData;
 			state.requestError = "";
@@ -111,6 +111,6 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { LogOut } = authSlice.actions;
+export const { timeOutLogOut } = authSlice.actions;
 export const authUsers = ({ auth }: StoreState): Authentication => auth;
 export default authSlice.reducer;
