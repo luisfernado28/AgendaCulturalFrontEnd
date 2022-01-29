@@ -5,8 +5,10 @@ import { Button, Container, Grid, Switch, Text } from "theme-ui";
 import TextInput from "../components/TextInput";
 import { CreateUser } from "../redux/types";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../redux/usersSlice";
+import { useHistory } from "react-router-dom";
+import { authUsers } from "../redux/authSlice";
 
 interface Values {
 	username: string;
@@ -35,7 +37,10 @@ const CreateUserSchema = Yup.object().shape({
 });
 function CreateUserForm(): JSX.Element {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [adminValue, setAdminValue] = useState(false);
+	const { userInfo } = useSelector(authUsers);
+
 	const handleSubmit = async (values: Values) => {
 		const newUser: CreateUser = {
 			...values,
@@ -50,6 +55,7 @@ function CreateUserForm(): JSX.Element {
 		lastname: "",
 		password: "",
 	};
+	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
 			<Text>Crea un nuevo usuario!</Text>

@@ -4,11 +4,14 @@ import { User } from "../redux/types";
 import { fetchUsers, selectAllUsers } from "../redux/usersSlice";
 import { Button, Grid, Text } from "theme-ui";
 import UserCard from "../components/UserCard";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { authUsers } from "../redux/authSlice";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { users } = useSelector(selectAllUsers);
+	const {userInfo} = useSelector(authUsers);
 
 	useEffect(() => {
 		dispatch(fetchUsers());
@@ -28,6 +31,7 @@ function UsersList(): JSX.Element {
 			</div>
 		);
 	});
+	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
 			<Text>Usuarios</Text>

@@ -13,7 +13,6 @@ import PageSpinner from "../components/Spinner";
 const SignIn = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-
 	const userState = useSelector(authUsers);
 
 	const handleOdata = async () => {
