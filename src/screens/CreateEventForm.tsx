@@ -113,7 +113,6 @@ function CreateEventForm(): JSX.Element {
 			},
 		};
 
-		// console.log(newEvent);
 		await dispatch(createEvent(newEvent));
 	};
 

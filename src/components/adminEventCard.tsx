@@ -54,9 +54,7 @@ function AdminEventCard({
 		if (venueId !== "No Venue") {
 			dispatch(fetchVenueById(venueId));
 		}
-		// console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ' + venueId);
-
-		// console.log(Venue)
+	
 	}, [dispatch, venueId]);
 
 	const handleDelete = (id: string) => {

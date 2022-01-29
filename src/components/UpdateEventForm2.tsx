@@ -142,7 +142,6 @@ function UpdateEventForm2({
             newImageUrl = await postImage(image)
             updatedEvent.imageUrl = "/eventsimages/" + newImageUrl
         }
-        // console.log(newEvent);
         await dispatch(modifyEvent({ body: updatedEvent, eventId: event.id }))
     }
 

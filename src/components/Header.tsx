@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Grid } from "theme-ui";
-import { authUsers, logOutUser, timeOutLogOut } from "../redux/authSlice";
+import { authUsers, logOutUser } from "../redux/authSlice";
 
 const Header = (): JSX.Element => {
 	const dispatch = useDispatch();
@@ -10,7 +10,6 @@ const Header = (): JSX.Element => {
 	const { loggedIn, userInfo } = useSelector(authUsers);
 	const handleLogout = () => {
 		dispatch(logOutUser(userInfo));
-		dispatch(timeOutLogOut());
 		history.push("/Signin");
 	};
 
@@ -26,7 +25,6 @@ const Header = (): JSX.Element => {
 				<div>Logo Alcaldia</div>
 				<div>Search</div>
 				<div>Bienvenido Agenda Cultural La Paz</div>
-				<div>User Logo</div>
 				{loggedIn ? (
 					<div>
 						<button

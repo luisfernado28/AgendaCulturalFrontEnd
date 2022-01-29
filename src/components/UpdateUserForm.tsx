@@ -57,7 +57,6 @@ function UpdateUserForm({
 			...values,
 			admin: adminValue,
 		};
-		console.log(newUser);
 		const updateData: UserUpdateData = {
 			userId: id,
 			body: newUser,

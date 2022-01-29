@@ -120,7 +120,6 @@ function UpdateEventForm({
             }
         }
 
-        // console.log(newEvent);
         await dispatch(modifyEvent({body:updatedEvent,eventId:event.id}))
     }
    
