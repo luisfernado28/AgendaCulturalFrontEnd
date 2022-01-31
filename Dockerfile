@@ -1,7 +1,8 @@
 FROM node:15-alpine AS build-stage
 
 WORKDIR /app
-ENV REACT_APP_EVENTS_API http://20.127.7.165:5000/v1.0
+ENV REACT_APP_EVENTS_API http://20.120.89.91:5000/v1.0
+ENV REACT_APP_Blob_API = https://storageagendacultural.blob.core.windows.net
 COPY package.json /app/
 COPY package-lock.json /app/
 RUN npm install --production
