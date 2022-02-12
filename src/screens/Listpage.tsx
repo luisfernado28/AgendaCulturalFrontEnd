@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import TextInput from "../components/TextInput";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
 
 interface Values {
 	searchBar: string;
@@ -18,6 +19,7 @@ interface Values {
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
 	const { events } = useSelector(selectAllEvents);
+	const { fullEvents} = useSelector(selectAllFullEvents);
 	const { Venue } = useSelector(singleVenue);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
 
@@ -31,7 +33,10 @@ function ListPage(): JSX.Element {
 	});
 	useEffect(() => {
 		dispatch(fetchEvents());
+
+		dispatch(fetchFullEvents());
 	}, [dispatch]);
+	console.log(fullEvents);
 	const eventsList = events.map((event: Event) => {
 		// if (!event.venueId.startsWith("N")) {
 		// dispatch(fetchVenueById(event.venueId));
