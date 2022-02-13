@@ -62,6 +62,26 @@ export async function postFullEvent(params: CreateFullEvents): Promise<FullEvent
 		}
 	}
 }
+export async function getFullEventById(fullEventId: string): Promise<FullEvent> {
+	try {
+		const headers: any = {
+			"Content-Type": "application/json",
+		};
+		const response = await fetch(`${routes}/${fullEventId}`, {
+			method: "GET",
+			headers,
+		});
+		const results = await response.json();
+		return results;
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
+	}
+}
 
 
 export async function deleteFullEvent(fullEventId: string): Promise<void> {

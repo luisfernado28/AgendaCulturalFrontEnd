@@ -1,69 +1,64 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
-import { fetchEventById, singleEvent } from "../redux/eventSlice";
 import { Text, Image } from "theme-ui";
-import { fetchVenueById, singleVenue } from "../redux/venueSlice";
+import { fetchFullEventById, singleFullEvent } from "../redux/fullEventSlice";
 
 function EventsDetail({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
 	const dispatch = useDispatch();
-	const { event } = useSelector(singleEvent);
-	const { Venue } = useSelector(singleVenue);
-
+	const { fullEvent} = useSelector(singleFullEvent);
+	
 	useEffect(() => {
-		dispatch(fetchEventById(match.params.id));
-		if (!event.venueId.startsWith("-")) {
-			dispatch(fetchVenueById(event.venueId));
-		}
-	}, [dispatch, event.venueId, match.params.id]);
-
+		dispatch(fetchFullEventById(match.params.id));	
+	}, [dispatch, fullEvent.id, match.params.id]);
+	
 	return (
 		<Fragment>
 			Titulo
-			<Text>{event.title}</Text>
+			<Text>{fullEvent.title}</Text>
 			Artista/Elenco:
-			<Text>{event.artist}</Text>
+			<Text>{fullEvent.artist}</Text>
 			<Text>
 				Escenario: {"\n"}
-				{event.venueId.startsWith("-") ? "sin escenario" : Venue.name}
+				{fullEvent.venueId.startsWith("-") ? "sin escenario" : fullEvent.venueName}
 			</Text>
 			<Text>
 				Precio: {"\n"}
-				{event.price}
+				{fullEvent.price}
 			</Text>
 			<Text>
 				Telefono: {"\n"}
-				{event.phone}
+				{fullEvent.phone}
 			</Text>
 			<Text>
 				Tipo de evento: {"\n"}
-				{event.type}
+				{fullEvent.type}
 			</Text>
 			Fechas
-			{event.dates.areindependent ? (
-				<Text>{new Date(event.dates.dates[0]).toDateString()}</Text>
+			{fullEvent.areIndependent ? (
+				<Text>{new Date(fullEvent.dates[0]).toDateString()}</Text>
 			) : (
 				<Text>
-					{new Date(event.dates.dates[0]).toDateString()}a
-					{new Date(event.dates.dates[1]).toDateString()}
+					{new Date(fullEvent.dates[0]).toDateString()}a
+					{new Date(fullEvent.dates[1]).toDateString()}
 				</Text>
 			)}
 			<Text>
 				Horario: {"\n"}
-				{event.dates.time}
+				{fullEvent.time}
 			</Text>
 			<Text>
 				Description: {"\n"}
-				{event.description}
+				{fullEvent.description}
 			</Text>
-			{event.imageUrl === "" ? (
+			{fullEvent.imageUrl === "" ? (
 				<Text>No image</Text>
 			) : (
 				<div>
 					<Image
-						src={`${process.env.REACT_APP_Blob_API}${event.imageUrl}`}
+						src={`${process.env.REACT_APP_Blob_API}${fullEvent.imageUrl}`}
 						variant="card"
 					></Image>
 				</div>

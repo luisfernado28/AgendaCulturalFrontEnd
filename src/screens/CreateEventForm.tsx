@@ -126,7 +126,6 @@ function CreateEventForm(): JSX.Element {
 			locationCoordinates: []
 		};
 
-		// await dispatch(createEvent(newEvent));
 		await dispatch(createFullEvent(newEvent));
 	};
 

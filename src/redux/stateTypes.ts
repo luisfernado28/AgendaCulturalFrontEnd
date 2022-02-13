@@ -62,6 +62,12 @@ export interface FullEventsReducer {
   status: string
 }
 
+export interface FullEventReducer {
+  error: Error
+  fullEvent: FullEvent
+  eventStatus: string
+}
+
 export interface StoreState {
   event: EventReducer
   events: EventsReducer
@@ -71,4 +77,5 @@ export interface StoreState {
   user: UserReducer
   auth : Authentication 
   fullEvents: FullEventsReducer
+  fullEvent: FullEventReducer
 }

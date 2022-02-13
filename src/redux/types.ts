@@ -232,10 +232,10 @@ export interface FullEvent {
 	status: number;
 	price: number;
 	phone: string;
-	type: string;
+	type:  EventTypeStatus;
 	description: string;
 	imageUrl: string;
-	areIndependent: string;
+	areIndependent: boolean;
 	dates: string[];
 	time: string;
 	tags: string[];

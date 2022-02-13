@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import { authSlice } from "./authSlice";
 import eventSlice from "./eventSlice";
 import eventsSlice from "./eventsSlice"
+import fullEventSlice  from "./fullEventSlice";
 import fullEventsSlice  from "./fullEventsSlice";
 import userSlice from "./userSlice";
 import usersSlice from "./usersSlice";
@@ -29,6 +30,7 @@ const store = configureStore({
     users: usersSlice,
     user: userSlice,
     fullEvents: fullEventsSlice,
+    fullEvent: fullEventSlice
   }
 });
 
