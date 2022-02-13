@@ -1,5 +1,6 @@
 import {
 	CreateEvent,
+	CreateFullEvents,
 	Event,
 	EventUpdateData,
 	FullEvent,
@@ -30,6 +31,47 @@ export async function getFullEvents(queryParams?: QueryParams): Promise<FullEven
 			const results = await response;
 			return results;
 		}
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
+	}
+}
+
+export async function postFullEvent(params: CreateFullEvents): Promise<FullEvent> {
+	try {
+		const { ...body } = params;
+		const res = await fetch(routes, {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await res.json();
+		return result;
+	} catch (e) {
+		console.error(e);
+		if (e instanceof Error) {
+			throw new Error(e.message);
+		} else {
+			throw new Error("Internal server error please contact admin");
+		}
+	}
+}
+
+
+export async function deleteFullEvent(fullEventId: string): Promise<void> {
+	try {
+		await fetch(`${routes}/${fullEventId}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 	} catch (e) {
 		console.error(e);
 		if (e instanceof Error) {

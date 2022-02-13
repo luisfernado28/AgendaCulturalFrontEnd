@@ -10,8 +10,8 @@ import ShowModal from "./CustomModal";
 
 import { Dates, EventTypeStatus, FullEvent, ModalTypes, Status } from "../redux/types";
 import { fetchVenueById, singleVenue } from "../redux/venueSlice";
-import { removeEvent } from "../redux/eventsSlice";
 import PageSpinner from "./Spinner";
+import { removeFullEvent } from "../redux/fullEventsSlice";
 
 interface AdminProps {
 	title: string;
@@ -59,7 +59,7 @@ function AdminEventCard({
 	}, [dispatch, venueId]);
 
 	const handleDelete = (id: string) => {
-		dispatch(removeEvent(id));
+		dispatch(removeFullEvent(id));
 		ShowModal({
 			onSuccess: () => {
 				history.push("/adminEvents");

@@ -6,7 +6,12 @@ import TextAreaInput from "../components/TextAreaInput";
 import TextInput from "../components/TextInput";
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent } from "../redux/eventsSlice";
-import { CreateEvent, EventTypeStatus, Venue } from "../redux/types";
+import {
+	CreateEvent,
+	CreateFullEvents,
+	EventTypeStatus,
+	Venue,
+} from "../redux/types";
 import ImageUpload from "../components/ImageUpload";
 import { useState, useEffect } from "react";
 import { postImage } from "../utils/blobStorageClient";
@@ -16,6 +21,7 @@ import RadioButton from "../components/RadioButton";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import "yup-phone";
+import { createFullEvent } from "../redux/fullEventsSlice";
 
 interface Values {
 	title: string;
@@ -99,21 +105,29 @@ function CreateEventForm(): JSX.Element {
 			newImageUrl = await postImage(image);
 		}
 		values.type = statusValue;
-		const newEvent: CreateEvent = {
+		const newEvent: CreateFullEvents = {
 			...values,
 			status: 1,
 			venueId: venueIdValue,
 			imageUrl: newImageUrl,
-			dates: {
-				areindependent: rangeOrMultipleValue === "true",
-				dates: calendarValue.map((date) => {
-					return new Date(date.toString()).toISOString();
-				}),
-				time: setTime(),
-			},
+			areIndependent: rangeOrMultipleValue === "true",
+			dates: calendarValue.map((date) => {
+				return new Date(date.toString()).toISOString();
+			}),
+			time: setTime(),
+			venueName: "",
+			address: "",
+			venueWebsite: "",
+			venueFacebook: "",
+			venueTwitter: "",
+			venueInstagram: "",
+			venueDescription: "",
+			locationType: "",
+			locationCoordinates: []
 		};
 
-		await dispatch(createEvent(newEvent));
+		// await dispatch(createEvent(newEvent));
+		await dispatch(createFullEvent(newEvent));
 	};
 
 	const initialValues: Values = {

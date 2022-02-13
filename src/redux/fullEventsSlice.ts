@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getFullEvents } from "../utils/fullEventsClient";
+import {
+	deleteFullEvent,
+	getFullEvents,
+	postFullEvent,
+} from "../utils/fullEventsClient";
 import { FullEventsReducer, StoreState } from "./stateTypes";
-import { QueryParams, Status } from "./types";
+import { CreateFullEvents, QueryParams, Status } from "./types";
 
 const initialState: FullEventsReducer = {
 	fullEvents: [],
@@ -20,6 +24,20 @@ export const fetchFullEvents = createAsyncThunk(
 	}
 );
 
+export const createFullEvent = createAsyncThunk(
+	"events/postFullEvents",
+	async (body: CreateFullEvents) => {
+		return await postFullEvent(body);
+	}
+);
+
+export const removeFullEvent = createAsyncThunk(
+	"events/deleteFullEvent",
+	async (data: string) => {
+		return await deleteFullEvent(data);
+	}
+);
+
 export const fullEventsSlice = createSlice({
 	name: "fullEvents",
 	initialState,
@@ -35,6 +53,10 @@ export const fullEventsSlice = createSlice({
 		});
 		builder.addCase(fetchFullEvents.rejected, (state) => {
 			state.status = Status.FAILED;
+		});
+		builder.addCase(createFullEvent.fulfilled, (state, { payload }) => {
+			state.status = Status.SUCCEEDED;
+			state.fullEvents.push(payload);
 		});
 	},
 });
