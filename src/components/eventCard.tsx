@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, Text, jsx, Image } from "theme-ui";
 
-import { Event } from "../redux/types";
+import { Event, FullEvent } from "../redux/types";
 import { singleVenue } from "../redux/venueSlice";
 
 function EventCard({
@@ -15,30 +15,27 @@ function EventCard({
 	price,
 	dates,
 	venueName,
-}: Event): JSX.Element {
+	time
+}: FullEvent): JSX.Element {
 	const frontCardDate =
-		new Date(dates.dates[0]).getDay() +
+		new Date(dates[0]).getDay() +
 		"/" +
-		new Date(dates.dates[0]).toLocaleString("default", { month: "short" }); //+ '/' + dateOfEvent.getFullYear();
+		new Date(dates[0]).toLocaleString("default", { month: "short" }); //+ '/' + dateOfEvent.getFullYear();
 	const fromToCardDate = setDatesRange();
 	const dispatch = useDispatch();
 
-	const { Venue } = useSelector(singleVenue);
 	useEffect(() => {
-		// if (venueId !== '--Select--') {
-		//   dispatch(fetchVenueById(venueId))
-		// }
 	}, [dispatch]);
 	function setDatesRange(): string {
-		const first = new Date(dates.dates[0]);
-		if (dates.dates.length === 1) {
+		const first = new Date(dates[0]);
+		if (dates.length === 1) {
 			return (
 				first.getDay() +
 				" de " +
 				first.toLocaleString("default", { month: "long" })
 			);
 		} else {
-			const last = new Date(dates.dates[dates.dates.length - 1]);
+			const last = new Date(dates[dates.length - 1]);
 			const string =
 				"Desde " +
 				first.getDay() +
@@ -76,10 +73,10 @@ function EventCard({
 				<Text>{title}</Text>
 				<br />
 				<Link to={`/updateEvent/${id}`}>
-					{venueName !== "" ? (
+					{venueName === "" ? (
 						<Text>Venue: Sin evento</Text>
 					) : (
-						<Text>Venue:{Venue.name}</Text>
+						<Text>Venue:{venueName}</Text>
 					)}
 				</Link>
 				<br />
@@ -87,9 +84,9 @@ function EventCard({
 				<br />
 				<Text>
 					Time{" "}
-					{new Date(dates.time).getHours() +
+					{new Date(time).getHours() +
 						":" +
-						new Date(dates.time).getMinutes()}
+						new Date(time).getMinutes()}
 				</Text>
 				<br />
 				<Text>Precio:{price}</Text>

@@ -8,7 +8,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Card, Text, jsx, Image, Grid, Button } from "theme-ui";
 import ShowModal from "./CustomModal";
 
-import { Dates, EventTypeStatus, ModalTypes, Status } from "../redux/types";
+import { Dates, EventTypeStatus, FullEvent, ModalTypes, Status } from "../redux/types";
 import { fetchVenueById, singleVenue } from "../redux/venueSlice";
 import { removeEvent } from "../redux/eventsSlice";
 import PageSpinner from "./Spinner";
@@ -45,7 +45,8 @@ function AdminEventCard({
 	venueId,
 	type,
 	venueName,
-}: AdminProps): JSX.Element {
+	time
+}: FullEvent): JSX.Element {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -67,8 +68,8 @@ function AdminEventCard({
 		});
 	};
 
-	const startingDate = new Date(dates.dates[0]);
-	const time = new Date(dates.time);
+	const startingDate = new Date(dates[0]);
+	const eventTime = new Date(time);
 	const typeOfEvent =
 		type.toString() === "0"
 			? "Hibrido"
@@ -133,7 +134,7 @@ function AdminEventCard({
 							<Text>{typeOfEvent}</Text>
 							<br />
 							Hora:
-							<Text>{time.toTimeString()}</Text>
+							<Text>{eventTime.toTimeString()}</Text>
 						</div>
 					</Grid>
 					<Grid

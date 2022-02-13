@@ -3,7 +3,7 @@ import { Button, Grid, Select, Text } from "theme-ui";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents, selectAllEvents } from "../redux/eventsSlice";
-import { Event, Filter, QueryParams } from "../redux/types";
+import { Event, Filter, FullEvent, QueryParams } from "../redux/types";
 import EventCard from "../components/eventCard";
 import { singleVenue } from "../redux/venueSlice";
 import { Link } from "react-router-dom";
@@ -18,8 +18,8 @@ interface Values {
 
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
-	const { events } = useSelector(selectAllEvents);
-	const { fullEvents} = useSelector(selectAllFullEvents);
+	// const { events } = useSelector(selectAllEvents);
+	const { fullEvents } = useSelector(selectAllFullEvents);
 	const { Venue } = useSelector(singleVenue);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
 
@@ -32,15 +32,11 @@ function ListPage(): JSX.Element {
 			.max(50, "El titulo no puede tener mas que 50 caracteres "),
 	});
 	useEffect(() => {
-		dispatch(fetchEvents());
+		// dispatch(fetchEvents());
 
 		dispatch(fetchFullEvents());
 	}, [dispatch]);
-	console.log(fullEvents);
-	const eventsList = events.map((event: Event) => {
-		// if (!event.venueId.startsWith("N")) {
-		// dispatch(fetchVenueById(event.venueId));
-		// }
+	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
 			<div key={event.id}>
 				<EventCard
@@ -49,17 +45,28 @@ function ListPage(): JSX.Element {
 					imageUrl={event.imageUrl}
 					price={event.price}
 					dates={event.dates}
-					venueName={Venue.name}
-					artist={""}
+					venueName={event.venueName}
+					artist={event.artist}
 					venueId={event.venueId}
 					status={0}
-					phone={""}
+					phone={event.phone}
 					type={event.type}
-					description={""}
-					website={""}
-					facebook={""}
-					twitter={""}
-					instagram={""}
+					description={event.description}
+					website={event.website}
+					facebook={event.facebook}
+					twitter={event.twitter}
+					instagram={event.instagram}
+					areIndependent={event.areIndependent}
+					time={event.time}
+					tags={event.tags}
+					address={event.address}
+					venueWebsite={event.venueWebsite}
+					venueFacebook={event.venueFacebook}
+					venueTwitter={event.venueTwitter}
+					venueInstagram={event.venueInstagram}
+					venueDescription={event.venueDescription}
+					locationType={event.locationType}
+					locationCoordinates={event.locationCoordinates}
 				/>
 			</div>
 		);
@@ -79,9 +86,9 @@ function ListPage(): JSX.Element {
 			queryParams.orderby = orderby;
 		}
 		if (Object.keys(queryParams).length === 0) {
-			dispatch(fetchEvents());
+			dispatch(fetchFullEvents());
 		} else {
-			dispatch(fetchEvents(queryParams));
+			dispatch(fetchFullEvents(queryParams));
 		}
 	};
 	return (
@@ -133,7 +140,7 @@ function ListPage(): JSX.Element {
 					columnGap: "50px",
 				}}
 			>
-				{events.length !== 0 ? (
+				{fullEvents.length !== 0 ? (
 					eventsList
 				) : (
 					<Text>No existen eventos con esas caracteristicas :c</Text>
