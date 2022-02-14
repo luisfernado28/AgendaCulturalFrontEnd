@@ -3,9 +3,10 @@ import {
 	deleteFullEvent,
 	getFullEvents,
 	postFullEvent,
+	putFullEvent,
 } from "../utils/fullEventsClient";
 import { FullEventsReducer, StoreState } from "./stateTypes";
-import { CreateFullEvents, QueryParams, Status } from "./types";
+import { CreateFullEvents, FullEventUpdateData, QueryParams, Status } from "./types";
 
 const initialState: FullEventsReducer = {
 	fullEvents: [],
@@ -35,6 +36,13 @@ export const removeFullEvent = createAsyncThunk(
 	"events/deleteFullEvent",
 	async (data: string) => {
 		return await deleteFullEvent(data);
+	}
+);
+
+export const modifyFullEvent = createAsyncThunk(
+	"events/updateFullEvent",
+	async (data: FullEventUpdateData) => {
+		return await putFullEvent(data);
 	}
 );
 

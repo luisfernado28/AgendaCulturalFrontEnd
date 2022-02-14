@@ -123,6 +123,11 @@ export interface EventUpdateData {
 	eventId?: string;
 }
 
+export interface FullEventUpdateData {
+	body: UpdateFullEvent;
+	fullEventId?: string;
+}
+
 export interface UpdateEvent {
 	id?: string;
 	title: string;
@@ -227,6 +232,36 @@ export interface UserCredentialsResponse {
 
 export interface FullEvent {
 	id: string;
+	title: string;
+	artist: string;
+	status: number;
+	price: number;
+	phone: string;
+	type:  EventTypeStatus;
+	description: string;
+	imageUrl: string;
+	areIndependent: boolean;
+	dates: string[];
+	time: string;
+	tags: string[];
+	website: string;
+	facebook: string;
+	twitter: string;
+	instagram: string;
+	venueId: string;
+	venueName: string;
+	address: string;
+	venueWebsite: string;
+	venueFacebook: string;
+	venueTwitter: string;
+	venueInstagram: string;
+	venueDescription: string;
+	locationType: string;
+	locationCoordinates: number[];
+}
+
+export interface UpdateFullEvent {
+	id?: string;
 	title: string;
 	artist: string;
 	status: number;

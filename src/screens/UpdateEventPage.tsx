@@ -7,6 +7,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { fetchEventById, singleEvent } from "../redux/eventSlice";
 import PageSpinner from "../components/Spinner";
 import UpdateEventForm2 from "../components/UpdateEventForm2";
+import { fetchFullEventById, singleFullEvent } from "../redux/fullEventSlice";
 
 export interface Values {
 	title: string;
@@ -29,13 +30,14 @@ function UpdateEventPage({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
 	const dispatch = useDispatch();
-	const { event, eventStatus } = useSelector(singleEvent);
+	// const { event, eventStatus } = useSelector(singleEvent);
+	const { fullEvent, eventStatus } = useSelector(singleFullEvent);
 
 	useEffect(() => {
-		dispatch(fetchEventById(match.params.id));
+		dispatch(fetchFullEventById(match.params.id));
 	}, [dispatch, match.params.id]);
 
-	const typeEvent: any = EventTypeStatus[event.type.toString()];
+	const typeEvent: any = EventTypeStatus[fullEvent.type.toString()];
 	return (
 		<Fragment>
 			{eventStatus === Status.IDLE ? (
@@ -46,19 +48,33 @@ function UpdateEventPage({
 				<Text>Failure Fetching Data</Text>
 			) : (
 				<UpdateEventForm2
-					title={event.title}
-					venueId={event.venueId}
+					title={fullEvent.title}
+					venueId={fullEvent.venueId}
 					type={typeEvent}
-					dates={event.dates}
-					event={event}
-					artist={event.artist}
-					price={event.price}
-					phone={event.phone}
-					description={event.description}
-					website={event.website}
-					facebook={event.facebook}
-					twitter={event.twitter}
-					instagram={event.instagram}
+					dates={fullEvent.dates}
+					artist={fullEvent.artist}
+					price={fullEvent.price}
+					phone={fullEvent.phone}
+					description={fullEvent.description}
+					website={fullEvent.website}
+					facebook={fullEvent.facebook}
+					twitter={fullEvent.twitter}
+					instagram={fullEvent.instagram}
+					id={fullEvent.id}
+					status={0}
+					imageUrl={fullEvent.imageUrl}
+					areIndependent={false}
+					time={fullEvent.time}
+					tags={[]}
+					venueName={""}
+					address={""}
+					venueWebsite={""}
+					venueFacebook={""}
+					venueTwitter={""}
+					venueInstagram={""}
+					venueDescription={""}
+					locationType={""}
+					locationCoordinates={[]}
 				/>
 			)}
 		</Fragment>
