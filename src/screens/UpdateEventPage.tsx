@@ -65,16 +65,16 @@ function UpdateEventPage({
 					imageUrl={fullEvent.imageUrl}
 					areIndependent={false}
 					time={fullEvent.time}
-					tags={[]}
-					venueName={""}
-					address={""}
-					venueWebsite={""}
-					venueFacebook={""}
-					venueTwitter={""}
-					venueInstagram={""}
-					venueDescription={""}
-					locationType={""}
-					locationCoordinates={[]}
+					tags={fullEvent.tags}
+					venueName={fullEvent.venueName}
+					address={fullEvent.address}
+					venueWebsite={fullEvent.venueWebsite}
+					venueFacebook={fullEvent.venueFacebook}
+					venueTwitter={fullEvent.venueTwitter}
+					venueInstagram={fullEvent.venueInstagram}
+					venueDescription={fullEvent.venueDescription}
+					locationType={fullEvent.locationType}
+					locationCoordinates={fullEvent.locationCoordinates}
 				/>
 			)}
 		</Fragment>

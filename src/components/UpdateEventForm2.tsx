@@ -23,9 +23,9 @@ import React from "react";
 import RadioButton from "../components/RadioButton";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
-import { modifyEvent } from "../redux/eventSlice";
 import PageSpinner from "./Spinner";
 import { modifyFullEvent } from "../redux/fullEventsSlice";
+import { DateObject } from "react-multi-date-picker";
 
 export interface FormProps {
 	title: string;
@@ -59,6 +59,15 @@ export interface Values {
 	instagram: string;
 	imageUrl?: string;
 	// tagsId?: string[],
+	venueName: string;
+	address: string;
+	venueWebsite: string;
+	venueFacebook: string;
+	venueTwitter: string;
+	venueInstagram: string;
+	venueDescription: string;
+	locationType: string;
+	locationCoordinates: number[];
 }
 
 const CreateEventSchema = Yup.object().shape({
@@ -81,39 +90,42 @@ const CreateEventSchema = Yup.object().shape({
 	twitter: Yup.string().url("Link debe ser una URL valida de Twitter"),
 	facebook: Yup.string().url("Link debe ser una URL valida de Facebook"),
 	instagram: Yup.string().url("Link debe ser una URL valida de Instagra"),
+	phone: Yup.string(),
+	venueWebsite: Yup.string().url("Link debe ser una URL valida "),
+	venueTwitter: Yup.string().url("Link debe ser una URL valida de Twitter"),
+	venueFacebook: Yup.string().url("Link debe ser una URL valida de Facebook"),
+	venueInstagram: Yup.string().url(
+		"Link debe ser una URL valida de Instagra"
+	),
+	venueName: Yup.string()
+		.min(1, "Al menos un caracter")
+		.max(
+			100,
+			"El nombre del espacio no puede tener mas que 100 caracteres "
+		)
+		.required("Nombre del espacio es requerido"),
+	address: Yup.string()
+		.min(1, "Al menos un caracter")
+		.max(200, "La direccion no puede tener mas que 200 caracteres ")
+		.required("Direccion del espacio es requerida"),
 });
-function UpdateEventForm2({
-	title,
-	venueId,
-	type,
-	dates,
-	areIndependent,
-	time,
-	artist,
-	price,
-	phone,
-	description,
-	facebook,
-	instagram,
-	website,
-	twitter,
-	imageUrl,
-	id,
-}: FullEvent): JSX.Element {
+function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 	const dispatch = useDispatch();
 	const [image, setImage] = useState<File>();
 	const { venues, status } = useSelector(selectAllVenues);
 
-	const [venueIdValue, setValueDropdown] = React.useState(venueId);
-	const [statusValue, setValueRadio] = React.useState(type);
+	const [venueIdValue, setValueDropdown] = React.useState(
+		eventForUpdate.venueId
+	);
+	const [statusValue, setValueRadio] = React.useState(eventForUpdate.type);
 	const [calendarValue, setCalendarValue] = useState(
-		dates.map((date) => {
+		eventForUpdate.dates.map((date) => {
 			return new Date(date);
 		})
 	);
-	const [timeValue, settimeValue] = useState(new Date(time));
+	const [timeValue, settimeValue] = useState(new DateObject(eventForUpdate.time));
 	const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState(
-		areIndependent.toString()
+		eventForUpdate.areIndependent.toString()
 	);
 
 	useEffect(() => {
@@ -127,20 +139,13 @@ function UpdateEventForm2({
 	const handleChange = (e: any) => {
 		setValueRadio(e.target.value);
 	};
-	const handletimeChange = (e: Date) => {
+	const handletimeChange = (e: DateObject) => {
 		settimeValue(e);
 	};
 
 	const calendarOnChange = (e: any) => {
 		setCalendarValue(e);
 	};
-	function setTime(updatedTime: Date): string {
-		const current = new Date(updatedTime);
-		const timeOfEvent = new Date();
-		timeOfEvent.setHours(current.getHours());
-		timeOfEvent.setMinutes(current.getMinutes());
-		return timeOfEvent.toISOString();
-	}
 
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
@@ -154,41 +159,41 @@ function UpdateEventForm2({
 			dates: calendarValue.map((date) => {
 				return new Date(date.toString()).toISOString();
 			}),
-			time: setTime(timeValue),
+			time: timeValue.toDate().toISOString(),
 			tags: [],
-			venueName: "",
-			address: "",
-			venueWebsite: "",
-			venueFacebook: "",
-			venueTwitter: "",
-			venueInstagram: "",
-			venueDescription: "",
-			locationType: "",
-			locationCoordinates: [],
+			
 		};
 		if (image) {
 			newImageUrl = await postImage(image);
 			updatedEvent.imageUrl = "/eventsimages/" + newImageUrl;
 		}
-		// await dispatch(modifyEvent({ body: updatedEvent, eventId: event.id }))
 		await dispatch(
-			modifyFullEvent({ body: updatedEvent, fullEventId: id })
+			modifyFullEvent({ body: updatedEvent, fullEventId: eventForUpdate.id })
 		);
 	};
 
 	const initialValues: Values = {
-		title: title,
-		artist: artist,
-		venueId: venueId,
-		price: price,
-		phone: phone,
-		type: type,
-		description: description,
-		website: website,
-		facebook: facebook,
-		twitter: twitter,
-		instagram: instagram,
-		imageUrl: imageUrl,
+		title: eventForUpdate.title,
+		artist: eventForUpdate.artist,
+		venueId: eventForUpdate.venueId,
+		price: eventForUpdate.price,
+		phone: eventForUpdate.phone,
+		type: eventForUpdate.type,
+		description: eventForUpdate.description,
+		website: eventForUpdate.website,
+		facebook: eventForUpdate.facebook,
+		twitter: eventForUpdate.twitter,
+		instagram: eventForUpdate.instagram,
+		imageUrl: eventForUpdate.imageUrl,
+		venueName: eventForUpdate.venueName,
+		address: eventForUpdate.address,
+		venueWebsite: eventForUpdate.website,
+		venueFacebook: eventForUpdate.venueFacebook,
+		venueTwitter: eventForUpdate.venueTwitter,
+		venueInstagram: eventForUpdate.venueInstagram,
+		venueDescription: eventForUpdate.venueDescription,
+		locationType: eventForUpdate.locationType,
+		locationCoordinates: eventForUpdate.locationCoordinates,
 	};
 	const venuesListDrop = venues.map((venue: Venue) => {
 		return (
@@ -228,7 +233,7 @@ function UpdateEventForm2({
 								alt={`${process.env.REACT_APP_Blob_API}${initialValues.imageUrl}`}
 							/>
 						)}
-						<Grid columns={[2]}>
+						<Grid columns={[3]}>
 							<Container>
 								<TextInput
 									name="title"
@@ -377,6 +382,43 @@ function UpdateEventForm2({
 									label="Telefono"
 									placeholder=""
 									type="string"
+								/>
+							</Container>
+							<Container>
+								<Text>Informacion de espacio</Text>
+								<TextInput
+									name="venueName"
+									label="Nombre de Espacio"
+									type="string"
+								/>
+								<TextInput
+									name="address"
+									label="Direccion de Espacio"
+									type="string"
+								/>
+								<TextInput
+									name="venueFacebook"
+									label="Facebook de Espacio"
+									placeholder="https://facebook"
+									type="url"
+								/>
+								<TextInput
+									name="venueTwitter"
+									label="Twitter de Espacio"
+									placeholder="https://twitter"
+									type="url"
+								/>
+								<TextInput
+									name="venueInstagram"
+									label="Instagram de Espacio"
+									placeholder="https://Instagram"
+									type="url"
+								/>
+								<TextInput
+									name="venueWebsite"
+									label="Pagina Web de Espacio"
+									placeholder="https://"
+									type="url"
 								/>
 							</Container>
 						</Grid>
