@@ -5,9 +5,7 @@ import * as Yup from "yup";
 import TextAreaInput from "../components/TextAreaInput";
 import TextInput from "../components/TextInput";
 import { useDispatch, useSelector } from "react-redux";
-import { createEvent } from "../redux/eventsSlice";
 import {
-	CreateEvent,
 	CreateFullEvents,
 	EventTypeStatus,
 	Venue,
@@ -22,6 +20,7 @@ import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import "yup-phone";
 import { createFullEvent } from "../redux/fullEventsSlice";
+import { DateObject } from "react-multi-date-picker";
 
 interface Values {
 	title: string;
@@ -36,6 +35,15 @@ interface Values {
 	twitter: string;
 	instagram: string;
 	imageUrl?: string;
+	venueName: string;
+	address: string;
+	venueWebsite: string;
+	venueFacebook: string;
+	venueTwitter: string;
+	venueInstagram: string;
+	venueDescription: string;
+	locationType: string;
+	locationCoordinates: number[];
 }
 
 const CreateEventSchema = Yup.object().shape({
@@ -59,6 +67,23 @@ const CreateEventSchema = Yup.object().shape({
 	facebook: Yup.string().url("Link debe ser una URL valida de Facebook"),
 	instagram: Yup.string().url("Link debe ser una URL valida de Instagra"),
 	phone: Yup.string(),
+	venueWebsite: Yup.string().url("Link debe ser una URL valida "),
+	venueTwitter: Yup.string().url("Link debe ser una URL valida de Twitter"),
+	venueFacebook: Yup.string().url("Link debe ser una URL valida de Facebook"),
+	venueInstagram: Yup.string().url(
+		"Link debe ser una URL valida de Instagra"
+	),
+	venueName: Yup.string()
+		.min(1, "Al menos un caracter")
+		.max(
+			100,
+			"El nombre del espacio no puede tener mas que 100 caracteres "
+		)
+		.required("Nombre del espacio es requerido"),
+	address: Yup.string()
+		.min(1, "Al menos un caracter")
+		.max(200, "La direccion no puede tener mas que 200 caracteres ")
+		.required("Direccion del espacio es requerida"),
 });
 function CreateEventForm(): JSX.Element {
 	const dispatch = useDispatch();
@@ -67,11 +92,8 @@ function CreateEventForm(): JSX.Element {
 	const [venueIdValue, setValueDropdown] = React.useState("--Select--");
 	const [statusValue, setValueRadio] = React.useState(EventTypeStatus.HYBRID);
 	const [calendarValue, setCalendarValue] = useState([new Date()]);
-	const [timeValue, settimeValue] = useState(
-		new Date().setTime(2211665449509)
-	);
+	const [timeValue, settimeValue] = useState(new DateObject());
 	const [rangeOrMultipleValue, setrangeOrMultipleValue] = useState("true");
-
 	const handlerangeOrMultipleValue = (e: any) => {
 		setrangeOrMultipleValue(e.target.value);
 	};
@@ -79,22 +101,13 @@ function CreateEventForm(): JSX.Element {
 	const handleChange = (e: any) => {
 		setValueRadio(e.target.value);
 	};
-	const handletimeChange = (e: any) => {
+	const handletimeChange = (e: DateObject) => {
 		settimeValue(e);
 	};
 
 	const calendarOnChange = (e: any) => {
 		setCalendarValue(e);
 	};
-	function setTime(): string {
-		const value = timeValue.toString().split(":");
-		const timeOfEvent = new Date();
-		timeOfEvent.setHours(parseInt(value[0], 10));
-		timeOfEvent.setMinutes(parseInt(value[1], 10));
-		console.log(timeOfEvent.toISOString());
-		return timeOfEvent.toISOString();
-	}
-
 	useEffect(() => {
 		dispatch(fetchVenues());
 	}, [dispatch]);
@@ -114,18 +127,8 @@ function CreateEventForm(): JSX.Element {
 			dates: calendarValue.map((date) => {
 				return new Date(date.toString()).toISOString();
 			}),
-			time: setTime(),
-			venueName: "",
-			address: "",
-			venueWebsite: "",
-			venueFacebook: "",
-			venueTwitter: "",
-			venueInstagram: "",
-			venueDescription: "",
-			locationType: "",
-			locationCoordinates: []
+			time: timeValue.toDate().toISOString(),
 		};
-
 		await dispatch(createFullEvent(newEvent));
 	};
 
@@ -142,6 +145,15 @@ function CreateEventForm(): JSX.Element {
 		instagram: "",
 		imageUrl: "",
 		phone: "",
+		venueName: "",
+		address: "",
+		venueWebsite: "",
+		venueFacebook: "",
+		venueTwitter: "",
+		venueInstagram: "",
+		venueDescription: "",
+		locationType: "",
+		locationCoordinates: [],
 	};
 
 	const venuesListDrop = venues.map((venue: Venue) => {
@@ -165,7 +177,7 @@ function CreateEventForm(): JSX.Element {
 							fromChild={(local: File) => setImage(local)}
 							alt={""}
 						/>
-						<Grid columns={[2]}>
+						<Grid columns={[3]}>
 							<Container>
 								<TextInput
 									name="title"
@@ -300,6 +312,43 @@ function CreateEventForm(): JSX.Element {
 									label="Telefono"
 									placeholder=""
 									type="string"
+								/>
+							</Container>
+							<Container>
+								<Text>Informacion de espacio</Text>
+								<TextInput
+									name="venueName"
+									label="Nombre de Espacio"
+									type="string"
+								/>
+								<TextInput
+									name="address"
+									label="Direccion de Espacio"
+									type="string"
+								/>
+								<TextInput
+									name="venueFacebook"
+									label="Facebook de Espacio"
+									placeholder="https://facebook"
+									type="url"
+								/>
+								<TextInput
+									name="venueTwitter"
+									label="Twitter de Espacio"
+									placeholder="https://twitter"
+									type="url"
+								/>
+								<TextInput
+									name="venueInstagram"
+									label="Instagram de Espacio"
+									placeholder="https://Instagram"
+									type="url"
+								/>
+								<TextInput
+									name="venueWebsite"
+									label="Pagina Web de Espacio"
+									placeholder="https://"
+									type="url"
 								/>
 							</Container>
 						</Grid>
