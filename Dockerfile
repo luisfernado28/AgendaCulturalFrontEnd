@@ -7,7 +7,7 @@ ARG	StoreToken
 ARG	ResourceName
 ENV REACT_APP_EVENTS_API $Endpoint
 ENV REACT_APP_Blob_API ${BlobAPI}
-ENV REACT_APP_STORAGESASTOKEN ${StoreToken}}
+ENV REACT_APP_STORAGESASTOKEN ${StoreToken}
 ENV REACT_APP_STORAGERESOURCENAME ${ResourceName} 
 COPY package.json /app/
 COPY package-lock.json /app/
