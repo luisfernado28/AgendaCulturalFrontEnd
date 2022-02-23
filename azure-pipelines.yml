@@ -1,13 +1,10 @@
 # Docker
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - release
-
 resources:
 - repo: self
-
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '99ed89d0-daae-446c-aafa-cc688ddaa4bf'
@@ -19,7 +16,6 @@ variables:
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
-
 stages:
 - stage: Build
   displayName: Build and push stage
