@@ -37,7 +37,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         dockerfile: $(dockerfilePath)
         tags: $(tag)
-        arguments: '--build-arg REACT_APP_EVENTS_API=http://20.120.89.91:5000/v1.0 '
+        arguments: '--build-arg Endpoint=http://20.120.89.91:5000/v1.0 '
     - task: Docker@2
       displayName: Push ubuntu with qt 5.12.4 installed
       inputs:
