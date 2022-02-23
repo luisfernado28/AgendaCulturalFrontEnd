@@ -58,7 +58,7 @@ function EventsDetail({
 			) : (
 				<div>
 					<Image
-						src={`${process.env.REACT_APP_Blob_API}${fullEvent.imageUrl}`}
+						src={`${process.env.REACT_APP_Blob_API}/eventsimages/${fullEvent.imageUrl}`}
 						variant="card"
 					></Image>
 				</div>

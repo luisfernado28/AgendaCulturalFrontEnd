@@ -60,7 +60,7 @@ function EventCard({
 				{imageUrl ? (
 					<Link to={`/events/${id}`}>
 						<Image
-							src={`${process.env.REACT_APP_Blob_API}${imageUrl}`}
+							src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
 							variant="card"
 						></Image>
 					</Link>

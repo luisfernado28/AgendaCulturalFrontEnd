@@ -152,7 +152,7 @@ function AdminEventCard({
 							) : (
 								<div>
 									<Image
-										src={`${process.env.REACT_APP_Blob_API}${imageUrl}`}
+										src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
 										variant="card"
 									></Image>
 								</div>
