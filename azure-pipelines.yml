@@ -1,13 +1,10 @@
 # Docker
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - release
-
 resources:
 - repo: self
-
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '99ed89d0-daae-446c-aafa-cc688ddaa4bf'
@@ -19,7 +16,6 @@ variables:
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
-
 stages:
 - stage: Build
   displayName: Build and push stage
@@ -30,29 +26,11 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build ubuntu with qt 5.12.4 installed
+      displayName: Build and push an image to container registry
       inputs:
-        command: build
+        command: buildAndPush
         repository: $(imageRepository)
-        containerRegistry: $(dockerRegistryServiceConnection)
         dockerfile: $(dockerfilePath)
-        tags: $(tag)
-        arguments: '--build-arg REACT_APP_EVENTS_API=http://20.120.89.91:5000/v1.0 '
-    - task: Docker@2
-      displayName: Push ubuntu with qt 5.12.4 installed
-      inputs:
-        command: push
-        repository: $(imageRepository)
         containerRegistry: $(dockerRegistryServiceConnection)
-        tags: $(tag)
-    
-
-    # - task: Docker@2
-    #   displayName: Build and push an image to container registry
-    #   inputs:
-    #     command: buildAndPush
-    #     repository: $(imageRepository)
-    #     dockerfile: $(dockerfilePath)
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     tags: |
-    #       $(tag)
+        tags: |
+          $(tag)
