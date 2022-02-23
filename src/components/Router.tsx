@@ -80,7 +80,6 @@ interface propTypes {
 function PrivateRoute({ children, ...rest }: propTypes): JSX.Element {
 	const userState = useSelector(authUsers);
 	const auth = userState.userInfo.token;
-	const adminRestrictedList = ["/usersList","/createUser","/updateEvent/:id"];	
 	return (
 		<Route
 			{...rest}

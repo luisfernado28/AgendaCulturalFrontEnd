@@ -1,12 +1,8 @@
 import {
-	CreateEvent,
 	CreateFullEvents,
-	Event,
-	EventUpdateData,
 	FullEvent,
 	FullEventUpdateData,
 	QueryParams,
-	UpdateEvent,
 	UpdateFullEvent,
 } from "../redux/types";
 import { o, OdataQuery } from "odata";

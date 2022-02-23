@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getFullEventById } from "../utils/fullEventsClient";
 import {
-	EventReducer,
 	FullEventReducer,
-	FullEventsReducer,
 	StoreState,
 } from "./stateTypes";
 import { EventTypeStatus, Status } from "./types";

@@ -7,7 +7,6 @@ import { Button, jsx } from "theme-ui";
 import LoginForm from "../components/LoginFrom";
 import { authUser, authUsers, timeOutLogOut } from "../redux/authSlice";
 import { Status, UserCredentials } from "../redux/types";
-import { o } from "odata";
 import PageSpinner from "../components/Spinner";
 
 const SignIn = (): JSX.Element => {
@@ -15,11 +14,6 @@ const SignIn = (): JSX.Element => {
 	const history = useHistory();
 	const userState = useSelector(authUsers);
 
-	const handleOdata = async () => {
-		const data1 = await o("http://localhost:5000/")
-			.get("v1.0/Events")
-			.query({ $top: 3 });
-	};
 	const handleSubmit = async (
 		values: UserCredentials,
 		{ setSubmitting }: FormikHelpers<UserCredentials>
@@ -44,7 +38,6 @@ const SignIn = (): JSX.Element => {
 				<Link to="/">Regresar a eventos</Link>
 			</Button>
 			<LoginForm handleSubmit={handleSubmit} />
-			<Button onClick={() => handleOdata()}>a</Button>
 		</div>
 	);
 };

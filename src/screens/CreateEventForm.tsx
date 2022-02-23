@@ -1,19 +1,18 @@
 /** @jsxImportSource theme-ui */
-import { Button, Container, Grid, Select, Text } from "theme-ui";
+import { Button, Container, Grid, Text } from "theme-ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextAreaInput from "../components/TextAreaInput";
 import TextInput from "../components/TextInput";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
 	CreateFullEvents,
 	EventTypeStatus,
-	Venue,
 } from "../redux/types";
 import ImageUpload from "../components/ImageUpload";
 import { useState, useEffect } from "react";
 import { postImage } from "../utils/blobStorageClient";
-import { fetchVenues, selectAllVenues } from "../redux/venuesSlice";
+import { fetchVenues} from "../redux/venuesSlice";
 import React from "react";
 import RadioButton from "../components/RadioButton";
 import CalendarItem from "../components/CalendarItem";
@@ -88,8 +87,6 @@ const CreateEventSchema = Yup.object().shape({
 function CreateEventForm(): JSX.Element {
 	const dispatch = useDispatch();
 	const [image, setImage] = useState<File>();
-	const { venues } = useSelector(selectAllVenues);
-	const [venueIdValue, setValueDropdown] = React.useState("--Select--");
 	const [statusValue, setValueRadio] = React.useState(EventTypeStatus.HYBRID);
 	const [calendarValue, setCalendarValue] = useState([new Date()]);
 	const [timeValue, settimeValue] = useState(new DateObject());
@@ -121,7 +118,7 @@ function CreateEventForm(): JSX.Element {
 		const newEvent: CreateFullEvents = {
 			...values,
 			status: 1,
-			venueId: venueIdValue,
+			venueId: "",
 			imageUrl: newImageUrl,
 			areIndependent: rangeOrMultipleValue === "true",
 			dates: calendarValue.map((date) => {
@@ -155,14 +152,6 @@ function CreateEventForm(): JSX.Element {
 		locationType: "",
 		locationCoordinates: [],
 	};
-
-	const venuesListDrop = venues.map((venue: Venue) => {
-		return (
-			<option value={venue.id} key={venue.id}>
-				{venue.name}
-			</option>
-		);
-	});
 	return (
 		<div>
 			<Text>Crea un nuevo evento!</Text>
@@ -192,17 +181,6 @@ function CreateEventForm(): JSX.Element {
 									type="text"
 								/>
 								Espacio
-								<Select
-									value={venueIdValue}
-									onChange={(e) =>
-										setValueDropdown(e.currentTarget.value)
-									}
-								>
-									<option key="Sin espacio" value="No Venue">
-										--Sin Espacio--
-									</option>
-									{venuesListDrop}
-								</Select>
 								<TextInput
 									name="price"
 									label="Precio"

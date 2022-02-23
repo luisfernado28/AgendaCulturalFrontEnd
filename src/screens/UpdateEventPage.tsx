@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { EventStatus, Status, EventTypeStatus } from "../redux/types";
 import { useEffect, Fragment } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { fetchEventById, singleEvent } from "../redux/eventSlice";
 import PageSpinner from "../components/Spinner";
 import UpdateEventForm2 from "../components/UpdateEventForm2";
 import { fetchFullEventById, singleFullEvent } from "../redux/fullEventSlice";
@@ -30,7 +29,6 @@ function UpdateEventPage({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
 	const dispatch = useDispatch();
-	// const { event, eventStatus } = useSelector(singleEvent);
 	const { fullEvent, eventStatus } = useSelector(singleFullEvent);
 
 	useEffect(() => {

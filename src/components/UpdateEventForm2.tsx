@@ -1,29 +1,24 @@
 /** @jsxImportSource theme-ui */
-import { Button, Container, Grid, Select, Text } from "theme-ui";
+import { Button, Container, Grid, Text } from "theme-ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextAreaInput from "../components/TextAreaInput";
 import TextInput from "../components/TextInput";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import {
 	Event,
-	Venue,
-	UpdateEvent,
 	Dates,
 	EventTypeStatus,
-	Status,
 	UpdateFullEvent,
 	FullEvent,
 } from "../redux/types";
 import ImageUpload from "../components/ImageUpload";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { postImage } from "../utils/blobStorageClient";
-import { fetchVenues, selectAllVenues } from "../redux/venuesSlice";
 import React from "react";
 import RadioButton from "../components/RadioButton";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
-import PageSpinner from "./Spinner";
 import { modifyFullEvent } from "../redux/fullEventsSlice";
 import { DateObject } from "react-multi-date-picker";
 
@@ -112,11 +107,7 @@ const CreateEventSchema = Yup.object().shape({
 function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 	const dispatch = useDispatch();
 	const [image, setImage] = useState<File>();
-	const { venues, status } = useSelector(selectAllVenues);
 
-	const [venueIdValue, setValueDropdown] = React.useState(
-		eventForUpdate.venueId
-	);
 	const [statusValue, setValueRadio] = React.useState(eventForUpdate.type);
 	const [calendarValue, setCalendarValue] = useState(
 		eventForUpdate.dates.map((date) => {
@@ -128,9 +119,6 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 		eventForUpdate.areIndependent.toString()
 	);
 
-	useEffect(() => {
-		dispatch(fetchVenues());
-	}, [dispatch]);
 
 	const handlerangeOrMultipleValue = (e: any) => {
 		setrangeOrMultipleValue(e.target.value);
@@ -153,7 +141,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 		const updatedEvent: UpdateFullEvent = {
 			...values,
 			status: 1,
-			venueId: venueIdValue,
+			venueId: "",
 			imageUrl: "",
 			areIndependent: rangeOrMultipleValue === "true",
 			dates: calendarValue.map((date) => {
@@ -195,23 +183,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 		locationType: eventForUpdate.locationType,
 		locationCoordinates: eventForUpdate.locationCoordinates,
 	};
-	const venuesListDrop = venues.map((venue: Venue) => {
-		return (
-			<option value={venue.id} key={venue.id}>
-				{venue.name}
-			</option>
-		);
-	});
 
-	if (status === Status.IDLE) {
-		return <div></div>;
-	}
-	if (status === Status.LOADING) {
-		return <PageSpinner />;
-	}
-	if (status === Status.FAILED) {
-		return <div> Failure Fetching Data</div>;
-	}
 	return (
 		<div>
 			<Text>Actualiza un evento</Text>
@@ -248,17 +220,6 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 									type="text"
 								/>
 								Espacio
-								<Select
-									value={venueIdValue}
-									onChange={(e) =>
-										setValueDropdown(e.currentTarget.value)
-									}
-								>
-									<option key="Sin espacio" value="No Venue">
-										--Sin Espacio--
-									</option>
-									{venuesListDrop}
-								</Select>
 								<TextInput
 									name="price"
 									label="Precio"

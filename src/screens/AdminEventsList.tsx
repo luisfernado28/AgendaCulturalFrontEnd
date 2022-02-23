@@ -2,7 +2,7 @@
 import { Grid, Text } from "theme-ui";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Event, FullEvent } from "../redux/types";
+import { FullEvent } from "../redux/types";
 import AdminEventCard from "../components/adminEventCard";
 import { Link } from "react-router-dom";
 import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";

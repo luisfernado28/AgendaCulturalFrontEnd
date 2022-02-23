@@ -2,10 +2,8 @@
 import { Button, Grid, Select, Text } from "theme-ui";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEvents, selectAllEvents } from "../redux/eventsSlice";
-import { Event, Filter, FullEvent, QueryParams } from "../redux/types";
+import { Filter, FullEvent, QueryParams } from "../redux/types";
 import EventCard from "../components/eventCard";
-import { singleVenue } from "../redux/venueSlice";
 import { Link } from "react-router-dom";
 import TextInput from "../components/TextInput";
 import { Form, Formik } from "formik";
@@ -18,9 +16,7 @@ interface Values {
 
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
-	// const { events } = useSelector(selectAllEvents);
 	const { fullEvents } = useSelector(selectAllFullEvents);
-	const { Venue } = useSelector(singleVenue);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
 
 	const initialValues: Values = {
@@ -32,7 +28,6 @@ function ListPage(): JSX.Element {
 			.max(50, "El titulo no puede tener mas que 50 caracteres "),
 	});
 	useEffect(() => {
-		// dispatch(fetchEvents());
 
 		dispatch(fetchFullEvents());
 	}, [dispatch]);

@@ -1,12 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, Text, jsx, Image } from "theme-ui";
-
-import { Event, FullEvent } from "../redux/types";
-import { singleVenue } from "../redux/venueSlice";
+import {  FullEvent } from "../redux/types";
 
 function EventCard({
 	id,
