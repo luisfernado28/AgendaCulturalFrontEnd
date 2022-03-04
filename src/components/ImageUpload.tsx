@@ -53,7 +53,6 @@ function ImageUpload({
   const [data, setData] = useState<string>(alt)
   const [error, setError] = useState<string | boolean>(false)
   const [overlay, setOverlay] = useState(false)
-
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault()
     const {

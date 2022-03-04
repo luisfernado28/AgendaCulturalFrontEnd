@@ -112,7 +112,8 @@ function CreateEventForm(): JSX.Element {
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
 		if (image) {
-			newImageUrl = await postImage(image);
+			const setFile= new File([image],`${values.title}_${values.venueName}_${calendarValue[0].getDate()}_${calendarValue[0].getDay()}_${calendarValue[0].getMonth()}`);
+			newImageUrl = await postImage(setFile);
 		}
 		values.type = statusValue;
 		const newEvent: CreateFullEvents = {
