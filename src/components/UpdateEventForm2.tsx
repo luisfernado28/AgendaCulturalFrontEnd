@@ -152,8 +152,9 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 			
 		};
 		if (image) {
-			newImageUrl = await postImage(image);
-			updatedEvent.imageUrl = "/eventsimages/" + newImageUrl;
+			const setFile= new File([image],`${values.title}_${values.venueName}_${calendarValue[0].getDate()}_${calendarValue[0].getDay()}_${calendarValue[0].getMonth()}`);
+			newImageUrl = await postImage(setFile);
+			updatedEvent.imageUrl = newImageUrl;// "/eventsimages/" + newImageUrl;
 		}
 		await dispatch(
 			modifyFullEvent({ body: updatedEvent, fullEventId: eventForUpdate.id })
@@ -202,7 +203,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 						) : (
 							<ImageUpload
 								fromChild={(local: File) => setImage(local)}
-								alt={`${process.env.REACT_APP_Blob_API}${initialValues.imageUrl}`}
+								alt={`${process.env.REACT_APP_Blob_API}/eventsimages/${initialValues.imageUrl}`}
 							/>
 						)}
 						<Grid columns={[3]}>
