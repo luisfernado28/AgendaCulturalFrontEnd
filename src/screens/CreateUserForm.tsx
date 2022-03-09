@@ -1,7 +1,5 @@
-/** @jsxImportSource theme-ui */
 import { Form, Formik } from "formik";
 import { useState } from "react";
-import { Button, Container, Grid, Switch, Text } from "theme-ui";
 import TextInput from "../components/TextInput";
 import { CreateUser } from "../redux/types";
 import * as Yup from "yup";
@@ -9,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../redux/usersSlice";
 import { useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
+import { Button, Container, Grid, Switch } from "@mui/material";
 
 interface Values {
 	username: string;
@@ -58,7 +57,7 @@ function CreateUserForm(): JSX.Element {
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
-			<Text>Crea un nuevo usuario!</Text>
+			Crea un nuevo usuario!
 			<Formik
 				initialValues={initialValues}
 				validationSchema={CreateUserSchema}
@@ -93,7 +92,6 @@ function CreateUserForm(): JSX.Element {
 									type="text"
 								/>
 								<Switch
-									label="Administrador?"
 									onChange={() => setAdminValue(!adminValue)}
 									value={0}
 								/>

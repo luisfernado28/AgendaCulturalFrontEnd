@@ -1,7 +1,7 @@
-/** @jsxImportSource theme-ui */
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Grid } from "theme-ui";
 import { authUsers, logOutUser } from "../redux/authSlice";
 
 const Header = (): JSX.Element => {
@@ -14,37 +14,18 @@ const Header = (): JSX.Element => {
 	};
 
 	return (
-		<div
-			sx={{
-				backgroundImage: (theme) =>
-					`linear-gradient(to right, #00923D, #3BB2B5 )`,
-				height: "100px",
-			}}
-		>
+		<div>
 			<Grid columns={[4]}>
 				<div>Logo Alcaldia</div>
 				<div>Search</div>
 				<div>Bienvenido Agenda Cultural La Paz</div>
 				{loggedIn ? (
 					<div>
-						<button
-							onClick={() => handleLogout()}
-							sx={{
-								borderBottomStyle: "none",
-							}}
-						>
-							Log out
-						</button>
-						<button
-							onClick={() => history.push("/adminEvents")}
-							sx={{
-								borderBottomStyle: "none",
-							}}
-						>
+						<Button onClick={() => handleLogout()}>Log out</Button>
+						<Button onClick={() => history.push("/adminEvents")}>
 							Admin Events
-						</button>
-
-						<button
+						</Button>
+						<Button
 							onClick={() => history.push("/usersList")}
 							sx={{
 								borderBottomStyle: "none",
@@ -52,7 +33,7 @@ const Header = (): JSX.Element => {
 							hidden={!userInfo.admin}
 						>
 							Admin Users
-						</button>
+						</Button>
 					</div>
 				) : (
 					<Link to="Signin">Signin</Link>

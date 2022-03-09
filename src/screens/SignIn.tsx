@@ -1,13 +1,11 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
 import { FormikHelpers } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Button, jsx } from "theme-ui";
 import LoginForm from "../components/LoginFrom";
 import { authUser, authUsers, timeOutLogOut } from "../redux/authSlice";
 import { Status, UserCredentials } from "../redux/types";
 import PageSpinner from "../components/Spinner";
+import Button from "@mui/material/Button";
 
 const SignIn = (): JSX.Element => {
 	const dispatch = useDispatch();

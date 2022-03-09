@@ -1,9 +1,8 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+import { CardMedia } from "@mui/material";
+import Card from "@mui/material/Card";
 import { useEffect } from "react";
 import { useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
-import { Card, Text, jsx, Image } from "theme-ui";
 import {  FullEvent } from "../redux/types";
 
 function EventCard({
@@ -48,46 +47,42 @@ function EventCard({
 	}
 	return (
 		<Card
-			variant="primary"
-			sx={{
-				maxWidth: 400,
-				height: "350px",
-			}}
+			
 		>
 			<div>
 				{imageUrl ? (
 					<Link to={`/events/${id}`}>
-						<Image
+						<CardMedia 
 							src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
-							variant="card"
-						></Image>
+
+						></CardMedia>
 					</Link>
 				) : (
 					<Link to={`/events/${id}`}>No image go to event</Link>
 				)}
 			</div>
 			<div>
-				<Text sx={{ color: "red" }}>{frontCardDate}</Text>
-				<Text>{title}</Text>
+				{frontCardDate}
+				{title}
 				<br />
 				<Link to={`/updateEvent/${id}`}>
 					{venueName === "" ? (
-						<Text>Venue: Sin evento</Text>
+						<div>Venue: Sin evento</div>
 					) : (
-						<Text>Venue:{venueName}</Text>
+						<div>Venue:{venueName}</div>
 					)}
 				</Link>
 				<br />
-				<Text>Dates:{fromToCardDate}</Text>
+				Dates:{fromToCardDate}
 				<br />
-				<Text>
+				
 					Time{" "}
 					{new Date(time).getHours() +
 						":" +
 						new Date(time).getMinutes()}
-				</Text>
+				
 				<br />
-				<Text>Precio:{price}</Text>
+				Precio:{price}
 				<br />
 			</div>
 		</Card>

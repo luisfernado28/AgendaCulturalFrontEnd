@@ -1,10 +1,9 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
+
 import { UserCredentials } from "../redux/types";
 import { Form, Formik, FormikHelpers } from "formik";
 import TextInput from "./TextInput";
-import { Button, Text, jsx } from "theme-ui";
 import * as Yup from "yup";
+import Button from '@mui/material/Button';
 
 const LoginSchema = Yup.object().shape({
 	username: Yup.string()
@@ -33,18 +32,10 @@ const LoginForm = ({ handleSubmit }: FormProps): JSX.Element => {
 			validationSchema={LoginSchema}
 		>
 			{({ handleSubmit, isSubmitting }) => (
+				
 				<Form onSubmit={handleSubmit}>
-					<Text
-						sx={{
-							alignSelf: "center",
-							fontSize: "2em",
-							fontWeight: "bolder",
-							marginBottom: "1rem",
-						}}
-						variant="Title"
-					>
 						Sign In
-					</Text>
+				
 					<TextInput
 						name="username"
 						id="username"
@@ -52,6 +43,7 @@ const LoginForm = ({ handleSubmit }: FormProps): JSX.Element => {
 						placeholder="Enter username"
 						type="text"
 					/>
+					
 					<TextInput
 						name="password"
 						id="password"
@@ -59,11 +51,11 @@ const LoginForm = ({ handleSubmit }: FormProps): JSX.Element => {
 						placeholder="Enter password"
 						type="password"
 					/>
+					
 					<div>
 						<Button
 							type="submit"
 							disabled={isSubmitting}
-							variant="green"
 						>
 							Sign In
 						</Button>

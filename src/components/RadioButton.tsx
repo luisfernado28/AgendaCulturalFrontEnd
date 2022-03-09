@@ -1,9 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx  jsx */
-
+import Radio from '@mui/material/Radio'
 import { useField } from 'formik'
 import { Fragment } from 'react'
-import { jsx, Label, Radio } from 'theme-ui'
 import { EventTypeStatus } from '../redux/types'
 
 interface RadioButtonProperties {
@@ -21,9 +18,9 @@ const RadioButton = ({ label, ...props }: RadioButtonProperties): JSX.Element =>
 
     return (
         <Fragment>
-            <Label>
+            <div>
                 <Radio  {...field} {...props} /> {label}
-            </Label>
+            </div>
         </Fragment>
     )
 }

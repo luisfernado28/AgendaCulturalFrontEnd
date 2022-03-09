@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-import { Button, Container, Grid, Text } from "theme-ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextAreaInput from "../components/TextAreaInput";
@@ -20,6 +18,7 @@ import TimePickerItem from "../components/TimeItem";
 import "yup-phone";
 import { createFullEvent } from "../redux/fullEventsSlice";
 import { DateObject } from "react-multi-date-picker";
+import { Button, Container, Grid } from "@mui/material";
 
 interface Values {
 	title: string;
@@ -155,7 +154,7 @@ function CreateEventForm(): JSX.Element {
 	};
 	return (
 		<div>
-			<Text>Crea un nuevo evento!</Text>
+			Crea un nuevo evento!
 			<Formik
 				initialValues={initialValues}
 				validationSchema={CreateEventSchema}
@@ -261,7 +260,7 @@ function CreateEventForm(): JSX.Element {
 								</Container>
 							</Container>
 							<Container>
-								<Text> Redes Sociales</Text>
+								Redes Sociales
 								<TextInput
 									name="facebook"
 									label="Facebook"
@@ -294,7 +293,7 @@ function CreateEventForm(): JSX.Element {
 								/>
 							</Container>
 							<Container>
-								<Text>Informacion de espacio</Text>
+								Informacion de espacio
 								<TextInput
 									name="venueName"
 									label="Nombre de Espacio"

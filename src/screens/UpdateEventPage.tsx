@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-import { Text } from "theme-ui";
 import { useDispatch, useSelector } from "react-redux";
 import { EventStatus, Status, EventTypeStatus } from "../redux/types";
 import { useEffect, Fragment } from "react";
@@ -43,7 +41,7 @@ function UpdateEventPage({
 			) : eventStatus === Status.LOADING ? (
 				<PageSpinner />
 			) : eventStatus === Status.FAILED ? (
-				<Text>Failure Fetching Data</Text>
+				<div>Failure Fetching Data</div>
 			) : (
 				<UpdateEventForm2
 					title={fullEvent.title}

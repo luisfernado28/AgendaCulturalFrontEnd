@@ -1,9 +1,7 @@
-/** @jsxRuntime classic */
-/** @jsx  jsx */
+
 
 import { Fragment } from 'react'
 import DatePicker from 'react-multi-date-picker'
-import { jsx} from 'theme-ui'
 
 interface calendarProps {
     value: any,

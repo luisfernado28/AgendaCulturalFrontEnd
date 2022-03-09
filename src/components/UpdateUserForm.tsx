@@ -1,11 +1,11 @@
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Container, Text, Grid, Switch } from "theme-ui";
 import TextInput from "./TextInput";
 import * as Yup from "yup";
 import { UpdateUser, UserUpdateData } from "../redux/types";
 import { modifyUser } from "../redux/userSlice";
+import { Button, Container, Grid, Switch } from "@mui/material";
 
 interface Values {
 	username: string;
@@ -71,7 +71,7 @@ function UpdateUserForm({
 	};
 	return (
 		<div>
-			<Text>Crea un nuevo usuario!</Text>
+			Crea un nuevo usuario!
 			<Formik
 				initialValues={initialValues}
 				validationSchema={CreateUserSchema}
@@ -107,7 +107,6 @@ function UpdateUserForm({
 									disabled={true}
 								/>
 								<Switch
-									label="Administrador?"
 									onChange={() => setAdminValue(!adminValue)}
 									value={0}
 								/>

@@ -1,20 +1,18 @@
-/** @jsxImportSource theme-ui */
-import { Grid, Text } from "theme-ui";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FullEvent } from "../redux/types";
 import AdminEventCard from "../components/adminEventCard";
 import { Link } from "react-router-dom";
 import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
+import { Grid } from "@mui/material";
 
 function AdminEventsList(): JSX.Element {
 	const dispatch = useDispatch();
 	const { fullEvents } = useSelector(selectAllFullEvents);
 	useEffect(() => {
-		dispatch(fetchFullEvents());
+		dispatch(fetchFullEvents({}));
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
-		
 		return (
 			<div key={event.id}>
 				<AdminEventCard
@@ -52,20 +50,10 @@ function AdminEventsList(): JSX.Element {
 
 	return (
 		<div>
-			<Text>Edita Eventos</Text>
+			Edita Eventos
 			<Link to="/createEvent">Crear evento</Link>
 			<Link to="/createVenue">Crear escenario</Link>
-			<Grid
-				columns={[1]}
-				sx={{
-					justifyContent: "stretch",
-					my: "50px",
-					rowGap: "100px",
-					columnGap: "50px",
-				}}
-			>
-				{eventsList}
-			</Grid>
+			<Grid columns={[1]}>{eventsList}</Grid>
 		</div>
 	);
 }

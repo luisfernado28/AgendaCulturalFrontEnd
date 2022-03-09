@@ -1,10 +1,7 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch} from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Card, Text, jsx, Image, Grid, Button } from "theme-ui";
 import ShowModal from "./CustomModal";
 
 import {
@@ -14,6 +11,10 @@ import {
 	ModalTypes,
 } from "../redux/types";
 import { removeFullEvent } from "../redux/fullEventsSlice";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
 
 interface AdminProps {
 	title: string;
@@ -70,14 +71,8 @@ function AdminEventCard({
 			: "Virtual";
 
 	return (
-		<Card
-			variant="primary"
-			sx={{
-				width: "1500px",
-				height: "350px",
-			}}
-		>
-			<Text>{title} </Text>
+		<Card>
+			<div>{title}</div> 
 			<Grid
 				columns={[2]}
 				sx={{
@@ -98,29 +93,28 @@ function AdminEventCard({
 				>
 					<div>
 						Artista/Elenco:
-						<Text>{artist}</Text>
+						{artist}
 						<br />
 						Escenario:
-						<Text>{venueName}</Text>
+						{venueName}
 						<br />
 						Fecha:
-						<Text>
 							{startingDate.toLocaleString("default", {
 								month: "long",
 							}) +
 								"/" +
 								startingDate.getDay()}
-						</Text>
+						
 					</div>
 					<div>
 						Precio:
-						<Text>{price}</Text>
+						{price}
 						<br />
 						Tipo de evento:
-						<Text>{typeOfEvent}</Text>
+						{typeOfEvent}
 						<br />
 						Hora:
-						<Text>{eventTime.toTimeString()}</Text>
+						{eventTime.toTimeString()}
 					</div>
 				</Grid>
 				<Grid
@@ -134,13 +128,12 @@ function AdminEventCard({
 				>
 					<div>
 						{imageUrl === "" ? (
-							<Text>No image</Text>
+							<div>No image</div>
 						) : (
 							<div>
-								<Image
+								<CardMedia 
 									src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
-									variant="card"
-								></Image>
+								></CardMedia>
 							</div>
 						)}
 					</div>

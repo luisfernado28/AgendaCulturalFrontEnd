@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-import { Button, Grid, Select, Text } from "theme-ui";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Filter, FullEvent, QueryParams } from "../redux/types";
@@ -9,6 +7,7 @@ import TextInput from "../components/TextInput";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
+import { Button, Grid, Select } from "@mui/material";
 
 interface Values {
 	searchBar: string;
@@ -28,8 +27,7 @@ function ListPage(): JSX.Element {
 			.max(50, "El titulo no puede tener mas que 50 caracteres "),
 	});
 	useEffect(() => {
-
-		dispatch(fetchFullEvents());
+		dispatch(fetchFullEvents({}));
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
@@ -81,7 +79,7 @@ function ListPage(): JSX.Element {
 			queryParams.orderby = orderby;
 		}
 		if (Object.keys(queryParams).length === 0) {
-			dispatch(fetchFullEvents());
+			dispatch(fetchFullEvents({}));
 		} else {
 			dispatch(fetchFullEvents(queryParams));
 		}
@@ -110,9 +108,9 @@ function ListPage(): JSX.Element {
 						<span>Ordenar</span>
 						<Select
 							value={sortValue}
-							onChange={(e) =>
-								setSortValueDropdown(e.currentTarget.value)
-							}
+							onChange={(e) => {
+								setSortValueDropdown(e.target.value);
+							}}
 						>
 							<option key="Titulo Ascendente" value="title asc">
 								Titulo Ascendente
@@ -125,20 +123,12 @@ function ListPage(): JSX.Element {
 					</Form>
 				)}
 			</Formik>
-			<Text>Eventos en tendencia</Text>
-			<Grid
-				columns={[2]}
-				sx={{
-					justifyContent: "stretch",
-					my: "50px",
-					rowGap: "100px",
-					columnGap: "50px",
-				}}
-			>
+			<div>Eventos en tendencia</div>
+			<Grid columns={[2]}>
 				{fullEvents.length !== 0 ? (
 					eventsList
 				) : (
-					<Text>No existen eventos con esas caracteristicas :c</Text>
+					<div>No existen eventos con esas caracteristicas :c</div>
 				)}
 			</Grid>
 		</div>

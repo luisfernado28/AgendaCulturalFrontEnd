@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-import { Button, Container, Grid, Text } from "theme-ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextAreaInput from "../components/TextAreaInput";
@@ -21,6 +19,7 @@ import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import { modifyFullEvent } from "../redux/fullEventsSlice";
 import { DateObject } from "react-multi-date-picker";
+import { Button, Container, Grid } from "@mui/material";
 
 export interface FormProps {
 	title: string;
@@ -187,7 +186,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 
 	return (
 		<div>
-			<Text>Actualiza un evento</Text>
+			Actualiza un evento
 			<Formik
 				initialValues={initialValues}
 				validationSchema={CreateEventSchema}
@@ -314,7 +313,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 								</Container>
 							</Container>
 							<Container>
-								<Text> Redes Sociales</Text>
+								Redes Sociales
 								<TextInput
 									name="facebook"
 									label="Facebook"
@@ -347,7 +346,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 								/>
 							</Container>
 							<Container>
-								<Text>Informacion de espacio</Text>
+								Informacion de espacio
 								<TextInput
 									name="venueName"
 									label="Nombre de Espacio"

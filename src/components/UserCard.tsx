@@ -1,11 +1,8 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Card, Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Button, Card, Grid } from "theme-ui";
-import { Text, jsx } from "theme-ui";
 import { ModalTypes } from "../redux/types";
 import { removeUser } from "../redux/usersSlice";
 import ShowModal from "./CustomModal";
@@ -30,23 +27,17 @@ function UserCard({
 	const history = useHistory();
 
 	const handleDelete = (id: string) => {
-		dispatch(removeUser(id))
+		dispatch(removeUser(id));
 		ShowModal({
-		    onSuccess: () => {
-		        history.push('/usersList')
-		    },
-		    type: ModalTypes.DeleteSucceededModalValues,
-		})
+			onSuccess: () => {
+				history.push("/usersList");
+			},
+			type: ModalTypes.DeleteSucceededModalValues,
+		});
 	};
 
 	return (
-		<Card
-			variant="primary"
-			sx={{
-				width: "1500px",
-				height: "350px",
-			}}
-		>
+		<Card>
 			<Grid
 				columns={[2]}
 				sx={{
@@ -57,24 +48,16 @@ function UserCard({
 				}}
 			>
 				<div>
-					<Text>Username: {username}</Text>
+					Username: {username}
 					<br />
-					<Text>Nombre: {firstName}</Text>
+					Nombre: {firstName}
 					<br />
-					<Text>Apellido: {lastName}</Text>
+					Apellido: {lastName}
 					<br />
-					<Text>{admin ? "Es admin" : "No es admin"}</Text>
+					{admin ? "Es admin" : "No es admin"}
 					<br />
 				</div>
-				<Grid
-					columns={[3]}
-					sx={{
-						justifyContent: "stretch",
-						my: "50px",
-						rowGap: "100px",
-						columnGap: "50px",
-					}}
-				>
+				<Grid columns={[3]}>
 					<div>
 						<Link to={`/updateUser/${id}`}>
 							<FontAwesomeIcon icon={faEdit} />

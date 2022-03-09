@@ -1,7 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
 
-import { jsx } from 'theme-ui'
 
 import Footer from './Footer'
 import Header from './Header'

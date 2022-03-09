@@ -1,23 +1,11 @@
-/** @jsxImportSource theme-ui */
-
-import { Spinner } from 'theme-ui'
+import { CircularProgress } from "@mui/material";
 
 function PageSpinner(): JSX.Element {
-  return (
-    <div
-      sx={{
-        alignItems: 'center',
-        height: '85%',
-        justifyContent: 'center',
-        width: '100%',
-        position: 'absolute',
-        zIndex: 9,
-        backgroundColor: '#FFFFFF',
-      }}
-    >
-      <Spinner sx={{ color: 'orange' }} />
-    </div>
-  )
+	return (
+		<div>
+			<CircularProgress sx={{ color: "orange" }} />
+		</div>
+	);
 }
 
-export default PageSpinner
+export default PageSpinner;

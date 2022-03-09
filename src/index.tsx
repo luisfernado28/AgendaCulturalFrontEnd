@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -7,8 +6,6 @@ import store from "./redux/store";
 //import store from './redux/store';
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-import { ThemeProvider } from "theme-ui";
-import { theme } from "./styles/theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
@@ -19,9 +16,7 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<ThemeProvider theme={theme}>
 					<App />
-				</ThemeProvider>
 			</PersistGate>
 		</Provider>
 	</React.StrictMode>,

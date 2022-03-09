@@ -4,7 +4,6 @@ import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import PageSpinner from "../components/Spinner";
 import { Status } from "../redux/types";
 import { fetchUserById, singleUser } from "../redux/userSlice";
-import { Text } from "theme-ui";
 import UpdateUserForm from "../components/UpdateUserForm";
 import { authUsers } from "../redux/authSlice";
 
@@ -26,7 +25,7 @@ function UpdateUserPage({
 			) : userStatus === Status.LOADING ? (
 				<PageSpinner />
 			) : userStatus === Status.FAILED ? (
-				<Text>Failure Fetching Data</Text>
+				<div>Failure Fetching Data</div>
 			) : (
 				<UpdateUserForm
 					id={user.id}

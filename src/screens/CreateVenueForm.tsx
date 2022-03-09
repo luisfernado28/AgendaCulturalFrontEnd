@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-import { Button, Container, Grid, Text } from "theme-ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextInput from "../components/TextInput";
@@ -9,6 +7,7 @@ import TextAreaInput from "../components/TextAreaInput";
 
 import { useHistory } from "react-router-dom";
 import { createVenue } from "../redux/venuesSlice";
+import { Button, Container, Grid } from "@mui/material";
 
 export interface Values {
 	name: string;
@@ -68,7 +67,7 @@ function CreateVemueForm(): JSX.Element {
 
 	return (
 		<div>
-			<Text>Crea un nuevo evento!</Text>
+			Crea un nuevo evento!
 			<Formik
 				initialValues={initialValues}
 				validationSchema={CreateEventSchema}
@@ -98,7 +97,7 @@ function CreateVemueForm(): JSX.Element {
 								/>
 							</Container>
 							<Container>
-								<Text> Redes Sociales</Text>
+								Redes Sociales
 								<TextInput
 									name="facebook"
 									label="Facebook"

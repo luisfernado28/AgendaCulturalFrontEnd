@@ -1,9 +1,7 @@
-/** @jsxRuntime classic */
-/** @jsx  jsx */
-
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { useField } from 'formik'
 import { Fragment } from 'react'
-import { Input, jsx, Label } from 'theme-ui'
 
 
 interface TextInputProps {
@@ -23,10 +21,10 @@ const TextInput = ({ label, ...props }: TextInputProps): JSX.Element => {
 
   return (
     <Fragment>
-      <Label sx={{ color: `${props.lcolor}` }} htmlFor={props.id || props.name}>
+      <Typography >
         {label}{' '}
-      </Label>
-      <Input {...field} {...props} />
+      </Typography>
+      <TextField  {...field} {...props} />
       {meta.touched && meta.error ? (
         <div >{meta.error}</div>
       ) : null}

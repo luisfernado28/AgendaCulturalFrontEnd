@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "../redux/types";
 import { fetchUsers, selectAllUsers } from "../redux/usersSlice";
-import { Button, Grid, Text } from "theme-ui";
 import UserCard from "../components/UserCard";
 import { Link, useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
+import { Button, Grid } from "@mui/material";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function UsersList(): JSX.Element {
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
-			<Text>Usuarios</Text>
+			<div>Usuarios</div>
 			<Button>
 				<Link to="/createUser">Crear Usuario</Link>
 			</Button>

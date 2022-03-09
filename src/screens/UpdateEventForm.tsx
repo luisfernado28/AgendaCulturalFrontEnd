@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-import { Button, Container, Grid, jsx, Label, Radio, Select, Text } from 'theme-ui'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import TextAreaInput from '../components/TextAreaInput'
@@ -17,6 +15,7 @@ import CalendarItem from '../components/CalendarItem'
 import TimePickerItem from '../components/TimeItem'
 import { RouteComponentProps } from 'react-router-dom'
 import { fetchEventById, modifyEvent, singleEvent } from '../redux/eventSlice'
+import { Button, Container, Grid, Select } from '@mui/material'
 
 
 export interface Values {
@@ -145,7 +144,7 @@ function UpdateEventForm({
     })
     return (
         <div >
-            <Text>Actualiza un evento</Text>
+            <div>Actualiza un evento</div>
             <Formik
                 initialValues={initialValues}
                 validationSchema={CreateEventSchema}
@@ -175,7 +174,7 @@ function UpdateEventForm({
                                     Espacio
                                     <Select
                                         value={venueIdValue}
-                                        onChange={e => setValueDropdown(e.currentTarget.value)}
+                                        onChange={e => setValueDropdown(e.target.value)}
                                     >
                                         <option key="Sin espacio" value="No Venue">--Sin Espacio--</option>
                                         {venuesListDrop}
@@ -248,7 +247,7 @@ function UpdateEventForm({
                                     </Container>
                                 </Container>
                                 <Container>
-                                    <Text> Redes Sociales</Text>
+                                    <div> Redes Sociales</div>
                                     <TextInput
                                         name="facebook"
                                         label="Facebook"
