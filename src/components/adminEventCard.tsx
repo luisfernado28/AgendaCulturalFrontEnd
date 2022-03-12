@@ -15,6 +15,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
+import { Typography } from "@mui/material";
 
 interface AdminProps {
 	title: string;
@@ -71,10 +72,10 @@ function AdminEventCard({
 			: "Virtual";
 
 	return (
-		<Card>
-			<div>{title}</div> 
-			<Grid
-				columns={[2]}
+		<Card  sx={{ Width: 800, Height: 300 }} variant="outlined">
+			<Typography variant="h4">{title}</Typography> 
+			<Grid 
+				xs={6}
 				sx={{
 					justifyContent: "stretch",
 					my: "50px",
@@ -83,7 +84,7 @@ function AdminEventCard({
 				}}
 			>
 				<Grid
-					columns={[2]}
+					xs={6}
 					sx={{
 						justifyContent: "stretch",
 						my: "50px",

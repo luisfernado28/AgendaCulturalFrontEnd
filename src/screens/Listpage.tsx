@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Filter, FullEvent, QueryParams } from "../redux/types";
 import EventCard from "../components/eventCard";
-import { Link } from "react-router-dom";
-import TextInput from "../components/TextInput";
-import { Form, Formik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
-import { Button, Grid, Select } from "@mui/material";
+import {
+	Button,
+	Grid,
+	MenuItem,
+	Select,
+	TextField,
+	Typography,
+} from "@mui/material";
+import { authUsers } from "../redux/authSlice";
 
 interface Values {
 	searchBar: string;
@@ -16,22 +22,21 @@ interface Values {
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
 	const { fullEvents } = useSelector(selectAllFullEvents);
+	const { userInfo } = useSelector(authUsers);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
 
-	const initialValues: Values = {
-		searchBar: "",
-	};
 	const CreateEventSchema = Yup.object().shape({
 		searchBar: Yup.string()
 			.min(1, "Al menos un caracter")
 			.max(50, "El titulo no puede tener mas que 50 caracteres "),
 	});
+
 	useEffect(() => {
 		dispatch(fetchFullEvents({}));
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
-			<div key={event.id}>
+			<Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
 				<EventCard
 					id={event.id}
 					title={event.title}
@@ -61,7 +66,7 @@ function ListPage(): JSX.Element {
 					locationType={event.locationType}
 					locationCoordinates={event.locationCoordinates}
 				/>
-			</div>
+			</Grid>
 		);
 	});
 
@@ -74,6 +79,8 @@ function ListPage(): JSX.Element {
 			};
 			queryParams.filter = filter;
 		}
+		console.log(sortValue);
+
 		if (sortValue !== "Ordenar") {
 			const orderby: string[] = [sortValue];
 			queryParams.orderby = orderby;
@@ -84,47 +91,76 @@ function ListPage(): JSX.Element {
 			dispatch(fetchFullEvents(queryParams));
 		}
 	};
+
+	const formik = useFormik({
+		initialValues: {
+			searchBar: "",
+		},
+		validationSchema: CreateEventSchema,
+		onSubmit: (values) => {
+			handleSubmit(values);
+		},
+	});
 	return (
 		<div>
-			<Button>
-				<Link to="/adminEvents">Administrar eventos</Link>
+			<Button href="/adminEvents" color="inherit">
+				Administrar eventos
 			</Button>
-			<Button>
-				<Link to="/usersList">Administrar usuarios</Link>
-			</Button>
-			<Formik
-				initialValues={initialValues}
-				validationSchema={CreateEventSchema}
-				onSubmit={handleSubmit}
+			<Button
+				href="/usersList"
+				disabled={!userInfo.admin}
+				color="inherit"
 			>
-				{({ handleSubmit }) => (
-					<Form onSubmit={handleSubmit}>
-						<TextInput
-							name="searchBar"
-							label="Buscar por titulo o artista"
-							placeholder="Busque! por titulo o artista"
-							type="text"
-						/>
-						<span>Ordenar</span>
-						<Select
-							value={sortValue}
-							onChange={(e) => {
-								setSortValueDropdown(e.target.value);
-							}}
-						>
-							<option key="Titulo Ascendente" value="title asc">
-								Titulo Ascendente
-							</option>
-							<option key="Titulo Descendente" value="title desc">
-								Titulo Descendente
-							</option>
-						</Select>
-						<Button>Buscar</Button>
-					</Form>
-				)}
-			</Formik>
+				Administrar usuarios
+			</Button>
+			<form onSubmit={formik.handleSubmit}>
+				<TextField
+					fullWidth
+					id="searchBar"
+					name="searchBar"
+					label="Busqueda"
+					value={formik.values.searchBar}
+					onChange={formik.handleChange}
+					error={
+						formik.touched.searchBar &&
+						Boolean(formik.errors.searchBar)
+					}
+					helperText={
+						formik.touched.searchBar && formik.errors.searchBar
+					}
+				/>
+				<Typography variant="h6" component="div">
+					Ordenar
+				</Typography>
+				<Select
+					value={sortValue}
+					onChange={(e) => {
+						setSortValueDropdown(e.target.value);
+					}}
+				>
+					<MenuItem value="title asc">Titulo Ascendente</MenuItem>
+					<MenuItem value="title desc">Titulo Descendente</MenuItem>
+				</Select>
+
+				<Button
+					color="primary"
+					variant="contained"
+					fullWidth
+					type="submit"
+				>
+					Submit
+				</Button>
+			</form>
 			<div>Eventos en tendencia</div>
-			<Grid columns={[2]}>
+			<Grid
+				container
+				spacing={3}
+				rowSpacing={3}
+				sx={{
+					justifyContent: "stretch",
+					my: "50px",
+				}}
+			>
 				{fullEvents.length !== 0 ? (
 					eventsList
 				) : (

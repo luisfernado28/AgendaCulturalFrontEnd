@@ -14,7 +14,7 @@ function AdminEventsList(): JSX.Element {
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
-			<div key={event.id}>
+			<Grid item xs={12} key={event.id}>
 				<AdminEventCard
 					title={event.title}
 					artist={event.artist}
@@ -44,7 +44,7 @@ function AdminEventsList(): JSX.Element {
 					locationType={event.locationType}
 					locationCoordinates={event.locationCoordinates}
 				/>
-			</div>
+			</Grid>
 		);
 	});
 
@@ -53,7 +53,15 @@ function AdminEventsList(): JSX.Element {
 			Edita Eventos
 			<Link to="/createEvent">Crear evento</Link>
 			<Link to="/createVenue">Crear escenario</Link>
-			<Grid columns={[1]}>{eventsList}</Grid>
+			<Grid
+				container
+				sx={{
+					justifyContent: "stretch",
+					my: "50px",
+				}}
+			>
+				{eventsList}
+			</Grid>
 		</div>
 	);
 }

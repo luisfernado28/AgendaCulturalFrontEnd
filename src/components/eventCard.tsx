@@ -1,9 +1,8 @@
-import { CardMedia } from "@mui/material";
-import Card from "@mui/material/Card";
+import { CardMedia, Card } from "@mui/material";
 import { useEffect } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {  FullEvent } from "../redux/types";
+import { FullEvent } from "../redux/types";
 
 function EventCard({
 	id,
@@ -12,7 +11,7 @@ function EventCard({
 	price,
 	dates,
 	venueName,
-	time
+	time,
 }: FullEvent): JSX.Element {
 	const frontCardDate =
 		new Date(dates[0]).getDay() +
@@ -21,8 +20,7 @@ function EventCard({
 	const fromToCardDate = setDatesRange();
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-	}, [dispatch]);
+	useEffect(() => {}, [dispatch]);
 	function setDatesRange(): string {
 		const first = new Date(dates[0]);
 		if (dates.length === 1) {
@@ -46,15 +44,14 @@ function EventCard({
 		}
 	}
 	return (
-		<Card
-			
-		>
+		<Card sx={{ Width: 275, Height: 300 }} variant="outlined">
 			<div>
 				{imageUrl ? (
 					<Link to={`/events/${id}`}>
-						<CardMedia 
-							src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
-
+						<CardMedia
+							component="img"
+							height="240"
+							image={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
 						></CardMedia>
 					</Link>
 				) : (
@@ -64,23 +61,16 @@ function EventCard({
 			<div>
 				{frontCardDate}
 				{title}
-				<br />
-				<Link to={`/updateEvent/${id}`}>
-					{venueName === "" ? (
-						<div>Venue: Sin evento</div>
-					) : (
-						<div>Venue:{venueName}</div>
-					)}
-				</Link>
+				{venueName === "" ? (
+					<div>Venue: Sin evento</div>
+				) : (
+					<div>Venue:{venueName}</div>
+				)}
 				<br />
 				Dates:{fromToCardDate}
 				<br />
-				
-					Time{" "}
-					{new Date(time).getHours() +
-						":" +
-						new Date(time).getMinutes()}
-				
+				Time{" "}
+				{new Date(time).getHours() + ":" + new Date(time).getMinutes()}
 				<br />
 				Precio:{price}
 				<br />
