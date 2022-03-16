@@ -124,16 +124,15 @@ function ImageUpload({
 						Choose another file
 					</div>
 				) : overlay && data ? (
-					//inside card media
-
-					// {...props}
-					// src={data}
-					// variant={size ? 'profile' : 'fullwidth'}
-					<CardMedia />
+					<Container sx={{ height: "500px", width: "300px" }}>
+						<CardMedia src={data} component="img" />
+					</Container>
 				) : overlay ? (
 					<Typography>Suelta tu imagen aca!</Typography>
 				) : data ? (
-					<CardMedia />
+					<Container sx={{ height: "500px", width: "300px" }}>
+						<CardMedia src={data} component="img" />
+					</Container>
 				) : (
 					<div> Agrega tu imagen aca!</div>
 				)}

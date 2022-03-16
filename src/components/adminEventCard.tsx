@@ -1,22 +1,14 @@
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ShowModal from "./CustomModal";
-
-import {
-	Dates,
-	EventTypeStatus,
-	FullEvent,
-	ModalTypes,
-} from "../redux/types";
+import { Dates, EventTypeStatus, FullEvent, ModalTypes } from "../redux/types";
 import { removeFullEvent } from "../redux/fullEventsSlice";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
-import { Typography } from "@mui/material";
-
 interface AdminProps {
 	title: string;
 	artist: string;
@@ -72,89 +64,68 @@ function AdminEventCard({
 			: "Virtual";
 
 	return (
-		<Card  sx={{ Width: 800, Height: 300 }} variant="outlined">
-			<Typography variant="h4">{title}</Typography> 
-			<Grid 
-				xs={6}
-				sx={{
-					justifyContent: "stretch",
-					my: "50px",
-					rowGap: "100px",
-					columnGap: "50px",
-				}}
-			>
-				<Grid
-					xs={6}
-					sx={{
-						justifyContent: "stretch",
-						my: "50px",
-						rowGap: "100px",
-						columnGap: "50px",
-					}}
-				>
-					<div>
-						Artista/Elenco:
-						{artist}
-						<br />
-						Escenario:
-						{venueName}
-						<br />
-						Fecha:
+		<Card sx={{ Width: 800, Height: 300 }} variant="outlined">
+			<Grid container>
+				<Grid item xs={6}>
+					<Grid container>
+						<Grid item xs={6}>
+							Artista/Elenco:
+							{artist}
+							<br />
+							Escenario:
+							{venueName}
+							<br />
+							Fecha:
 							{startingDate.toLocaleString("default", {
 								month: "long",
 							}) +
 								"/" +
 								startingDate.getDay()}
-						
-					</div>
-					<div>
-						Precio:
-						{price}
-						<br />
-						Tipo de evento:
-						{typeOfEvent}
-						<br />
-						Hora:
-						{eventTime.toTimeString()}
-					</div>
+						</Grid>
+						<Grid item xs={6}>
+							Precio:
+							{price}
+							<br />
+							Tipo de evento:
+							{typeOfEvent}
+							<br />
+							Hora:
+							{eventTime.toTimeString()}
+						</Grid>
+					</Grid>
 				</Grid>
-				<Grid
-					columns={[3]}
-					sx={{
-						justifyContent: "stretch",
-						my: "50px",
-						rowGap: "100px",
-						columnGap: "50px",
-					}}
-				>
-					<div>
-						{imageUrl === "" ? (
-							<div>No image</div>
-						) : (
-							<div>
-								<CardMedia 
-									src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
-								></CardMedia>
-							</div>
-						)}
-					</div>
-					<div>
-						<Link to={`/updateEvent/${id}`}>
-							<FontAwesomeIcon icon={faEdit} />
-						</Link>
-					</div>
-					<div>
-						<Button
-							onClick={() =>
-								ShowModal({
-									type: ModalTypes.ConfirmDeleteModalValues,
-									onSuccess: () => handleDelete(id),
-								})
-							}
-						>
-							<FontAwesomeIcon icon={faTrash} />
-						</Button>
-					</div>
+				<Grid item xs={6}>
+					<Grid container>
+						<Grid item xs={4}>
+							{imageUrl === "" ? (
+								<div>No image</div>
+							) : (
+								<div>
+									<CardMedia
+										component="img"
+										src={`${process.env.REACT_APP_Blob_API}/eventsimages/${imageUrl}`}
+									></CardMedia>
+								</div>
+							)}
+						</Grid>
+						<Grid item xs={4}>
+							<Link to={`/updateEvent/${id}`}>
+								<FontAwesomeIcon icon={faEdit} />
+							</Link>
+						</Grid>
+						<Grid item xs={4}>
+							<Button
+								onClick={() =>
+									ShowModal({
+										type: ModalTypes.ConfirmDeleteModalValues,
+										onSuccess: () => handleDelete(id),
+									})
+								}
+							>
+								<FontAwesomeIcon icon={faTrash} />
+							</Button>
+						</Grid>
+					</Grid>
 				</Grid>
 			</Grid>
 		</Card>
