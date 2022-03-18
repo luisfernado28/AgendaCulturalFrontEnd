@@ -19,7 +19,7 @@ const initialState: FullEventReducer = {
 		price: 0,
 		id: "",
 		phone: "",
-		type: EventTypeStatus.HYBRID,
+		type: "0",
 		description: "",
 		website: "",
 		facebook: "",

@@ -63,7 +63,7 @@ export interface CreateFullEvents{
 	status: number;
 	price: number;
 	phone: string;
-	type: EventTypeStatus;
+	type: string;
 	description: string;
 	imageUrl?: string;
 	areIndependent: boolean;
@@ -237,7 +237,7 @@ export interface FullEvent {
 	status: number;
 	price: number;
 	phone: string;
-	type:  EventTypeStatus;
+	type:  string;
 	description: string;
 	imageUrl: string;
 	areIndependent: boolean;
@@ -267,7 +267,7 @@ export interface UpdateFullEvent {
 	status: number;
 	price: number;
 	phone: string;
-	type:  EventTypeStatus;
+	type:  string;
 	description: string;
 	imageUrl: string;
 	areIndependent: boolean;

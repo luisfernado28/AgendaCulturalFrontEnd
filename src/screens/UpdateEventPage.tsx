@@ -57,9 +57,9 @@ function UpdateEventPage({
 					twitter={fullEvent.twitter}
 					instagram={fullEvent.instagram}
 					id={fullEvent.id}
-					status={0}
+					status={fullEvent.status}
 					imageUrl={fullEvent.imageUrl}
-					areIndependent={false}
+					areIndependent={fullEvent.areIndependent}
 					time={fullEvent.time}
 					tags={fullEvent.tags}
 					venueName={fullEvent.venueName}

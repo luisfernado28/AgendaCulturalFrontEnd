@@ -29,7 +29,7 @@ interface Values {
 	venueId: string;
 	price: number;
 	phone: string;
-	type: EventTypeStatus;
+	type: string;
 	description: string;
 	website: string;
 	facebook: string;
@@ -119,11 +119,11 @@ function CreateEventForm(): JSX.Element {
 				[image],
 				`${values.title}_${
 					values.venueName
-				}_${calendarValue[0].getDate()}_${calendarValue[0].getDay()}_${calendarValue[0].getMonth()}`
+				}_${calendarValue[0].getDate()}_${calendarValue[0].getDay()}_${calendarValue[0].getMonth()}_${new Date().toDateString().replace(/ /g,"_")}`
 			);
 			newImageUrl = await postImage(setFile);
 		}
-		values.type = statusValue;
+		values.type = statusValue.toString();
 		const newEvent: CreateFullEvents = {
 			...values,
 			status: 1,
@@ -144,7 +144,7 @@ function CreateEventForm(): JSX.Element {
 			artist: "",
 			price: 56,
 			description: "",
-			type: 0,
+			type: "0",
 			venueId: "",
 			website: "",
 			facebook: "",
@@ -258,17 +258,17 @@ function CreateEventForm(): JSX.Element {
 								onChange={handleChange}
 							>
 								<FormControlLabel
-									value={0} //"Hibrido"
+									value={EventTypeStatus.HYBRID} //"Hibrido"
 									control={<Radio />}
 									label="Hibrido"
 								/>
 								<FormControlLabel
-									value={1} //"Presencial"
+									value={EventTypeStatus.LIVE} //"Presencial"
 									control={<Radio />}
 									label="Presencial"
 								/>
 								<FormControlLabel
-									value={2} //"Virtual"
+									value={EventTypeStatus.VIRTUAL} //"Virtual"
 									control={<Radio />}
 									label="Virtual"
 								/>
