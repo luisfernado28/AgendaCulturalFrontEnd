@@ -29,6 +29,7 @@ import {
 	TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
+import createImageForBlob from "../utils/utils";
 
 export interface FormProps {
 	title: string;
@@ -162,12 +163,12 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 			tags: [],
 		};
 		if (image) {
-			const setFile = new File(
-				[image],
-				`${values.title}_${
-					values.venueName
-				}_${calendarValue[0].getDate()}_${calendarValue[0].getDay()}_${calendarValue[0].getMonth()}_${new Date().toDateString().replace(/ /g,"_")}`
-			);
+			const setFile = createImageForBlob({
+				image: image,
+				title: values.title,
+				venueName: values.venueName,
+				calendarValue: calendarValue[0],
+			});
 			newImageUrl = await postImage(setFile);
 			updatedEvent.imageUrl = newImageUrl; // "/eventsimages/" + newImageUrl;
 		}
@@ -556,216 +557,6 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 					Submit
 				</Button>
 			</form>
-			{/* <Formik
-				initialValues={initialValues}
-				validationSchema={CreateEventSchema}
-				onSubmit={handleSubmit}
-			>
-				{({ handleSubmit }) => (
-					<Form onSubmit={handleSubmit}>
-						{initialValues.imageUrl === "" ? (
-							<ImageUpload
-								fromChild={(local: File) => setImage(local)}
-								alt={""}
-							/>
-						) : (
-							<ImageUpload
-								fromChild={(local: File) => setImage(local)}
-								alt={`${process.env.REACT_APP_Blob_API}/eventsimages/${initialValues.imageUrl}`}
-							/>
-						)}
-						<Grid columns={[3]}>
-							<Container>
-								<TextInput
-									name="title"
-									label="Titulo"
-									placeholder="Titulo del evento"
-									type="text"
-								/>
-								<TextInput
-									name="artist"
-									label="Artista"
-									placeholder="Artista"
-									type="text"
-								/>
-								Espacio
-								<TextInput
-									name="price"
-									label="Precio"
-									placeholder="Bs."
-									type="number"
-								/>
-								<TextAreaInput
-									name="description"
-									label="Descripción"
-									placeholder="Descripción del evento"
-									type="text"
-								/>
-								<Container
-									sx={{
-										display: "flex",
-										justifyContent: "space-evenly",
-										width: "75%",
-										"@media screen and (max-width:1400px)":
-											{
-												flexDirection: "column",
-											},
-									}}
-								>
-									<RadioButton
-										id="Hibrido"
-										label="Hibrido"
-										name="statusValue"
-										onChange={handleChange}
-										value={EventTypeStatus.HYBRID}
-										defaultChecked={
-											parseInt(
-												initialValues.type.toString()
-											) === EventTypeStatus.HYBRID
-										}
-									/>
-									<RadioButton
-										id="Presencial"
-										label="Presencial"
-										name="statusValue"
-										onChange={handleChange}
-										value={EventTypeStatus.LIVE}
-										defaultChecked={
-											parseInt(
-												initialValues.type.toString()
-											) === EventTypeStatus.LIVE
-										}
-									/>
-									<RadioButton
-										id="Virtual"
-										label="Virtual"
-										name="statusValue"
-										onChange={handleChange}
-										value={EventTypeStatus.VIRTUAL}
-										defaultChecked={
-											parseInt(
-												initialValues.type.toString()
-											) === EventTypeStatus.VIRTUAL
-										}
-									/>
-								</Container>
-								<Container>
-									<RadioButton
-										id="Rango"
-										label="Rango de fechas"
-										name="rangeCalendar"
-										onChange={handlerangeOrMultipleValue}
-										value="true"
-										defaultChecked={
-											rangeOrMultipleValue === "true"
-										}
-									/>
-									<RadioButton
-										id="Individuales"
-										label="Fechas individuales"
-										name="rangeCalendar"
-										onChange={handlerangeOrMultipleValue}
-										value="false"
-										defaultChecked={
-											rangeOrMultipleValue === "false"
-										}
-									/>
-									<CalendarItem
-										value={calendarValue}
-										rangeOrMultiuple={rangeOrMultipleValue}
-										onChange={calendarOnChange}
-									/>
-									<TimePickerItem
-										value={timeValue}
-										onChange={handletimeChange}
-									/>
-								</Container>
-							</Container>
-							<Container>
-								Redes Sociales
-								<TextInput
-									name="facebook"
-									label="Facebook"
-									placeholder="https://facebook"
-									type="url"
-								/>
-								<TextInput
-									name="twitter"
-									label="Twitter"
-									placeholder="https://twitter"
-									type="url"
-								/>
-								<TextInput
-									name="instagram"
-									label="Instagram"
-									placeholder="https://Instagram"
-									type="url"
-								/>
-								<TextInput
-									name="website"
-									label="Pagina Web"
-									placeholder="https://"
-									type="url"
-								/>
-								<TextInput
-									name="phone"
-									label="Telefono"
-									placeholder=""
-									type="string"
-								/>
-							</Container>
-							<Container>
-								Informacion de espacio
-								<TextInput
-									name="venueName"
-									label="Nombre de Espacio"
-									type="string"
-								/>
-								<TextInput
-									name="address"
-									label="Direccion de Espacio"
-									type="string"
-								/>
-								<TextInput
-									name="venueFacebook"
-									label="Facebook de Espacio"
-									placeholder="https://facebook"
-									type="url"
-								/>
-								<TextInput
-									name="venueTwitter"
-									label="Twitter de Espacio"
-									placeholder="https://twitter"
-									type="url"
-								/>
-								<TextInput
-									name="venueInstagram"
-									label="Instagram de Espacio"
-									placeholder="https://Instagram"
-									type="url"
-								/>
-								<TextInput
-									name="venueWebsite"
-									label="Pagina Web de Espacio"
-									placeholder="https://"
-									type="url"
-								/>
-							</Container>
-						</Grid>
-
-						<Container
-							sx={{
-								display: "flex",
-								flexDirection: "row",
-							}}
-						>
-							<Button sx={{ marginLeft: "8px" }} type="submit">
-								Create
-							</Button>
-						</Container>
-					</Form>
-				)}
-			</Formik> */}
 		</div>
 	);
 }

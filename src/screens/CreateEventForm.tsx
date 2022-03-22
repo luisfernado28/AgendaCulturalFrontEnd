@@ -22,6 +22,7 @@ import { couldStartTrivia } from "typescript";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import ImageUpload from "../components/ImageUpload";
+import createImageForBlob from "../utils/utils";
 
 interface Values {
 	title: string;
@@ -115,12 +116,12 @@ function CreateEventForm(): JSX.Element {
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
 		if (image) {
-			const setFile = new File(
-				[image],
-				`${values.title}_${
-					values.venueName
-				}_${calendarValue[0].getDate()}_${calendarValue[0].getDay()}_${calendarValue[0].getMonth()}_${new Date().toDateString().replace(/ /g,"_")}`
-			);
+			const setFile = createImageForBlob({
+				image: image,
+				title: values.title,
+				venueName: values.venueName,
+				calendarValue: calendarValue[0]
+			})
 			newImageUrl = await postImage(setFile);
 		}
 		values.type = statusValue.toString();
