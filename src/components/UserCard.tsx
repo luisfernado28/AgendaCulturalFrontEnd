@@ -37,44 +37,40 @@ function UserCard({
 	};
 
 	return (
-		<Card>
-			<Grid
-				columns={[2]}
-				sx={{
-					justifyContent: "stretch",
-					my: "50px",
-					rowGap: "100px",
-					columnGap: "50px",
-				}}
-			>
-				<div>
-					Username: {username}
-					<br />
-					Nombre: {firstName}
-					<br />
-					Apellido: {lastName}
-					<br />
-					{admin ? "Es admin" : "No es admin"}
-					<br />
-				</div>
-				<Grid columns={[3]}>
+		<Card sx={{ Width: 800, Height: 300 }} variant="outlined">
+			<Grid container>
+				<Grid item xs={6}>
 					<div>
-						<Link to={`/updateUser/${id}`}>
-							<FontAwesomeIcon icon={faEdit} />
-						</Link>
+						Username: {username}
+						<br />
+						Nombre: {firstName}
+						<br />
+						Apellido: {lastName}
+						<br />
+						{admin ? "Es admin" : "No es admin"}
+						<br />
 					</div>
-					<div>
-						<Button
-							onClick={() =>
-								ShowModal({
-									type: ModalTypes.ConfirmDeleteModalValues,
-									onSuccess: () => handleDelete(id),
-								})
-							}
-						>
-							<FontAwesomeIcon icon={faTrash} />
-						</Button>
-					</div>
+				</Grid>
+				<Grid item xs={6}>
+					<Grid container>
+						<Grid item xs={6}>
+							<Link to={`/updateUser/${id}`}>
+								<FontAwesomeIcon icon={faEdit} />
+							</Link>
+						</Grid>
+						<Grid item xs={6}>
+							<Button
+								onClick={() =>
+									ShowModal({
+										type: ModalTypes.ConfirmDeleteModalValues,
+										onSuccess: () => handleDelete(id),
+									})
+								}
+							>
+								<FontAwesomeIcon icon={faTrash} />
+							</Button>
+						</Grid>
+					</Grid>
 				</Grid>
 			</Grid>
 		</Card>

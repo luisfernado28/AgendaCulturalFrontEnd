@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormik } from "formik";
 import { useState } from "react";
 import TextInput from "../components/TextInput";
 import { CreateUser } from "../redux/types";
@@ -7,7 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../redux/usersSlice";
 import { useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
-import { Button, Container, Grid, Switch } from "@mui/material";
+import {
+	Button,
+	Checkbox,
+	Container,
+	FormControlLabel,
+	Grid,
+	Switch,
+	TextField,
+} from "@mui/material";
 
 interface Values {
 	username: string;
@@ -37,13 +45,17 @@ const CreateUserSchema = Yup.object().shape({
 function CreateUserForm(): JSX.Element {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const [adminValue, setAdminValue] = useState(false);
 	const { userInfo } = useSelector(authUsers);
+	const [checked, setChecked] = useState(false);
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setChecked(event.target.checked);
+	};
 
 	const handleSubmit = async (values: Values) => {
 		const newUser: CreateUser = {
 			...values,
-			admin: adminValue,
+			admin: checked,
 		};
 		console.log(newUser);
 		await dispatch(createUser(newUser));
@@ -54,11 +66,105 @@ function CreateUserForm(): JSX.Element {
 		lastname: "",
 		password: "",
 	};
+	const formik = useFormik({
+		initialValues: {
+			username: "",
+			firstname: "",
+			lastname: "",
+			password: "",
+		},
+		validationSchema: CreateUserSchema,
+		onSubmit: (values) => {
+			handleSubmit(values);
+		},
+	});
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
 			Crea un nuevo usuario!
-			<Formik
+			<form onSubmit={formik.handleSubmit}>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField
+							id="username"
+							name="username"
+							label="Nombre de usuario"
+							value={formik.values.username}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.username &&
+								Boolean(formik.errors.username)
+							}
+							helperText={
+								formik.touched.username &&
+								formik.errors.username
+							}
+						/>
+						<TextField
+							id="firstname"
+							name="firstname"
+							label="Nombres"
+							value={formik.values.firstname}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.firstname &&
+								Boolean(formik.errors.firstname)
+							}
+							helperText={
+								formik.touched.firstname &&
+								formik.errors.firstname
+							}
+						/>
+						<TextField
+							id="lastname"
+							name="lastname"
+							label="Apellidos"
+							value={formik.values.lastname}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.lastname &&
+								Boolean(formik.errors.lastname)
+							}
+							helperText={
+								formik.touched.lastname &&
+								formik.errors.lastname
+							}
+						/>
+						<TextField
+							id="password"
+							name="password"
+							label="Contraseña"
+							value={formik.values.password}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.password &&
+								Boolean(formik.errors.password)
+							}
+							helperText={
+								formik.touched.password &&
+								formik.errors.password
+							}
+						/>
+						<FormControlLabel
+							control={
+								<Checkbox
+									checked={checked}
+									onChange={handleChange}
+								/>
+							}
+							label="Es administrador"
+						/>
+						<Button
+							color="primary"
+							variant="contained"
+							type="submit"
+						>
+							Submit
+						</Button>
+					</Grid>
+				</Grid>
+			</form>
+			{/* <Formik
 				initialValues={initialValues}
 				validationSchema={CreateUserSchema}
 				onSubmit={handleSubmit}
@@ -109,7 +215,7 @@ function CreateUserForm(): JSX.Element {
 						</Container>
 					</Form>
 				)}
-			</Formik>
+			</Formik> */}
 		</div>
 	);
 }

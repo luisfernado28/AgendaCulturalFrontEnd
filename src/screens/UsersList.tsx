@@ -11,7 +11,7 @@ function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { users } = useSelector(selectAllUsers);
-	const {userInfo} = useSelector(authUsers);
+	const { userInfo } = useSelector(authUsers);
 
 	useEffect(() => {
 		dispatch(fetchUsers());
@@ -19,7 +19,7 @@ function UsersList(): JSX.Element {
 
 	const usersList = users.map((user: User) => {
 		return (
-			<div key={user.id}>
+			<Grid item xs={12} rowSpacing={3} key={user.id}>
 				<UserCard
 					id={user.id}
 					username={user.username}
@@ -28,18 +28,19 @@ function UsersList(): JSX.Element {
 					password={user.password}
 					admin={user.admin}
 				/>
-			</div>
+			</Grid>
 		);
 	});
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
 			<div>Usuarios</div>
-			<Button>
-				<Link to="/createUser">Crear Usuario</Link>
+			<Button color="inherit" href="/createUser">
+				Crear evento
 			</Button>
+
 			<Grid
-				columns={[1]}
+				container
 				sx={{
 					justifyContent: "stretch",
 					my: "50px",
