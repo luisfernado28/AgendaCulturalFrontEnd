@@ -5,6 +5,7 @@ import LayoutWrapper from "./components/Layoutwrapper";
 import { useIdleTimer } from "react-idle-timer";
 import { useDispatch } from "react-redux";
 import { timeOutLogOut } from "./redux/authSlice";
+import { CssBaseline } from "@mui/material";
 
 function App() {
 	const dispatch = useDispatch();
@@ -20,6 +21,8 @@ function App() {
 
 	return (
 		<div className="App">
+			
+			<CssBaseline />
 			<BrowserRouter>
 				<LayoutWrapper>
 					<Router />

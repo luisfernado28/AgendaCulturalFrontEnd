@@ -6,9 +6,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
 import {
+	Box,
 	Button,
 	Grid,
 	MenuItem,
+	Pagination,
 	Select,
 	TextField,
 	Typography,
@@ -24,7 +26,16 @@ function ListPage(): JSX.Element {
 	const { fullEvents } = useSelector(selectAllFullEvents);
 	const { userInfo } = useSelector(authUsers);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
+	const [top, setTop] = useState(10);
+	const [skip, setSkip] = useState(0);
 
+	const [page, setPage] = useState(1);
+	console.log(skip);
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		setSkip((value - 1) * 10);
+
+		setPage(value);
+	};
 	const CreateEventSchema = Yup.object().shape({
 		searchBar: Yup.string()
 			.min(1, "Al menos un caracter")
@@ -32,7 +43,8 @@ function ListPage(): JSX.Element {
 	});
 
 	useEffect(() => {
-		dispatch(fetchFullEvents({}));
+		let queryParams: QueryParams = {};
+		dispatch(fetchFullEvents(queryParams));
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
@@ -103,62 +115,96 @@ function ListPage(): JSX.Element {
 	});
 	return (
 		<div>
-			<Button href="/adminEvents" color="inherit">
-				Administrar eventos
-			</Button>
-			<Button
-				href="/usersList"
-				disabled={!userInfo.admin}
-				color="inherit"
-			>
-				Administrar usuarios
-			</Button>
 			<form onSubmit={formik.handleSubmit}>
-				<TextField
-					fullWidth
-					id="searchBar"
-					name="searchBar"
-					label="Busqueda"
-					value={formik.values.searchBar}
-					onChange={formik.handleChange}
-					error={
-						formik.touched.searchBar &&
-						Boolean(formik.errors.searchBar)
-					}
-					helperText={
-						formik.touched.searchBar && formik.errors.searchBar
-					}
-				/>
-				<Typography variant="h6" component="div">
-					Ordenar
-				</Typography>
-				<Select
-					value={sortValue}
-					onChange={(e) => {
-						setSortValueDropdown(e.target.value);
-					}}
+				<Grid
+					container
+					spacing={0}
+					direction="column"
+					alignItems="center"
+					justifyContent="center"
 				>
-					<MenuItem value="title asc">Titulo Ascendente</MenuItem>
-					<MenuItem value="title desc">Titulo Descendente</MenuItem>
-				</Select>
-
-				<Button
-					color="primary"
-					variant="contained"
-					fullWidth
-					type="submit"
-				>
-					Submit
-				</Button>
+					<Grid item xs={3}>
+						<Box
+							sx={{
+								display: "flex",
+								alignItems: "center",
+								p: 1,
+								m: 1,
+								bgcolor: "background.paper",
+								height: 100,
+								borderRadius: 1,
+								width: "800px",
+								flexDirection: "row",
+								justifyContent: "center",
+								alignContent: "center",
+							}}
+						>
+							<TextField
+								fullWidth
+								id="searchBar"
+								name="searchBar"
+								label="Busqueda"
+								value={formik.values.searchBar}
+								onChange={formik.handleChange}
+								error={
+									formik.touched.searchBar &&
+									Boolean(formik.errors.searchBar)
+								}
+								helperText={
+									formik.touched.searchBar &&
+									formik.errors.searchBar
+								}
+							/>
+							<Box
+								sx={{
+									display: "flex",
+									alignItems: "center",
+									flexDirection: "column",
+									p: 1,
+									m: 1,
+									bgcolor: "background.paper",
+									borderRadius: 1,
+								}}
+							>
+								<Typography variant="h6" component="div">
+									Ordenar
+								</Typography>
+								<Select
+									value={sortValue}
+									onChange={(e) => {
+										setSortValueDropdown(e.target.value);
+									}}
+								>
+									<MenuItem value="title asc">
+										Titulo Ascendente
+									</MenuItem>
+									<MenuItem value="title desc">
+										Titulo Descendente
+									</MenuItem>
+								</Select>
+							</Box>
+							<Button
+								color="primary"
+								variant="contained"
+								fullWidth
+								type="submit"
+							>
+								Submit
+							</Button>
+						</Box>
+					</Grid>
+				</Grid>
 			</form>
-			<div>Eventos en tendencia</div>
+			<Typography variant="h3" component="div">
+				Eventos en tendencia
+			</Typography>
 			<Grid
 				container
 				spacing={3}
 				rowSpacing={3}
 				sx={{
 					justifyContent: "stretch",
-					my: "50px",
+					my: "10px",
 				}}
 			>
 				{fullEvents.length !== 0 ? (
@@ -167,6 +213,23 @@ function ListPage(): JSX.Element {
 					<div>No existen eventos con esas caracteristicas :c</div>
 				)}
 			</Grid>
+			{fullEvents.length !== 0 ? (
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Pagination
+						count={10}
+						page={page}
+						onChange={handleChange}
+					/>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</div>
 	);
 }

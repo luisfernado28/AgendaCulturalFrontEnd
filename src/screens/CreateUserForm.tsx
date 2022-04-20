@@ -144,6 +144,7 @@ function CreateUserForm(): JSX.Element {
 								formik.touched.password &&
 								formik.errors.password
 							}
+							type="password"
 						/>
 						<FormControlLabel
 							control={
@@ -164,58 +165,6 @@ function CreateUserForm(): JSX.Element {
 					</Grid>
 				</Grid>
 			</form>
-			{/* <Formik
-				initialValues={initialValues}
-				validationSchema={CreateUserSchema}
-				onSubmit={handleSubmit}
-			>
-				{({ handleSubmit }) => (
-					<Form onSubmit={handleSubmit}>
-						<Grid columns={[2]}>
-							<Container>
-								<TextInput
-									name="username"
-									label="Username"
-									placeholder="Username"
-									type="text"
-								/>
-								<TextInput
-									name="firstname"
-									label="Nombre"
-									placeholder="Nombre"
-									type="text"
-								/>
-								<TextInput
-									name="lastname"
-									label="Apellido"
-									placeholder="Apellido"
-									type="text"
-								/>
-								<TextInput
-									name="password"
-									label="Contrasena"
-									placeholder="Contrasena"
-									type="text"
-								/>
-								<Switch
-									onChange={() => setAdminValue(!adminValue)}
-									value={0}
-								/>
-							</Container>
-						</Grid>
-						<Container
-							sx={{
-								display: "flex",
-								flexDirection: "row",
-							}}
-						>
-							<Button sx={{ marginLeft: "8px" }} type="submit">
-								Crear nuevo Usuario!
-							</Button>
-						</Container>
-					</Form>
-				)}
-			</Formik> */}
 		</div>
 	);
 }

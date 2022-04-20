@@ -1,9 +1,11 @@
-import { CardMedia, Card } from "@mui/material";
+import { CardMedia, Card, CardContent, Typography, Box } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FullEvent } from "../redux/types";
-
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 function EventCard({
 	id,
 	title,
@@ -44,7 +46,10 @@ function EventCard({
 		}
 	}
 	return (
-		<Card sx={{ Width: 275, Height: 300 }} variant="outlined">
+		<Card
+			sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+			variant="outlined"
+		>
 			<div>
 				{imageUrl ? (
 					<Link to={`/events/${id}`}>
@@ -55,26 +60,87 @@ function EventCard({
 						></CardMedia>
 					</Link>
 				) : (
-					<Link to={`/events/${id}`}>No image go to event</Link>
+					// <Link to={`/events/${id}`}>No image go to event</Link>
+					<Link to={`/events/${id}`}>
+						<CardMedia
+							component="img"
+							height="240"
+							image={`${process.env.REACT_APP_Blob_API}/eventsimages/noImage.jpg`}
+						></CardMedia>
+					</Link>
 				)}
 			</div>
-			<div>
+			<CardContent sx={{ flexGrow: 1 }}>
+				<Typography gutterBottom variant="h5" component="h2">
+					{title}
+				</Typography>
+				<Typography variant="h6" sx={{ fontWeight: "bold" }}>
+					{venueName === "" ? (
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "row",
+								justifyContent: "center",
+								alignItems: "center",
+								alignContent: "center",
+							}}
+						>
+							<AddLocationIcon />
+							<div>Virtual</div>
+						</Box>
+					) : (
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "row",
+								justifyContent: "center",
+								alignItems: "center",
+								alignContent: "center",
+							}}
+						>
+							<AddLocationIcon />
+							{venueName}
+						</Box>
+					)}
+				</Typography>
+				<Typography>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "center",
+							alignItems: "center",
+							alignContent: "center",
+						}}
+					>
+						<CalendarTodayOutlinedIcon />
+						Fecha:
+						{fromToCardDate}
+						{"   "}
+						<AccessTimeOutlinedIcon />
+						Hora:
+						{new Date(time).getHours() +
+							":" +
+							new Date(time).getMinutes()}
+					</Box>
+				</Typography>
+			</CardContent>
+			{/* <div>
 				{frontCardDate}
-				{title}
 				{venueName === "" ? (
 					<div>Venue: Sin evento</div>
 				) : (
 					<div>Venue:{venueName}</div>
 				)}
 				<br />
-				Dates:{fromToCardDate}
+				
 				<br />
 				Time{" "}
 				{new Date(time).getHours() + ":" + new Date(time).getMinutes()}
 				<br />
 				Precio:{price}
 				<br />
-			</div>
+			</div> */}
 		</Card>
 	);
 }

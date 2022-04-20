@@ -1,4 +1,4 @@
-import { Filter } from "../redux/types";
+import { Filter, Pagination } from "../redux/types";
 
 export const buildQueryParams = (filter: Filter): string => {
 	let res: string = "$filter=(";
@@ -40,4 +40,9 @@ export const buildOrderBy2 = (orderByFilters: string[]): string => {
 	});
 	filter = filter.slice(0, -2);
 	return filter;
+};
+
+export const buildPagination = (pagination: Pagination): string => {
+	
+	return "";
 };

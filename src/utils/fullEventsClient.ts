@@ -6,7 +6,7 @@ import {
 	UpdateFullEvent,
 } from "../redux/types";
 import { o, OdataQuery } from "odata";
-import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
+import { buildFilter, buildOrderBy2, buildPagination } from "./buildOdataParams";
 
 
 let routes: string;
@@ -18,9 +18,11 @@ export async function getFullEvents(queryParams?: QueryParams): Promise<FullEven
 	try {
 		if (queryParams) {
 			const params: OdataQuery = {};
-			const { filter, orderby } = queryParams;
+			const { filter, orderby,pagination } = queryParams;
 			if (filter) params.$filter = buildFilter(filter);
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
+			if (pagination) params.$top = pagination.top;
+			if (pagination) params.$skip = pagination.skip;
 			const response = await o(routes).get("fullevents").query(params);
 			const results = await response;
 			return results;

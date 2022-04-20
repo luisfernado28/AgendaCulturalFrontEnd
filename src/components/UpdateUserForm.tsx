@@ -1,11 +1,19 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import TextInput from "./TextInput";
 import * as Yup from "yup";
 import { UpdateUser, UserUpdateData } from "../redux/types";
 import { modifyUser } from "../redux/userSlice";
-import { Button, Container, Grid, Switch } from "@mui/material";
+import {
+	Button,
+	Checkbox,
+	Container,
+	FormControlLabel,
+	Grid,
+	Switch,
+	TextField,
+} from "@mui/material";
 
 interface Values {
 	username: string;
@@ -52,6 +60,11 @@ function UpdateUserForm({
 }: FormProps): JSX.Element {
 	const dispatch = useDispatch();
 	const [adminValue, setAdminValue] = useState(false);
+	const [checked, setChecked] = useState(admin);
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setChecked(event.target.checked);
+	};
 	const handleSubmit = async (values: Values) => {
 		const newUser: UpdateUser = {
 			...values,
@@ -69,62 +82,105 @@ function UpdateUserForm({
 		lastname: lastname,
 		password: password,
 	};
+	const formik = useFormik({
+		initialValues: {
+			username: username,
+			firstname: firstname,
+			lastname: lastname,
+			password: "",
+		},
+		validationSchema: CreateUserSchema,
+		onSubmit: (values) => {
+			handleSubmit(values);
+		},
+	});
 	return (
 		<div>
-			Crea un nuevo usuario!
-			<Formik
-				initialValues={initialValues}
-				validationSchema={CreateUserSchema}
-				onSubmit={handleSubmit}
-			>
-				{({ handleSubmit }) => (
-					<Form onSubmit={handleSubmit}>
-						<Grid columns={[2]}>
-							<Container>
-								<TextInput
-									name="username"
-									label="Username"
-									placeholder="Username"
-									type="text"
+			Actualiza un usuario!
+			<form onSubmit={formik.handleSubmit}>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField
+							id="username"
+							name="username"
+							label="Nombre de usuario"
+							value={formik.values.username}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.username &&
+								Boolean(formik.errors.username)
+							}
+							helperText={
+								formik.touched.username &&
+								formik.errors.username
+							}
+						/>
+						<TextField
+							id="firstname"
+							name="firstname"
+							label="Nombres"
+							value={formik.values.firstname}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.firstname &&
+								Boolean(formik.errors.firstname)
+							}
+							helperText={
+								formik.touched.firstname &&
+								formik.errors.firstname
+							}
+						/>
+						<TextField
+							id="lastname"
+							name="lastname"
+							label="Apellidos"
+							value={formik.values.lastname}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.lastname &&
+								Boolean(formik.errors.lastname)
+							}
+							helperText={
+								formik.touched.lastname &&
+								formik.errors.lastname
+							}
+						/>
+						<TextField
+							id="password"
+							name="password"
+							label="Contraseña"
+							value={formik.values.password}
+							onChange={formik.handleChange}
+							error={
+								formik.touched.password &&
+								Boolean(formik.errors.password)
+							}
+							helperText={
+								formik.touched.password &&
+								formik.errors.password
+							}
+							
+							type="password"
+						/>
+						<FormControlLabel
+							control={
+								<Checkbox
+									checked={checked}
+									onChange={handleChange}
 								/>
-								<TextInput
-									name="firstname"
-									label="Nombre"
-									placeholder="Nombre"
-									type="text"
-								/>
-								<TextInput
-									name="lastname"
-									label="Apellido"
-									placeholder="Apellido"
-									type="text"
-								/>
-								<TextInput
-									name="password"
-									label="Contrasena"
-									placeholder="Contrasena"
-									type="password"
-									disabled={true}
-								/>
-								<Switch
-									onChange={() => setAdminValue(!adminValue)}
-									value={0}
-								/>
-							</Container>
-						</Grid>
-						<Container
-							sx={{
-								display: "flex",
-								flexDirection: "row",
-							}}
+							}
+							label="Es administrador"
+						/>
+						<Button
+							color="primary"
+							variant="contained"
+							type="submit"
 						>
-							<Button sx={{ marginLeft: "8px" }} type="submit">
-								Actualizar usuario
-							</Button>
-						</Container>
-					</Form>
-				)}
-			</Formik>
+							Submit
+						</Button>
+					</Grid>
+				</Grid>
+			</form>
 		</div>
 	);
 }

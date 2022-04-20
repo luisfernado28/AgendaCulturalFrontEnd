@@ -12,8 +12,7 @@ async function uploadImage(file: File) {
     //services 
     const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net?${sas}`);
     const containerClient = blobServiceClient.getContainerClient(containerName);
-    //const blobClient = containerClient.getBlobClient(blobName);
-
+    
     // create blobClient for container
     const blobClient = containerClient.getBlockBlobClient(file.name);
 
