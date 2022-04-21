@@ -6,6 +6,8 @@ import { authUser, authUsers, timeOutLogOut } from "../redux/authSlice";
 import { Status, UserCredentials } from "../redux/types";
 import PageSpinner from "../components/Spinner";
 import Button from "@mui/material/Button";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const SignIn = (): JSX.Element => {
 	const dispatch = useDispatch();
@@ -13,11 +15,10 @@ const SignIn = (): JSX.Element => {
 	const userState = useSelector(authUsers);
 
 	const handleSubmit = async (
-		values: UserCredentials,
-		{ setSubmitting }: FormikHelpers<UserCredentials>
-	) => {
+		values: UserCredentials	) => {
 		dispatch(authUser(values));
 	};
+
 
 	let Errortitle: string | undefined;
 	if (userState.requestStatus === Status.LOADING) return <PageSpinner />;
@@ -32,10 +33,10 @@ const SignIn = (): JSX.Element => {
 
 	return (
 		<div>
-			<Button>
+			{/* <Button>
 				<Link to="/">Regresar a eventos</Link>
-			</Button>
-			<LoginForm handleSubmit={handleSubmit} />
+			</Button> */}
+			<LoginForm />
 		</div>
 	);
 };

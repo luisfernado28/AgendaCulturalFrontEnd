@@ -1,8 +1,18 @@
-const Footer = (): JSX.Element => {
+import { Box, Typography } from "@mui/material";
+
+const Footer = (props: any): JSX.Element => {
 	return (
-		<div>
-			<div>Copyright 2021</div>
-		</div>
+		<Box sx={{backgroundColor: "#30CBD5"}}>
+			<Typography
+				variant="body2"
+				color="text.secondary"
+				align="center"
+				{...props}
+			>
+				{"Copyright © "} {new Date().getFullYear()}
+				{"."}
+			</Typography>
+		</Box>
 	);
 };
 

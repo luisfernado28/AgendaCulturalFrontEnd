@@ -14,6 +14,7 @@ function EventCard({
 	dates,
 	venueName,
 	time,
+	artist
 }: FullEvent): JSX.Element {
 	const frontCardDate =
 		new Date(dates[0]).getDay() +
@@ -72,7 +73,7 @@ function EventCard({
 			</div>
 			<CardContent sx={{ flexGrow: 1 }}>
 				<Typography gutterBottom variant="h5" component="h2">
-					{title}
+					{title} por {artist}
 				</Typography>
 				<Typography variant="h6" sx={{ fontWeight: "bold" }}>
 					{venueName === "" ? (
