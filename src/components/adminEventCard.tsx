@@ -1,5 +1,3 @@
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ShowModal from "./CustomModal";
@@ -9,6 +7,9 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
+import { Box } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 interface AdminProps {
 	title: string;
 	artist: string;
@@ -110,7 +111,7 @@ function AdminEventCard({
 						</Grid>
 						<Grid item xs={4}>
 							<Link to={`/updateEvent/${id}`}>
-								<FontAwesomeIcon icon={faEdit} />
+								<EditIcon/>
 							</Link>
 						</Grid>
 						<Grid item xs={4}>
@@ -122,7 +123,7 @@ function AdminEventCard({
 									})
 								}
 							>
-								<FontAwesomeIcon icon={faTrash} />
+								<DeleteForeverIcon/>
 							</Button>
 						</Grid>
 					</Grid>

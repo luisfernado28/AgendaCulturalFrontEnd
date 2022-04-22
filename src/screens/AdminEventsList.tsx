@@ -52,7 +52,6 @@ function AdminEventsList(): JSX.Element {
 		<div>
 			Edita Eventos
 			<Button color="inherit" href="/createEvent">Crear evento</Button>
-			<Link to="/createVenue">Crear escenario</Link>
 			<Grid
 				container
 				sx={{

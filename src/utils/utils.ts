@@ -16,3 +16,12 @@ const createImageForBlob = (props: contents): File => {
 	);
 };
 export default createImageForBlob;
+
+
+export const castTypeOfEvent = (value: string): string =>{
+	return value === "0"
+	? "Hibrido"
+	: value === "1"
+	? "Presencial"
+	: "Virtual"
+}
