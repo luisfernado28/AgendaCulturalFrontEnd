@@ -4,7 +4,7 @@ import { FullEvent } from "../redux/types";
 import AdminEventCard from "../components/adminEventCard";
 import { Link } from "react-router-dom";
 import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 function AdminEventsList(): JSX.Element {
 	const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function AdminEventsList(): JSX.Element {
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
-			<Grid item xs={12} rowSpacing={3} key={event.id}>
+			<Grid item xs={12} rowSpacing={15} key={event.id}>
 				<AdminEventCard
 					title={event.title}
 					artist={event.artist}
@@ -50,14 +50,19 @@ function AdminEventsList(): JSX.Element {
 
 	return (
 		<div>
-			Edita Eventos
-			<Button color="inherit" href="/createEvent">Crear evento</Button>
+			<Typography variant="h5" style={{ fontWeight: 600 }}>
+				Edita Eventos
+			</Typography>
+			<Button variant="contained" href="/createEvent">
+				Crear evento
+			</Button>
 			<Grid
 				container
 				sx={{
 					justifyContent: "stretch",
 					my: "50px",
 				}}
+				rowSpacing={5}
 			>
 				{eventsList}
 			</Grid>

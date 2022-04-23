@@ -126,22 +126,6 @@ function EventCard({
 					</Box>
 				</Typography>
 			</CardContent>
-			{/* <div>
-				{frontCardDate}
-				{venueName === "" ? (
-					<div>Venue: Sin evento</div>
-				) : (
-					<div>Venue:{venueName}</div>
-				)}
-				<br />
-				
-				<br />
-				Time{" "}
-				{new Date(time).getHours() + ":" + new Date(time).getMinutes()}
-				<br />
-				Precio:{price}
-				<br />
-			</div> */}
 		</Card>
 	);
 }
