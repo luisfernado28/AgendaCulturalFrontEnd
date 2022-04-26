@@ -8,6 +8,7 @@ import { createUser } from "../redux/usersSlice";
 import { useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
 import {
+	Box,
 	Button,
 	Checkbox,
 	Container,
@@ -15,6 +16,7 @@ import {
 	Grid,
 	Switch,
 	TextField,
+	Typography,
 } from "@mui/material";
 
 interface Values {
@@ -80,11 +82,21 @@ function CreateUserForm(): JSX.Element {
 	});
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
-		<div>
-			Crea un nuevo usuario!
+		<Box
+			sx={{
+				display: "inline-flex",
+				flexDirection: "Column",
+				justifyContent: "center",
+				alignItems: "center",
+				alignContent: "center",
+			}}
+		>
 			<form onSubmit={formik.handleSubmit}>
-				<Grid container spacing={2}>
-					<Grid item xs={6}>
+				<Grid container direction={"column"} spacing={3}>
+					<Typography gutterBottom variant="h5" component="h2">
+						Crea un nuevo usuario!
+					</Typography>
+					<Grid item>
 						<TextField
 							id="username"
 							name="username"
@@ -100,6 +112,8 @@ function CreateUserForm(): JSX.Element {
 								formik.errors.username
 							}
 						/>
+					</Grid>
+					<Grid item>
 						<TextField
 							id="firstname"
 							name="firstname"
@@ -115,6 +129,8 @@ function CreateUserForm(): JSX.Element {
 								formik.errors.firstname
 							}
 						/>
+					</Grid>
+					<Grid item>
 						<TextField
 							id="lastname"
 							name="lastname"
@@ -130,6 +146,8 @@ function CreateUserForm(): JSX.Element {
 								formik.errors.lastname
 							}
 						/>
+					</Grid>
+					<Grid item>
 						<TextField
 							id="password"
 							name="password"
@@ -146,6 +164,8 @@ function CreateUserForm(): JSX.Element {
 							}
 							type="password"
 						/>
+					</Grid>
+					<Grid item>
 						<FormControlLabel
 							control={
 								<Checkbox
@@ -155,6 +175,8 @@ function CreateUserForm(): JSX.Element {
 							}
 							label="Es administrador"
 						/>
+					</Grid>
+					<Grid item>
 						<Button
 							color="primary"
 							variant="contained"
@@ -165,7 +187,7 @@ function CreateUserForm(): JSX.Element {
 					</Grid>
 				</Grid>
 			</form>
-		</div>
+		</Box>
 	);
 }
 export default CreateUserForm;

@@ -35,8 +35,8 @@ function UsersList(): JSX.Element {
 	return (
 		<div>
 			<div>Usuarios</div>
-			<Button color="inherit" href="/createUser">
-				Crear evento
+			<Button   variant="contained" href="/createUser">
+				Crear usuario
 			</Button>
 
 			<Grid

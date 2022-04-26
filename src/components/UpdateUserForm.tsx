@@ -13,6 +13,7 @@ import {
 	Grid,
 	Switch,
 	TextField,
+	Typography,
 } from "@mui/material";
 
 interface Values {
@@ -96,10 +97,13 @@ function UpdateUserForm({
 	});
 	return (
 		<div>
-			Actualiza un usuario!
 			<form onSubmit={formik.handleSubmit}>
-				<Grid container spacing={2}>
-					<Grid item xs={6}>
+				<Grid container direction={"column"} spacing={3}>
+					<Typography gutterBottom variant="h5" component="h2">
+						Actualiza un usuario!
+					</Typography>
+
+					<Grid item>
 						<TextField
 							id="username"
 							name="username"
@@ -115,6 +119,8 @@ function UpdateUserForm({
 								formik.errors.username
 							}
 						/>
+					</Grid>
+					<Grid item>
 						<TextField
 							id="firstname"
 							name="firstname"
@@ -130,6 +136,8 @@ function UpdateUserForm({
 								formik.errors.firstname
 							}
 						/>
+					</Grid>
+					<Grid item>
 						<TextField
 							id="lastname"
 							name="lastname"
@@ -145,11 +153,13 @@ function UpdateUserForm({
 								formik.errors.lastname
 							}
 						/>
+					</Grid>
+					<Grid item>
 						<TextField
 							id="password"
 							name="password"
 							label="Contraseña"
-							value={formik.values.password}
+							value={""}
 							onChange={formik.handleChange}
 							error={
 								formik.touched.password &&
@@ -159,9 +169,10 @@ function UpdateUserForm({
 								formik.touched.password &&
 								formik.errors.password
 							}
-							
 							type="password"
 						/>
+					</Grid>
+					<Grid item>
 						<FormControlLabel
 							control={
 								<Checkbox
@@ -171,6 +182,8 @@ function UpdateUserForm({
 							}
 							label="Es administrador"
 						/>
+					</Grid>
+					<Grid item>
 						<Button
 							color="primary"
 							variant="contained"

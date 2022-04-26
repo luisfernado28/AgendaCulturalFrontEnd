@@ -9,6 +9,7 @@ import "yup-phone";
 import { createFullEvent } from "../redux/fullEventsSlice";
 import { DateObject } from "react-multi-date-picker";
 import {
+	Box,
 	Button,
 	Container,
 	FormControlLabel,
@@ -16,6 +17,7 @@ import {
 	Radio,
 	RadioGroup,
 	TextField,
+	Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { couldStartTrivia } from "typescript";
@@ -120,8 +122,8 @@ function CreateEventForm(): JSX.Element {
 				image: image,
 				title: values.title,
 				venueName: values.venueName,
-				calendarValue: calendarValue[0]
-			})
+				calendarValue: calendarValue[0],
+			});
 			newImageUrl = await postImage(setFile);
 		}
 		values.type = statusValue.toString();
@@ -172,319 +174,420 @@ function CreateEventForm(): JSX.Element {
 		<div>
 			Crea un nuevo evento!
 			<form onSubmit={formik.handleSubmit}>
-				<ImageUpload
-					fromChild={(local: File) => setImage(local)}
-					alt={""}
-				/>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "center",
+						alignItems: "center",
+						alignContent: "center",
+						backgroundColor: "gray",
+						margin: "20px",
+					}}
+				>
+					<ImageUpload
+						fromChild={(local: File) => setImage(local)}
+						alt={""}
+					/>
+				</Box>
 
 				<Grid container spacing={2}>
 					<Grid item xs={4}>
-						<div>
-							<br />
-							Titulo
-							<TextField
-								id="title"
-								name="title"
-								label="Titulo"
-								value={formik.values.title}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.title &&
-									Boolean(formik.errors.title)
-								}
-								helperText={
-									formik.touched.title && formik.errors.title
-								}
-							/>
-							<br />
-							Artista
-							<TextField
-								id="artist"
-								name="artist"
-								label="Artista"
-								value={formik.values.artist}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.artist &&
-									Boolean(formik.errors.artist)
-								}
-								helperText={
-									formik.touched.artist &&
-									formik.errors.artist
-								}
-							/>
-							<br />
-							Precio
-							<TextField
-								name="price"
-								label="Precio"
-								id="price"
-								value={formik.values.price}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.price &&
-									Boolean(formik.errors.price)
-								}
-								helperText={
-									formik.touched.price && formik.errors.price
-								}
-								type="number"
-							/>
-							<br />
-							Descripción
-							<TextField
-								name="description"
-								label="Descripción"
-								id="price"
-								value={formik.values.description}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.description &&
-									Boolean(formik.errors.description)
-								}
-								helperText={
-									formik.touched.description &&
-									formik.errors.description
-								}
-								multiline
-								rows={6}
-							/>
-							<br />
-							Tipo de evento
-							<RadioGroup
-								row
-								aria-labelledby="demo-row-radio-buttons-group-label"
-								name="row-radio-buttons-group"
-								value={statusValue}
-								onChange={handleChange}
+						<Grid container direction={"column"} spacing={3}>
+							<Typography variant="h4" component="div">
+								Informacion del evento
+							</Typography>
+							<Grid item>
+								<TextField
+									id="title"
+									name="title"
+									label="Titulo"
+									value={formik.values.title}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.title &&
+										Boolean(formik.errors.title)
+									}
+									helperText={
+										formik.touched.title &&
+										formik.errors.title
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="artist"
+									name="artist"
+									label="Artista"
+									value={formik.values.artist}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.artist &&
+										Boolean(formik.errors.artist)
+									}
+									helperText={
+										formik.touched.artist &&
+										formik.errors.artist
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									name="price"
+									label="Precio"
+									id="price"
+									value={formik.values.price}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.price &&
+										Boolean(formik.errors.price)
+									}
+									helperText={
+										formik.touched.price &&
+										formik.errors.price
+									}
+									type="number"
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									name="description"
+									label="Descripción"
+									id="price"
+									value={formik.values.description}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.description &&
+										Boolean(formik.errors.description)
+									}
+									helperText={
+										formik.touched.description &&
+										formik.errors.description
+									}
+									multiline
+									rows={6}
+								/>
+							</Grid>
+							<Grid item>Tipo de evento</Grid>
+							<Grid
+								item
+								sx={{
+									display: "flex",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "center",
+									alignContent: "center",
+								}}
 							>
-								<FormControlLabel
-									value={EventTypeStatus.HYBRID} //"Hibrido"
-									control={<Radio />}
-									label="Hibrido"
-								/>
-								<FormControlLabel
-									value={EventTypeStatus.LIVE} //"Presencial"
-									control={<Radio />}
-									label="Presencial"
-								/>
-								<FormControlLabel
-									value={EventTypeStatus.VIRTUAL} //"Virtual"
-									control={<Radio />}
-									label="Virtual"
-								/>
-							</RadioGroup>
-							<Container>
 								<RadioGroup
 									row
 									aria-labelledby="demo-row-radio-buttons-group-label"
 									name="row-radio-buttons-group"
-									value={rangeOrMultipleValue}
-									onChange={handlerangeOrMultipleValue}
-									defaultChecked={true}
+									value={statusValue}
+									onChange={handleChange}
 								>
 									<FormControlLabel
-										value={true}
+										value={EventTypeStatus.HYBRID} //"Hibrido"
 										control={<Radio />}
-										label="Rango de fechas"
+										label="Hibrido"
 									/>
 									<FormControlLabel
-										value={false}
+										value={EventTypeStatus.LIVE} //"Presencial"
 										control={<Radio />}
-										label="Fechas individuales"
+										label="Presencial"
+									/>
+									<FormControlLabel
+										value={EventTypeStatus.VIRTUAL} //"Virtual"
+										control={<Radio />}
+										label="Virtual"
 									/>
 								</RadioGroup>
-
+							</Grid>
+							<Grid item> Horario</Grid>
+							<Grid item>
+								<TimePickerItem
+									value={timeValue}
+									onChange={handletimeChange}
+								/>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid
+						item
+						xs={4}
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							alignContent: "center",
+						}}
+					>
+						<Grid container direction={"column"} spacing={3}>
+							<Grid item> Tipo de fecha</Grid>
+							<Grid item>
+								<Container>
+									<RadioGroup
+										row
+										aria-labelledby="demo-row-radio-buttons-group-label"
+										name="row-radio-buttons-group"
+										value={rangeOrMultipleValue}
+										onChange={handlerangeOrMultipleValue}
+										defaultChecked={true}
+										sx={{
+											display: "flex",
+											flexDirection: "row",
+											justifyContent: "center",
+											alignItems: "center",
+											alignContent: "center",
+										}}
+									>
+										<FormControlLabel
+											value={true}
+											control={<Radio />}
+											label="Rango de fechas"
+										/>
+										<FormControlLabel
+											value={false}
+											control={<Radio />}
+											label="Fechas individuales"
+										/>
+									</RadioGroup>
+								</Container>
+							</Grid>
+							<Grid item>
+								<Typography variant="h4" component="div">
+									Fecha(s)
+								</Typography>
+							</Grid>
+							<Grid item>
 								<CalendarItem
 									value={calendarValue}
 									rangeOrMultiuple={rangeOrMultipleValue.toString()}
 									onChange={calendarOnChange}
 								/>
-								<TimePickerItem
-									value={timeValue}
-									onChange={handletimeChange}
+							</Grid>
+							<Grid item>
+								<Typography variant="h4" component="div">
+									Redes Sociales del evento
+								</Typography>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="facebook"
+									name="facebook"
+									label="Facebook"
+									value={formik.values.facebook}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.facebook &&
+										Boolean(formik.errors.facebook)
+									}
+									helperText={
+										formik.touched.facebook &&
+										formik.errors.facebook
+									}
 								/>
-							</Container>
-						</div>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="twitter"
+									name="twitter"
+									label="Twitter"
+									value={formik.values.twitter}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.twitter &&
+										Boolean(formik.errors.twitter)
+									}
+									helperText={
+										formik.touched.twitter &&
+										formik.errors.twitter
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="instagram"
+									name="instagram"
+									label="Instagram"
+									value={formik.values.instagram}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.instagram &&
+										Boolean(formik.errors.instagram)
+									}
+									helperText={
+										formik.touched.instagram &&
+										formik.errors.instagram
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="website"
+									name="website"
+									label="Pagina Web"
+									value={formik.values.website}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.website &&
+										Boolean(formik.errors.website)
+									}
+									helperText={
+										formik.touched.website &&
+										formik.errors.website
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="phone"
+									name="phone"
+									label="Telefono"
+									value={formik.values.phone}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.phone &&
+										Boolean(formik.errors.phone)
+									}
+									helperText={
+										formik.touched.phone &&
+										formik.errors.phone
+									}
+								/>
+							</Grid>
+						</Grid>
 					</Grid>
-					<Grid item xs={4}>
-						<Container>
-							Redes Sociales
-							<TextField
-								id="facebook"
-								name="facebook"
-								label="Facebook"
-								value={formik.values.facebook}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.facebook &&
-									Boolean(formik.errors.facebook)
-								}
-								helperText={
-									formik.touched.facebook &&
-									formik.errors.facebook
-								}
-							/>
-							<TextField
-								id="twitter"
-								name="twitter"
-								label="Twitter"
-								value={formik.values.twitter}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.twitter &&
-									Boolean(formik.errors.twitter)
-								}
-								helperText={
-									formik.touched.twitter &&
-									formik.errors.twitter
-								}
-							/>
-							<TextField
-								id="instagram"
-								name="instagram"
-								label="Instagram"
-								value={formik.values.instagram}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.instagram &&
-									Boolean(formik.errors.instagram)
-								}
-								helperText={
-									formik.touched.instagram &&
-									formik.errors.instagram
-								}
-							/>
-							<TextField
-								id="website"
-								name="website"
-								label="Pagina Web"
-								value={formik.values.website}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.website &&
-									Boolean(formik.errors.website)
-								}
-								helperText={
-									formik.touched.website &&
-									formik.errors.website
-								}
-							/>
-							<TextField
-								id="phone"
-								name="phone"
-								label="Telefono"
-								value={formik.values.phone}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.phone &&
-									Boolean(formik.errors.phone)
-								}
-								helperText={
-									formik.touched.phone && formik.errors.phone
-								}
-							/>
-						</Container>
-					</Grid>
-					<Grid item xs={4}>
-						<Container>
-							Informacion de espacio
-							<TextField
-								id="venueName"
-								name="venueName"
-								label="Nombre del espacio"
-								value={formik.values.venueName}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.venueName &&
-									Boolean(formik.errors.venueName)
-								}
-								helperText={
-									formik.touched.venueName &&
-									formik.errors.venueName
-								}
-							/>
-							<TextField
-								id="address"
-								name="address"
-								label="Direccion de Espacio"
-								value={formik.values.address}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.address &&
-									Boolean(formik.errors.address)
-								}
-								helperText={
-									formik.touched.address &&
-									formik.errors.address
-								}
-							/>
-							<TextField
-								id="venueFacebook"
-								name="venueFacebook"
-								label="Facebook de Espacio"
-								value={formik.values.venueFacebook}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.venueFacebook &&
-									Boolean(formik.errors.venueFacebook)
-								}
-								helperText={
-									formik.touched.venueFacebook &&
-									formik.errors.venueFacebook
-								}
-							/>
-							<TextField
-								id="venueTwitter"
-								name="venueTwitter"
-								label="Twitter de Espacio"
-								value={formik.values.venueTwitter}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.venueTwitter &&
-									Boolean(formik.errors.venueTwitter)
-								}
-								helperText={
-									formik.touched.venueTwitter &&
-									formik.errors.venueTwitter
-								}
-							/>
-							<TextField
-								id="venueInstagram"
-								name="venueInstagram"
-								label="Instagram de Espacio"
-								value={formik.values.venueInstagram}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.venueInstagram &&
-									Boolean(formik.errors.venueInstagram)
-								}
-								helperText={
-									formik.touched.venueInstagram &&
-									formik.errors.venueInstagram
-								}
-							/>
-							<TextField
-								id="venueWebsite"
-								name="venueWebsite"
-								label="Pagina Web de Espacio"
-								value={formik.values.venueWebsite}
-								onChange={formik.handleChange}
-								error={
-									formik.touched.venueWebsite &&
-									Boolean(formik.errors.venueWebsite)
-								}
-								helperText={
-									formik.touched.venueWebsite &&
-									formik.errors.venueWebsite
-								}
-							/>
-						</Container>
+					<Grid
+						item
+						xs={4}
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							alignContent: "center",
+						}}
+					>
+						<Grid container direction={"column"} spacing={3}>
+							<Typography variant="h4" component="div">
+								Informacion de espacio
+							</Typography>
+							<Grid item>
+								<TextField
+									id="venueName"
+									name="venueName"
+									label="Nombre del espacio"
+									value={formik.values.venueName}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.venueName &&
+										Boolean(formik.errors.venueName)
+									}
+									helperText={
+										formik.touched.venueName &&
+										formik.errors.venueName
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="address"
+									name="address"
+									label="Direccion de Espacio"
+									value={formik.values.address}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.address &&
+										Boolean(formik.errors.address)
+									}
+									helperText={
+										formik.touched.address &&
+										formik.errors.address
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="venueFacebook"
+									name="venueFacebook"
+									label="Facebook de Espacio"
+									value={formik.values.venueFacebook}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.venueFacebook &&
+										Boolean(formik.errors.venueFacebook)
+									}
+									helperText={
+										formik.touched.venueFacebook &&
+										formik.errors.venueFacebook
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="venueTwitter"
+									name="venueTwitter"
+									label="Twitter de Espacio"
+									value={formik.values.venueTwitter}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.venueTwitter &&
+										Boolean(formik.errors.venueTwitter)
+									}
+									helperText={
+										formik.touched.venueTwitter &&
+										formik.errors.venueTwitter
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="venueInstagram"
+									name="venueInstagram"
+									label="Instagram de Espacio"
+									value={formik.values.venueInstagram}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.venueInstagram &&
+										Boolean(formik.errors.venueInstagram)
+									}
+									helperText={
+										formik.touched.venueInstagram &&
+										formik.errors.venueInstagram
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									id="venueWebsite"
+									name="venueWebsite"
+									label="Pagina Web de Espacio"
+									value={formik.values.venueWebsite}
+									onChange={formik.handleChange}
+									error={
+										formik.touched.venueWebsite &&
+										Boolean(formik.errors.venueWebsite)
+									}
+									helperText={
+										formik.touched.venueWebsite &&
+										formik.errors.venueWebsite
+									}
+								/>
+							</Grid>
+							<Grid item>
+								<Button
+									color="primary"
+									variant="contained"
+									type="submit"
+								>
+									Submit
+								</Button>
+							</Grid>
+						</Grid>
 					</Grid>
 				</Grid>
-				<Button color="primary" variant="contained" type="submit">
-					Submit
-				</Button>
 			</form>
 		</div>
 	);
