@@ -5,7 +5,7 @@ import { fetchUsers, selectAllUsers } from "../redux/usersSlice";
 import UserCard from "../components/UserCard";
 import { Link, useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function UsersList(): JSX.Element {
 
 	const usersList = users.map((user: User) => {
 		return (
-			<Grid item xs={12} rowSpacing={3} key={user.id}>
+			<Grid item xs={8} rowSpacing={3} key={user.id}>
 				<UserCard
 					id={user.id}
 					username={user.username}
@@ -34,19 +34,25 @@ function UsersList(): JSX.Element {
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
 		<div>
-			<div>Usuarios</div>
-			<Button   variant="contained" href="/createUser">
+			<Typography variant="h4" component="div">
+				Usuarios
+			</Typography>
+			<Button variant="contained" href="/createUser">
 				Crear usuario
 			</Button>
 
 			<Grid
 				container
 				sx={{
-					justifyContent: "stretch",
 					my: "50px",
-					rowGap: "100px",
-					columnGap: "50px",
+					rowGap: "50px",
+					width: "500px",
+					direction: "column",
+					justifyContent: "center",
+					alignItems: "center",
 				}}
+				spacing={{ xs: 12}}
+				rowSpacing={2}
 			>
 				{usersList}
 			</Grid>

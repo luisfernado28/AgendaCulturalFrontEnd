@@ -14,7 +14,7 @@ function AdminEventsList(): JSX.Element {
 	}, [dispatch]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
-			<Grid item xs={12} rowSpacing={15} key={event.id}>
+			<Grid item xs={11} rowSpacing={15} key={event.id}>
 				<AdminEventCard
 					title={event.title}
 					artist={event.artist}
@@ -59,9 +59,13 @@ function AdminEventsList(): JSX.Element {
 			<Grid
 				container
 				sx={{
-					justifyContent: "stretch",
 					my: "50px",
+					direction: "column",
+					justifyContent: "center",
+					alignItems: "center",
 				}}
+				
+				spacing={{ xs: 12}}
 				rowSpacing={5}
 			>
 				{eventsList}

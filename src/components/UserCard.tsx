@@ -38,7 +38,7 @@ function UserCard({
 	};
 
 	return (
-		<Card sx={{ Width: 800, Height: 300 }} variant="outlined">
+		<Card  variant="outlined">
 			<Grid container>
 				<Grid
 					item
@@ -61,7 +61,7 @@ function UserCard({
 						}}
 					>
 						<Typography variant="h5" style={{ fontWeight: 600 }}>
-							Username:
+							Nombre de usuario:
 						</Typography>
 						<Typography variant="h6">{username}</Typography>
 					</Box>
