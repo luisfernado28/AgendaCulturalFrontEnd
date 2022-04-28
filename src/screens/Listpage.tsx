@@ -16,7 +16,8 @@ import {
 	Typography,
 } from "@mui/material";
 import { authUsers } from "../redux/authSlice";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 interface Values {
 	searchBar: string;
 }
@@ -30,7 +31,6 @@ function ListPage(): JSX.Element {
 	const [skip, setSkip] = useState(0);
 
 	const [page, setPage] = useState(1);
-	console.log(skip);
 	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		setSkip((value - 1) * 10);
 
@@ -91,7 +91,6 @@ function ListPage(): JSX.Element {
 			};
 			queryParams.filter = filter;
 		}
-		console.log(sortValue);
 
 		if (sortValue !== "Ordenar") {
 			const orderby: string[] = [sortValue];
@@ -116,29 +115,22 @@ function ListPage(): JSX.Element {
 	return (
 		<div>
 			<form onSubmit={formik.handleSubmit}>
-				<Grid
-					container
-					spacing={0}
-					direction="column"
-					alignItems="center"
-					justifyContent="center"
+				<Box
+					sx={{
+						alignItems: "center",
+						justifyContent: "center",
+						display: "flex",
+					}}
 				>
-					<Grid item xs={3}>
-						<Box
-							sx={{
-								display: "flex",
-								alignItems: "center",
-								p: 1,
-								m: 1,
-								bgcolor: "background.paper",
-								height: 100,
-								borderRadius: 1,
-								width: "800px",
-								flexDirection: "row",
-								justifyContent: "center",
-								alignContent: "center",
-							}}
-						>
+					<Grid
+						container
+						spacing={2}
+						direction="row"
+						alignItems="center"
+						justifyContent="center"
+						width={"500px"}
+					>
+						<Grid item xs={12} sm={8} md={8} lg={8}>
 							<TextField
 								fullWidth
 								id="searchBar"
@@ -155,6 +147,8 @@ function ListPage(): JSX.Element {
 									formik.errors.searchBar
 								}
 							/>
+						</Grid>
+						<Grid item xs={12} sm={2} md={2} lg={2}>
 							<Box
 								sx={{
 									display: "flex",
@@ -166,9 +160,6 @@ function ListPage(): JSX.Element {
 									borderRadius: 1,
 								}}
 							>
-								<Typography variant="h6" component="div">
-									Ordenar
-								</Typography>
 								<Select
 									value={sortValue}
 									onChange={(e) => {
@@ -176,13 +167,15 @@ function ListPage(): JSX.Element {
 									}}
 								>
 									<MenuItem value="title asc">
-										Titulo Ascendente
+										<ArrowUpwardIcon />
 									</MenuItem>
 									<MenuItem value="title desc">
-										Titulo Descendente
+										<ArrowDownwardIcon />
 									</MenuItem>
 								</Select>
 							</Box>
+						</Grid>
+						<Grid item xs={12} sm={2} md={2} lg={2}>
 							<Button
 								color="primary"
 								variant="contained"
@@ -191,28 +184,38 @@ function ListPage(): JSX.Element {
 							>
 								Submit
 							</Button>
-						</Box>
+						</Grid>
 					</Grid>
-				</Grid>
+				</Box>
 			</form>
 			<Typography variant="h3" component="div">
 				Eventos en tendencia
 			</Typography>
-			<Grid
-				container
-				spacing={3}
-				rowSpacing={3}
-				sx={{
-					justifyContent: "stretch",
-					my: "10px",
-				}}
-			>
-				{fullEvents.length !== 0 ? (
-					eventsList
-				) : (
-					<div>No existen eventos con esas caracteristicas :c</div>
-				)}
-			</Grid>
+			{fullEvents.length !== 0 ? (
+				<Grid
+					container
+					spacing={3}
+					rowSpacing={3}
+					sx={{
+						justifyContent: "stretch",
+						my: "10px",
+					}}
+				>
+					{eventsList}
+				</Grid>
+			) : (
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Typography variant="h3" component="div">
+						No existen eventos con esas caracteristicas :c
+					</Typography>
+				</Box>
+			)}
 			{fullEvents.length !== 0 ? (
 				<div
 					style={{
