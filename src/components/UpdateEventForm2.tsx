@@ -240,26 +240,36 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 			<form onSubmit={formik.handleSubmit}>
 				<Box
 					sx={{
-						display: "flex",
-						flexDirection: "row",
-						justifyContent: "center",
 						alignItems: "center",
-						alignContent: "center",
-						backgroundColor: "gray",
-						margin: "20px",
+						justifyContent: "center",
+						display: "flex",
 					}}
 				>
-					{initialValues.imageUrl === "" ? (
-						<ImageUpload
-							fromChild={(local: File) => setImage(local)}
-							alt={""}
-						/>
-					) : (
-						<ImageUpload
-							fromChild={(local: File) => setImage(local)}
-							alt={`${process.env.REACT_APP_Blob_API}/eventsimages/${initialValues.imageUrl}`}
-						/>
-					)}
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							alignContent: "center",
+							backgroundColor: "#FFFFFF",
+							margin: "20px",
+							height: "200px",
+							width: "300px",
+						}}
+					>
+						{initialValues.imageUrl === "" ? (
+							<ImageUpload
+								fromChild={(local: File) => setImage(local)}
+								alt={""}
+							/>
+						) : (
+							<ImageUpload
+								fromChild={(local: File) => setImage(local)}
+								alt={`${process.env.REACT_APP_Blob_API}/eventsimages/${initialValues.imageUrl}`}
+							/>
+						)}
+					</Box>
 				</Box>
 				<Grid container spacing={2}>
 					<Grid item xs={4}>

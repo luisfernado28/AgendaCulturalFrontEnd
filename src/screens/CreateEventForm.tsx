@@ -176,20 +176,29 @@ function CreateEventForm(): JSX.Element {
 			<form onSubmit={formik.handleSubmit}>
 				<Box
 					sx={{
-						display: "flex",
-						flexDirection: "row",
-						justifyContent: "center",
 						alignItems: "center",
-						alignContent: "center",
-						backgroundColor: "gray",
-						margin: "20px",
-						
+						justifyContent: "center",
+						display: "flex",
 					}}
 				>
-					<ImageUpload
-						fromChild={(local: File) => setImage(local)}
-						alt={""}
-					/>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							alignContent: "center",
+							backgroundColor: "#73C6FD",
+							margin: "20px",
+							height: "300px",
+							width: "300px",
+						}}
+					>
+						<ImageUpload
+							fromChild={(local: File) => setImage(local)}
+							alt={""}
+						/>
+					</Box>
 				</Box>
 				<Box
 					sx={{

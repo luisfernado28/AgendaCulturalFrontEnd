@@ -84,7 +84,7 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Precio:
 				</Typography>
-				<Typography variant="h6">{"Bs: " + fullEvent.price}</Typography>
+				<Typography variant="h6">{fullEvent.price + " Bs"}</Typography>
 			</Box>
 			<Box
 				sx={{
@@ -108,7 +108,7 @@ function EventsDetail({
 				}}
 			>
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
-					Tipo de evento: 
+					Tipo de evento:
 				</Typography>
 				<Typography variant="h6">
 					{castTypeOfEvent(fullEvent.type)}
@@ -169,11 +169,24 @@ function EventsDetail({
 					alignItems: "center",
 				}}
 			>
-				<Typography variant="h5" style={{ fontWeight: 600 }}>
-					Descripcion:
-				</Typography>{" "}
-				<Typography variant="h6">{fullEvent.description}</Typography>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignItems: "center",
+						width: "500px",
+					}}
+				>
+					<Typography variant="h5" style={{ fontWeight: 600 }}>
+						Descripcion:
+					</Typography>{" "}
+					<Typography variant="h6">
+						{fullEvent.description}
+					</Typography>
+				</Box>
 			</Box>
+
 			<Typography variant="h5" style={{ fontWeight: 600 }}>
 				Redes sociales del evento
 			</Typography>
@@ -237,12 +250,21 @@ function EventsDetail({
 			{fullEvent.imageUrl === "" ? (
 				<div>No image</div>
 			) : (
-				<div>
-					<CardMedia
-						component="img"
-						src={`${process.env.REACT_APP_Blob_API}/eventsimages/${fullEvent.imageUrl}`}
-					></CardMedia>
-				</div>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Box sx={{ height: "300px", width: "300px" }}>
+						<CardMedia
+							component="img"
+							src={`${process.env.REACT_APP_Blob_API}/eventsimages/${fullEvent.imageUrl}`}
+						></CardMedia>
+					</Box>
+				</Box>
 			)}
 		</Fragment>
 	);
