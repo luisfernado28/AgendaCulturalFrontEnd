@@ -1,28 +1,47 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { User } from "../redux/types";
-import { fetchUsers, selectAllUsers } from "../redux/usersSlice";
+import { PaginationContent, QueryParams, User } from "../redux/types";
+import { countUsers, fetchUsers, selectAllUsers } from "../redux/usersSlice";
 import UserCard from "../components/UserCard";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Pagination, Typography } from "@mui/material";
+import { buildPaginationSize } from "../utils/buildOdataParams";
 
 function UsersList(): JSX.Element {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { users } = useSelector(selectAllUsers);
+	const { users, count } = useSelector(selectAllUsers);
 	const { userInfo } = useSelector(authUsers);
-
+	const [topValueUsers] = useState(5);
+	let skip = 0;
+	const [page, setPage] = useState(1);
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		skip = (value - 1) * 5;
+		setPage(value);
+		dispatchPageContent(topValueUsers, skip);
+	};
 	useEffect(() => {
-		dispatch(fetchUsers());
+		dispatchPageContent(topValueUsers, skip);
 	}, [dispatch]);
+	console.log(users);
+	const dispatchPageContent = (topValue: number, skipValue: number) => {
+		let paginationvalues: PaginationContent = {
+			top: topValue,
+			skip: skipValue,
+		};
+		let queryParams: QueryParams = { pagination: paginationvalues };
+		dispatch(fetchUsers(queryParams));
+		// dispatch(countUsers(queryParams));
+	};
 
 	const usersList = users.map((user: User) => {
+		console.log(user)
 		return (
 			<Grid item xs={8} rowSpacing={3} key={user.id}>
 				<UserCard
 					id={user.id}
-					username={user.username}
+					username={user.firstname}
 					firstName={user.firstname}
 					lastName={user.lastname}
 					password={user.password}
@@ -33,7 +52,14 @@ function UsersList(): JSX.Element {
 	});
 	if (!userInfo.admin) history.push("/adminEvents");
 	return (
-		<div>
+		<Box
+			sx={{
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				flexDirection: "column",
+			}}
+		>
 			<Typography variant="h4" component="div">
 				Usuarios
 			</Typography>
@@ -51,12 +77,17 @@ function UsersList(): JSX.Element {
 					justifyContent: "center",
 					alignItems: "center",
 				}}
-				spacing={{ xs: 12}}
+				spacing={{ xs: 12 }}
 				rowSpacing={2}
 			>
 				{usersList}
 			</Grid>
-		</div>
+			<Pagination
+				count={buildPaginationSize(count, 5)}
+				page={page}
+				onChange={handleChange}
+			/>
+		</Box>
 	);
 }
 

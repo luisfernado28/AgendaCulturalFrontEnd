@@ -129,7 +129,7 @@ function CreateEventForm(): JSX.Element {
 		values.type = statusValue.toString();
 		const newEvent: CreateFullEvents = {
 			...values,
-			status: 1,
+			status: "active",
 			venueId: "",
 			imageUrl: newImageUrl,
 			areIndependent: rangeOrMultipleValue,

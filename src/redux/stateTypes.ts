@@ -34,6 +34,7 @@ export interface UsersReducer {
   users: User[]
   hasMore: boolean
   status: string
+  count: number
 }
 export interface UserReducer {
   error: Error

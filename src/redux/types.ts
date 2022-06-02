@@ -60,7 +60,7 @@ export interface CreateEvent {
 export interface CreateFullEvents{
 	title: string;
 	artist: string;
-	status: number;
+	status: string;
 	price: number;
 	phone: string;
 	type: string;
@@ -177,7 +177,7 @@ export interface Filter {
 	orderby?: string[];
 }
 
-export interface Pagination {
+export interface PaginationContent {
 	top: number;
 	skip: number;
 }
@@ -185,7 +185,7 @@ export interface Pagination {
 export interface QueryParams {
 	filter?: Filter;
 	orderby?: string[];
-	pagination?: Pagination;
+	pagination?: PaginationContent;
 }
 
 export interface User {
@@ -264,7 +264,7 @@ export interface UpdateFullEvent {
 	id?: string;
 	title: string;
 	artist: string;
-	status: number;
+	status: string;
 	price: number;
 	phone: string;
 	type:  string;
@@ -273,7 +273,7 @@ export interface UpdateFullEvent {
 	areIndependent: boolean;
 	dates: string[];
 	time: string;
-	tags: string[];
+	tags?: string[];
 	website: string;
 	facebook: string;
 	twitter: string;

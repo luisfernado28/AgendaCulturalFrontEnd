@@ -1,8 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteUser, getUsers, postUser } from "../utils/authClient";
+import {
+	deleteUser,
+	getCountUsers,
+	getUsers,
+	postUser,
+} from "../utils/authClient";
 
 import { StoreState, UsersReducer } from "./stateTypes";
-import { CreateUser, Status } from "./types";
+import { CreateUser, QueryParams, Status } from "./types";
 
 const initialState: UsersReducer = {
 	error: {
@@ -12,11 +17,22 @@ const initialState: UsersReducer = {
 	users: [],
 	hasMore: true,
 	status: Status.IDLE,
+	count: 0,
 };
 
-export const fetchUsers = createAsyncThunk("auth/fetchUsers", async () => {
-	return await getUsers();
-});
+export const fetchUsers = createAsyncThunk(
+	"auth/fetchUsers",
+	async (queryParams?: QueryParams) => {
+		return await getUsers(queryParams);
+	}
+);
+
+export const countUsers = createAsyncThunk(
+	"auth/countUsers",
+	async (queryParams?: QueryParams) => {
+		return await getCountUsers(queryParams);
+	}
+);
 
 export const createUser = createAsyncThunk(
 	"auth/postUser",
@@ -33,7 +49,7 @@ export const removeUser = createAsyncThunk(
 );
 
 export const usersSlice = createSlice({
-	name: "venues",
+	name: "users",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
@@ -47,7 +63,16 @@ export const usersSlice = createSlice({
 		builder.addCase(fetchUsers.rejected, (state) => {
 			state.status = Status.FAILED;
 		});
-
+		builder.addCase(countUsers.pending, (state) => {
+			state.status = Status.LOADING;
+		});
+		builder.addCase(countUsers.fulfilled, (state, action) => {
+			state.status = Status.SUCCEEDED;
+			state.count = action.payload;
+		});
+		builder.addCase(countUsers.rejected, (state) => {
+			state.status = Status.FAILED;
+		});
 		builder.addCase(createUser.pending, (state) => {
 			state.status = Status.LOADING;
 		});

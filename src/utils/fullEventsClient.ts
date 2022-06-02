@@ -12,7 +12,7 @@ import { buildFilter, buildOrderBy2, buildPagination } from "./buildOdataParams"
 let routes: string;
 
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
-	routes = `${process.env.REACT_APP_EVENTS_API}/fullEvents`;
+	routes = `${process.env.REACT_APP_EVENTS_API}/Events`;
 }
 export async function getFullEvents(queryParams?: QueryParams): Promise<FullEvent[]> {
 	try {
@@ -23,11 +23,11 @@ export async function getFullEvents(queryParams?: QueryParams): Promise<FullEven
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
-			const response = await o(routes).get("fullevents").query(params);
+			const response = await o(routes).get("Events").query(params);
 			const results = await response;
 			return results;
 		} else {
-			const response = await o(routes).get("fullevents").query();
+			const response = await o(routes).get("Events").query();
 			const results = await response;
 			return results;
 		}

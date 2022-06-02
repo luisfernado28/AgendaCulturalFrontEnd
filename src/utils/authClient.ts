@@ -1,22 +1,69 @@
+import { o, OdataQuery } from "odata";
 import {
 	CreateUser,
+	QueryParams,
 	UpdateUser,
 	User,
 	UserCredentials,
 	UserCredentialsResponse,
 	UserUpdateData,
 } from "../redux/types";
+import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
 
 let routes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
 	routes = `${process.env.REACT_APP_EVENTS_API}/auth`;
 }
 
-export async function getUsers(): Promise<User[]> {
+export async function getUsers(queryParams?: QueryParams): Promise<User[]> {
 	try {
-		const response = await fetch(routes);
-		const results = await response.json();
-		return results;
+		if (queryParams) {
+			const params: OdataQuery = {};
+			const { filter, orderby, pagination } = queryParams;
+			if (filter) params.$filter = buildFilter(filter);
+			if (orderby) params.$orderby = buildOrderBy2(orderby);
+			if (pagination) params.$top = pagination.top;
+			if (pagination) params.$skip = pagination.skip;
+			params.$count = true;
+			const response = await o("https://localhost:44337")
+				.get("Users")
+				.query(params);
+			return response;
+		} else {
+			const response = await o("https://localhost:44337")
+				.get("Users")
+				.query();
+			const results = await response;
+			return results;
+		}
+		// const response = await fetch(routes);
+		// const results = await response.json();
+	} catch (error) {
+		throw new Error();
+	}
+}
+export async function getCountUsers(queryParams?: QueryParams): Promise<number> {
+	try {
+		if (queryParams) {
+			const params: OdataQuery = {};
+			const { filter, orderby, pagination } = queryParams;
+			if (filter) params.$filter = buildFilter(filter);
+			if (orderby) params.$orderby = buildOrderBy2(orderby);
+			if (pagination) params.$top = pagination.top;
+			if (pagination) params.$skip = pagination.skip;
+			params.$count = true;
+			const response = await o("https://localhost:44337")
+			.get("Users/$count")
+				.query(params);
+			return response;
+		} else {
+			const response = await o("https://localhost:44337")
+			.get("Users/$count")
+				.query();
+			const results = await response;
+			return results;
+		}
+		
 	} catch (error) {
 		throw new Error();
 	}

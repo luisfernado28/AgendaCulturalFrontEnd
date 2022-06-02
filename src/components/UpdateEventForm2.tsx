@@ -1,7 +1,4 @@
-import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import TextAreaInput from "../components/TextAreaInput";
-import TextInput from "../components/TextInput";
 import { useDispatch } from "react-redux";
 import {
 	Event,
@@ -14,7 +11,6 @@ import ImageUpload from "../components/ImageUpload";
 import { useState } from "react";
 import { postImage } from "../utils/blobStorageClient";
 import React from "react";
-import RadioButton from "../components/RadioButton";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import { modifyFullEvent } from "../redux/fullEventsSlice";
@@ -151,10 +147,10 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
-		values.type = statusValue;
+		values.type = statusValue.toString();
 		const updatedEvent: UpdateFullEvent = {
 			...values,
-			status: 1,
+			status: "active",
 			venueId: "",
 			imageUrl: eventForUpdate.imageUrl,
 			areIndependent: rangeOrMultipleValue,
@@ -162,7 +158,6 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 				return new Date(date.toString()).toISOString();
 			}),
 			time: timeValue.toDate().toISOString(),
-			tags: [],
 		};
 		if (image) {
 			const setFile = createImageForBlob({

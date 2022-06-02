@@ -1,4 +1,4 @@
-import { Filter, Pagination } from "../redux/types";
+import { Filter, PaginationContent } from "../redux/types";
 
 export const buildQueryParams = (filter: Filter): string => {
 	let res: string = "$filter=(";
@@ -24,7 +24,7 @@ export const buildOrderBy = (orderByFilters: string[]): string => {
 };
 
 export const buildFilter = (filter: Filter): string => {
-    let res: string = "";
+	let res: string = "";
 	for (const field in filter) {
 		const currentRule = buildRule(field, filter);
 		res = res + currentRule + " or ";
@@ -42,7 +42,19 @@ export const buildOrderBy2 = (orderByFilters: string[]): string => {
 	return filter;
 };
 
-export const buildPagination = (pagination: Pagination): string => {
-	
+export const buildPagination = (pagination: PaginationContent): string => {
 	return "";
+};
+
+export const buildPaginationSize = (
+	totalElements: number,
+	numberOfElementsOnSceen: number
+): number => {
+	if (totalElements <= numberOfElementsOnSceen) {
+		return 1;
+	} else if (totalElements % numberOfElementsOnSceen === 0) {
+		return Math.floor(totalElements / numberOfElementsOnSceen);
+	} else {
+		return Math.floor(totalElements / numberOfElementsOnSceen) + 1;
+	}
 };
