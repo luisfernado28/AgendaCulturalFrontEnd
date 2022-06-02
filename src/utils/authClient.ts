@@ -24,9 +24,11 @@ export async function getUsers(queryParams?: QueryParams): Promise<User[]> {
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
-			params.$count = true;
-			const response = await o("https://localhost:44337")
-				.get("Users")
+			// const response = await o("https://localhost:44337")
+			// 	.get("Users")
+			const response = await o(routes)
+				.get("auth")
+			
 				.query(params);
 			return response;
 		} else {
@@ -36,8 +38,6 @@ export async function getUsers(queryParams?: QueryParams): Promise<User[]> {
 			const results = await response;
 			return results;
 		}
-		// const response = await fetch(routes);
-		// const results = await response.json();
 	} catch (error) {
 		throw new Error();
 	}

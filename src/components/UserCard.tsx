@@ -26,7 +26,6 @@ function UserCard({
 }: UserProps): JSX.Element {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	console.log(username);
 	const handleDelete = (id: string) => {
 		dispatch(removeUser(id));
 		ShowModal({

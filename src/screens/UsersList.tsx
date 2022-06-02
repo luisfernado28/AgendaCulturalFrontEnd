@@ -24,7 +24,7 @@ function UsersList(): JSX.Element {
 	useEffect(() => {
 		dispatchPageContent(topValueUsers, skip);
 	}, [dispatch]);
-	console.log(users);
+
 	const dispatchPageContent = (topValue: number, skipValue: number) => {
 		let paginationvalues: PaginationContent = {
 			top: topValue,
@@ -32,16 +32,15 @@ function UsersList(): JSX.Element {
 		};
 		let queryParams: QueryParams = { pagination: paginationvalues };
 		dispatch(fetchUsers(queryParams));
-		// dispatch(countUsers(queryParams));
+		dispatch(countUsers(queryParams));
 	};
 
 	const usersList = users.map((user: User) => {
-		console.log(user)
 		return (
 			<Grid item xs={8} rowSpacing={3} key={user.id}>
 				<UserCard
 					id={user.id}
-					username={user.firstname}
+					username={user.username}
 					firstName={user.firstname}
 					lastName={user.lastname}
 					password={user.password}
@@ -83,7 +82,7 @@ function UsersList(): JSX.Element {
 				{usersList}
 			</Grid>
 			<Pagination
-				count={buildPaginationSize(count, 5)}
+				count={buildPaginationSize(count, topValueUsers)}
 				page={page}
 				onChange={handleChange}
 			/>
