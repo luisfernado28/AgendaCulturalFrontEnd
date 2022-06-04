@@ -1,33 +1,9 @@
-import { Event , FullEvent, User, Venue} from './types'
+import { Event, User, Venue} from './types'
 
 
 export interface Error {
   code: string
   message: string
-}
-
-
-export interface EventsReducer {
-  error: Error
-  events: Event[]
-  hasMore: boolean
-  status: string
-}
-export interface EventReducer {
-  error: Error
-  event: Event
-  eventStatus: string
-}
-export interface VenuesReducer {
-  error: Error
-  venues: Venue[]
-  hasMore: boolean
-  status: string
-}
-export interface VenueReducer {
-  error: Error
-  Venue: Venue
-  venueStatus: string
 }
 export interface UsersReducer {
   error: Error
@@ -56,28 +32,24 @@ export interface userInfo {
   admin: boolean,
   token: string
 }
-export interface FullEventsReducer {
+export interface EventsReducer {
   error: Error
-  fullEvents: FullEvent[]
+  Events: Event[]
   hasMore: boolean
   status: string
   count: number
 }
 
-export interface FullEventReducer {
+export interface EventReducer {
   error: Error
-  fullEvent: FullEvent
+  Event: Event
   eventStatus: string
 }
 
 export interface StoreState {
-  event: EventReducer
-  events: EventsReducer
-  venue: VenueReducer
-  venues: VenuesReducer
   users: UsersReducer
   user: UserReducer
   auth : Authentication 
-  fullEvents: FullEventsReducer
-  fullEvent: FullEventReducer
+  Events: EventsReducer
+  Event: EventReducer
 }

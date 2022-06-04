@@ -2,8 +2,8 @@ import { configureStore } from "@reduxjs/toolkit"
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authSlice } from "./authSlice";
-import fullEventSlice  from "./fullEventSlice";
-import fullEventsSlice  from "./fullEventsSlice";
+import EventSlice  from "./EventSlice";
+import EventsSlice  from "./EventsSlice";
 import userSlice from "./userSlice";
 import usersSlice from "./usersSlice";
 
@@ -21,8 +21,8 @@ const store = configureStore({
     auth: persistedReducer,
     users: usersSlice,
     user: userSlice,
-    fullEvents: fullEventsSlice,
-    fullEvent: fullEventSlice
+    Events: EventsSlice,
+    Event: EventSlice
   }
 });
 

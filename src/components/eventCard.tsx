@@ -2,7 +2,7 @@ import { CardMedia, Card, CardContent, Typography, Box } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { FullEvent } from "../redux/types";
+import { Event } from "../redux/types";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -15,7 +15,7 @@ function EventCard({
 	venueName,
 	time,
 	artist
-}: FullEvent): JSX.Element {
+}: Event): JSX.Element {
 	
 	const fromToCardDate = setDatesRange();
 	const dispatch = useDispatch();

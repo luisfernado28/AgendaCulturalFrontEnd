@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ShowModal from "./CustomModal";
-import { FullEvent, ModalTypes } from "../redux/types";
-import { removeFullEvent } from "../redux/fullEventsSlice";
+import { Event, ModalTypes } from "../redux/types";
+import { removeEvent } from "../redux/EventsSlice";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -20,12 +20,12 @@ function AdminEventCard({
 	type,
 	venueName,
 	time,
-}: FullEvent): JSX.Element {
+}: Event): JSX.Element {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const handleDelete = (id: string) => {
-		dispatch(removeFullEvent(id));
+		dispatch(removeEvent(id));
 		ShowModal({
 			onSuccess: () => {
 				history.push("/adminEvents");

@@ -12,26 +12,6 @@ export enum EventStatus {
 	PUBLISHED = "Published",
 }
 
-export interface Event {
-	title: string;
-	artist: string;
-	venueId: string;
-	status: number;
-	price: number;
-	id: string;
-	phone: string;
-	type: EventTypeStatus;
-	description: string;
-	website: string;
-	facebook: string;
-	twitter: string;
-	instagram: string;
-	imageUrl?: string;
-	dates: Dates;
-	tagsId?: string[];
-	time?: string;
-	venueName?: string;
-}
 
 export enum EventTypeStatus {
 	HYBRID,
@@ -39,25 +19,8 @@ export enum EventTypeStatus {
 	VIRTUAL,
 }
 
-export interface CreateEvent {
-	title: string;
-	artist: string;
-	venueId: string;
-	status: number;
-	price: number;
-	phone: string;
-	type: EventTypeStatus;
-	description: string;
-	website: string;
-	facebook: string;
-	twitter: string;
-	instagram: string;
-	imageUrl?: string;
-	dates: Dates;
-	tags?: string[];
-}
 
-export interface CreateFullEvents{
+export interface CreateEvents{
 	title: string;
 	artist: string;
 	status: string;
@@ -118,33 +81,11 @@ export interface CreateVenue {
 	instagram: string;
 }
 
+
+
 export interface EventUpdateData {
 	body: UpdateEvent;
-	eventId?: string;
-}
-
-export interface FullEventUpdateData {
-	body: UpdateFullEvent;
-	fullEventId?: string;
-}
-
-export interface UpdateEvent {
-	id?: string;
-	title: string;
-	artist: string;
-	venueId: string;
-	status: number;
-	price: number;
-	phone: string;
-	type: EventTypeStatus;
-	description: string;
-	website: string;
-	facebook: string;
-	twitter: string;
-	instagram: string;
-	imageUrl?: string;
-	dates: Dates;
-	tags?: string[];
+	EventId?: string;
 }
 
 export enum ModalTypes {
@@ -233,7 +174,7 @@ export interface UserCredentialsResponse {
 	token: string;
 }
 
-export interface FullEvent {
+export interface Event {
 	id: string;
 	title: string;
 	artist: string;
@@ -263,7 +204,7 @@ export interface FullEvent {
 	locationCoordinates: number[];
 }
 
-export interface UpdateFullEvent {
+export interface UpdateEvent {
 	id?: string;
 	title: string;
 	artist: string;

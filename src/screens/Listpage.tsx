@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	Filter,
-	FullEvent,
-	PaginationContent,
-	QueryParams,
-} from "../redux/types";
+import { Filter, Event, PaginationContent, QueryParams } from "../redux/types";
 import EventCard from "../components/eventCard";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-	countFullEvents,
-	fetchFullEvents,
-	selectAllFullEvents,
-} from "../redux/fullEventsSlice";
+	countEvents,
+	fetchEvents,
+	selectAllEvents,
+} from "../redux/EventsSlice";
 import {
 	Box,
 	Button,
@@ -33,7 +28,7 @@ interface Values {
 
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
-	const { fullEvents, count } = useSelector(selectAllFullEvents);
+	const { Events, count } = useSelector(selectAllEvents);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
 	const [topValueUsers] = useState(10);
 	const [page, setPage] = useState(1);
@@ -58,10 +53,10 @@ function ListPage(): JSX.Element {
 			.max(50, "El titulo no puede tener mas que 50 caracteres "),
 	});
 	useEffect(() => {
-		dispatch(fetchFullEvents(queryParameters));
-		dispatch(countFullEvents(queryParameters));
+		dispatch(fetchEvents(queryParameters));
+		dispatch(countEvents(queryParameters));
 	}, [dispatch, queryParameters]);
-	const eventsList = fullEvents.map((event: FullEvent) => {
+	const eventsList = Events.map((event: Event) => {
 		return (
 			<Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
 				<EventCard
@@ -118,10 +113,9 @@ function ListPage(): JSX.Element {
 		queryParams.pagination = pag;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
-			dispatch(fetchFullEvents({}));
+			dispatch(fetchEvents({}));
 		} else {
 			setqueryParameters(queryParams);
-			// dispatch(fetchFullEvents(queryParams));
 		}
 	};
 
@@ -213,7 +207,7 @@ function ListPage(): JSX.Element {
 			<Typography variant="h3" component="div">
 				Eventos en tendencia
 			</Typography>
-			{fullEvents.length !== 0 ? (
+			{Events.length !== 0 ? (
 				<Grid
 					container
 					spacing={3}
@@ -238,7 +232,7 @@ function ListPage(): JSX.Element {
 					</Typography>
 				</Box>
 			)}
-			{fullEvents.length !== 0 ? (
+			{Events.length !== 0 ? (
 				<div
 					style={{
 						display: "flex",

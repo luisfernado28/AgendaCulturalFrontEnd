@@ -2,7 +2,7 @@ import { Box, CardMedia, Link, Typography } from "@mui/material";
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
-import { fetchFullEventById, singleFullEvent } from "../redux/fullEventSlice";
+import { fetchEventById, singleEvent } from "../redux/EventSlice";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -12,13 +12,13 @@ function EventsDetail({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
 	const dispatch = useDispatch();
-	const { fullEvent } = useSelector(singleFullEvent);
+	const { Event } = useSelector(singleEvent);
 
 	useEffect(() => {
-		dispatch(fetchFullEventById(match.params.id));
-	}, [dispatch, fullEvent.id, match.params.id]);
+		dispatch(fetchEventById(match.params.id));
+	}, [dispatch, Event.id, match.params.id]);
 
-	const listOfDates = fullEvent.dates.map((inidividualDate) => {
+	const listOfDates = Event.dates.map((inidividualDate) => {
 		const newDate = new Date(inidividualDate);
 		return (
 			<Typography variant="h6" key={1}>
@@ -41,7 +41,7 @@ function EventsDetail({
 					Titulo
 				</Typography>
 				{"  "}
-				<Typography variant="h6">{fullEvent.title}</Typography>
+				<Typography variant="h6">{Event.title}</Typography>
 			</Box>
 			<Box
 				sx={{
@@ -54,7 +54,7 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Artista/Elenco:
 				</Typography>
-				<Typography variant="h6">{fullEvent.artist}</Typography>
+				<Typography variant="h6">{Event.artist}</Typography>
 			</Box>
 			<Box
 				sx={{
@@ -68,8 +68,8 @@ function EventsDetail({
 					Escenario:
 				</Typography>
 				<Typography variant="h6">
-					{Boolean(fullEvent.venueName)
-						? fullEvent.venueName
+					{Boolean(Event.venueName)
+						? Event.venueName
 						: "sin escenario"}
 				</Typography>
 			</Box>
@@ -84,7 +84,7 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Precio:
 				</Typography>
-				<Typography variant="h6">{fullEvent.price + " Bs"}</Typography>
+				<Typography variant="h6">{Event.price + " Bs"}</Typography>
 			</Box>
 			<Box
 				sx={{
@@ -97,7 +97,7 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Telefono:
 				</Typography>
-				<Typography variant="h6">{fullEvent.phone}</Typography>
+				<Typography variant="h6">{Event.phone}</Typography>
 			</Box>
 			<Box
 				sx={{
@@ -111,7 +111,7 @@ function EventsDetail({
 					Tipo de evento:
 				</Typography>
 				<Typography variant="h6">
-					{castTypeOfEvent(fullEvent.type)}
+					{castTypeOfEvent(Event.type)}
 				</Typography>
 			</Box>
 			<Box
@@ -125,12 +125,12 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Fechas
 				</Typography>
-				{fullEvent.areIndependent ? (
+				{Event.areIndependent ? (
 					listOfDates
 				) : (
 					<Typography variant="h6">
-						{new Date(fullEvent.dates[0]).toDateString()} a{" "}
-						{new Date(fullEvent.dates[1]).toDateString()}
+						{new Date(Event.dates[0]).toDateString()} a{" "}
+						{new Date(Event.dates[1]).toDateString()}
 					</Typography>
 				)}
 			</Box>
@@ -145,7 +145,7 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Horario:
 				</Typography>
-				<Typography variant="h6">{fullEvent.time}</Typography>
+				<Typography variant="h6">{Event.time}</Typography>
 			</Box>
 
 			<Box
@@ -159,7 +159,7 @@ function EventsDetail({
 				<Typography variant="h5" style={{ fontWeight: 600 }}>
 					Direccion:
 				</Typography>{" "}
-				<Typography variant="h6">{fullEvent.address}</Typography>
+				<Typography variant="h6">{Event.address}</Typography>
 			</Box>
 			<Box
 				sx={{
@@ -182,7 +182,7 @@ function EventsDetail({
 						Descripcion:
 					</Typography>{" "}
 					<Typography variant="h6">
-						{fullEvent.description}
+						{Event.description}
 					</Typography>
 				</Box>
 			</Box>
@@ -192,21 +192,21 @@ function EventsDetail({
 			</Typography>
 			<Box>
 				<Link
-					href={fullEvent.facebook}
+					href={Event.facebook}
 					underline="none"
 					target="_blank"
 				>
 					<FacebookIcon />
 				</Link>
 
-				<Link href={fullEvent.twitter} underline="none" target="_blank">
+				<Link href={Event.twitter} underline="none" target="_blank">
 					<TwitterIcon />
 				</Link>
-				<Link href={fullEvent.website} underline="none" target="_blank">
+				<Link href={Event.website} underline="none" target="_blank">
 					<LanguageIcon />
 				</Link>
 				<Link
-					href={fullEvent.instagram}
+					href={Event.instagram}
 					underline="none"
 					target="_blank"
 				>
@@ -218,7 +218,7 @@ function EventsDetail({
 			</Typography>
 			<Box>
 				<Link
-					href={fullEvent.venueFacebook}
+					href={Event.venueFacebook}
 					underline="none"
 					target="_blank"
 				>
@@ -226,28 +226,28 @@ function EventsDetail({
 				</Link>
 
 				<Link
-					href={fullEvent.venueTwitter}
+					href={Event.venueTwitter}
 					underline="none"
 					target="_blank"
 				>
 					<TwitterIcon />
 				</Link>
 				<Link
-					href={fullEvent.venueWebsite}
+					href={Event.venueWebsite}
 					underline="none"
 					target="_blank"
 				>
 					<LanguageIcon />
 				</Link>
 				<Link
-					href={fullEvent.venueInstagram}
+					href={Event.venueInstagram}
 					underline="none"
 					target="_blank"
 				>
 					<InstagramIcon />
 				</Link>
 			</Box>
-			{fullEvent.imageUrl === "" ? (
+			{Event.imageUrl === "" ? (
 				<div>No image</div>
 			) : (
 				<Box
@@ -261,7 +261,7 @@ function EventsDetail({
 					<Box sx={{ height: "300px", width: "300px" }}>
 						<CardMedia
 							component="img"
-							src={`${process.env.REACT_APP_Blob_API}/eventsimages/${fullEvent.imageUrl}`}
+							src={`${process.env.REACT_APP_Blob_API}/eventsimages/${Event.imageUrl}`}
 						></CardMedia>
 					</Box>
 				</Box>

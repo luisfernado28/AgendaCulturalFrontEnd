@@ -1,11 +1,11 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { CreateFullEvents, EventTypeStatus } from "../redux/types";
+import { CreateEvents, EventTypeStatus } from "../redux/types";
 import { useState} from "react";
 import { postImage } from "../utils/blobStorageClient";
 import React from "react";
 import "yup-phone";
-import { createFullEvent } from "../redux/fullEventsSlice";
+import { createEvent } from "../redux/EventsSlice";
 import { DateObject } from "react-multi-date-picker";
 import {
 	Box,
@@ -122,7 +122,7 @@ function CreateEventForm(): JSX.Element {
 			newImageUrl = await postImage(setFile);
 		}
 		values.type = statusValue.toString();
-		const newEvent: CreateFullEvents = {
+		const newEvent: CreateEvents = {
 			...values,
 			status: "active",
 			venueId: "",
@@ -133,7 +133,7 @@ function CreateEventForm(): JSX.Element {
 			}),
 			time: timeValue.toDate().toISOString(),
 		};
-		await dispatch(createFullEvent(newEvent));
+		await dispatch(createEvent(newEvent));
 	};
 
 	const formik = useFormik({

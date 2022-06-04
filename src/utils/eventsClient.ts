@@ -1,9 +1,9 @@
 import {
-	CreateFullEvents,
-	FullEvent,
-	FullEventUpdateData,
+	CreateEvents,
+	Event,
+	EventUpdateData,
 	QueryParams,
-	UpdateFullEvent,
+	UpdateEvent,
 } from "../redux/types";
 import { o, OdataQuery } from "odata";
 import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
@@ -14,7 +14,7 @@ let routes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
 	routes = `${process.env.REACT_APP_EVENTS_API}/Events`;
 }
-export async function getFullEvents(queryParams?: QueryParams): Promise<FullEvent[]> {
+export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	try {
 		if (queryParams) {
 			const params: OdataQuery = {};
@@ -41,7 +41,7 @@ export async function getFullEvents(queryParams?: QueryParams): Promise<FullEven
 	}
 }
 
-export async function getCountFullEvents(queryParams?: QueryParams): Promise<number> {
+export async function getCountEvents(queryParams?: QueryParams): Promise<number> {
 	try {
 		if (queryParams) {
 			const params: OdataQuery = {};
@@ -67,7 +67,7 @@ export async function getCountFullEvents(queryParams?: QueryParams): Promise<num
 		throw new Error();
 	}
 }
-export async function postFullEvent(params: CreateFullEvents): Promise<FullEvent> {
+export async function postEvent(params: CreateEvents): Promise<Event> {
 	try {
 		const { ...body } = params;
 		const res = await fetch(routes, {
@@ -88,12 +88,12 @@ export async function postFullEvent(params: CreateFullEvents): Promise<FullEvent
 		}
 	}
 }
-export async function getFullEventById(fullEventId: string): Promise<FullEvent> {
+export async function getEventById(EventId: string): Promise<Event> {
 	try {
 		const headers: any = {
 			"Content-Type": "application/json",
 		};
-		const response = await fetch(`${routes}/${fullEventId}`, {
+		const response = await fetch(`${routes}/${EventId}`, {
 			method: "GET",
 			headers,
 		});
@@ -110,12 +110,12 @@ export async function getFullEventById(fullEventId: string): Promise<FullEvent> 
 }
 
 
-export async function putFullEvent({
+export async function putEvent({
 	body,
-	fullEventId,
-}: FullEventUpdateData): Promise<UpdateFullEvent> {
+	EventId,
+}: EventUpdateData): Promise<UpdateEvent> {
 	try {
-		await fetch(`${routes}/${fullEventId}`, {
+		await fetch(`${routes}/${EventId}`, {
 			method: "PUT",
 			body: JSON.stringify(body),
 			headers: {
@@ -134,9 +134,9 @@ export async function putFullEvent({
 }
 
 
-export async function deleteFullEvent(fullEventId: string): Promise<void> {
+export async function deleteEvent(EventId: string): Promise<void> {
 	try {
-		await fetch(`${routes}/${fullEventId}`, {
+		await fetch(`${routes}/${EventId}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",

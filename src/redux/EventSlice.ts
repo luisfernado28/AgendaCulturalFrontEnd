@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getFullEventById } from "../utils/fullEventsClient";
+import { getEventById } from "../utils/eventsClient";
 import {
-	FullEventReducer,
+	EventReducer,
 	StoreState,
 } from "./stateTypes";
 import {Status } from "./types";
 
-const initialState: FullEventReducer = {
+const initialState: EventReducer = {
 	error: {
 		code: "",
 		message: "",
 	},
-	fullEvent: {
+	Event: {
 		title: "",
 		artist: "",
 		venueId: "",
@@ -43,31 +43,31 @@ const initialState: FullEventReducer = {
 	eventStatus: Status.IDLE,
 };
 
-export const fetchFullEventById = createAsyncThunk(
-	"event/fetchFullEventById",
+export const fetchEventById = createAsyncThunk(
+	"event/fetchEventById",
 	async (eventId: string) => {
-		return await getFullEventById(eventId);
+		return await getEventById(eventId);
 	}
 );
 
-export const fullEventSlice = createSlice({
-	name: "fullEvent",
+export const EventSlice = createSlice({
+	name: "Event",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(fetchFullEventById.pending, (state) => {
+		builder.addCase(fetchEventById.pending, (state) => {
 			state.eventStatus = Status.LOADING;
 		});
-		builder.addCase(fetchFullEventById.fulfilled, (state, action) => {
+		builder.addCase(fetchEventById.fulfilled, (state, action) => {
 			state.eventStatus = Status.SUCCEEDED;
-			state.fullEvent = action.payload;
+			state.Event = action.payload;
 		});
-		builder.addCase(fetchFullEventById.rejected, (state) => {
+		builder.addCase(fetchEventById.rejected, (state) => {
 			state.eventStatus = Status.FAILED;
 		});
 	},
 });
 
-export const singleFullEvent = ({ fullEvent }: StoreState): FullEventReducer =>
-	fullEvent;
-export default fullEventSlice.reducer;
+export const singleEvent = ({ Event }: StoreState): EventReducer =>
+	Event;
+export default EventSlice.reducer;

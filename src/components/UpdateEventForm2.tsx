@@ -1,11 +1,10 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import {
-	Event,
 	Dates,
 	EventTypeStatus,
-	UpdateFullEvent,
-	FullEvent,
+	UpdateEvent,
+	Event,
 } from "../redux/types";
 import ImageUpload from "../components/ImageUpload";
 import { useState } from "react";
@@ -13,7 +12,7 @@ import { postImage } from "../utils/blobStorageClient";
 import React from "react";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
-import { modifyFullEvent } from "../redux/fullEventsSlice";
+import { modifyEvent } from "../redux/EventsSlice";
 import { DateObject } from "react-multi-date-picker";
 import {
 	Button,
@@ -111,7 +110,7 @@ const CreateEventSchema = Yup.object().shape({
 		.max(200, "La direccion no puede tener mas que 200 caracteres ")
 		.required("Direccion del espacio es requerida"),
 });
-function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
+function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 	const dispatch = useDispatch();
 	const [image, setImage] = useState<File>();
 
@@ -148,7 +147,7 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
 		values.type = statusValue.toString();
-		const updatedEvent: UpdateFullEvent = {
+		const updatedEvent: UpdateEvent = {
 			...values,
 			status: "active",
 			venueId: "",
@@ -170,9 +169,9 @@ function UpdateEventForm2(eventForUpdate: FullEvent): JSX.Element {
 			updatedEvent.imageUrl = newImageUrl; // "/eventsimages/" + newImageUrl;
 		}
 		await dispatch(
-			modifyFullEvent({
+			modifyEvent({
 				body: updatedEvent,
-				fullEventId: eventForUpdate.id,
+				EventId: eventForUpdate.id,
 			})
 		);
 	};

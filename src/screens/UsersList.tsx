@@ -98,10 +98,8 @@ function UsersList(): JSX.Element {
 		queryParams.pagination = pag;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
-			// dispatch(fetchFullEvents({}));
 		} else {
 			setqueryParameters(queryParams);
-			// dispatch(fetchFullEvents(queryParams));
 		}
 	};
 

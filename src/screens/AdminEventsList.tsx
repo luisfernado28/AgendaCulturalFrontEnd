@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	Filter,
-	FullEvent,
+	Event,
 	PaginationContent,
 	QueryParams,
 } from "../redux/types";
 import AdminEventCard from "../components/adminEventCard";
 import {
-	fetchFullEvents,
-	selectAllFullEvents,
-	countFullEvents,
-} from "../redux/fullEventsSlice";
+	fetchEvents,
+	selectAllEvents,
+	countEvents,
+} from "../redux/EventsSlice";
 import {
 	Box,
 	Button,
@@ -42,7 +42,7 @@ function AdminEventsList(): JSX.Element {
 	const [page, setPage] = useState(1);
 
 	const [queryParameters, setqueryParameters] = useState(setQueryParams);
-	const { fullEvents, count } = useSelector(selectAllFullEvents);
+	const { Events, count } = useSelector(selectAllEvents);
 	const CreateEventSchema = Yup.object().shape({
 		searchBar: Yup.string()
 			.min(1, "Al menos un caracter")
@@ -60,10 +60,10 @@ function AdminEventsList(): JSX.Element {
 	};
 
 	useEffect(() => {
-		dispatch(fetchFullEvents(queryParameters));
-		dispatch(countFullEvents(queryParameters));
+		dispatch(fetchEvents(queryParameters));
+		dispatch(countEvents(queryParameters));
 	}, [dispatch, queryParameters]);
-	const eventsList = fullEvents.map((event: FullEvent) => {
+	const eventsList = Events.map((event: Event) => {
 		return (
 			<Grid item xs={11} rowSpacing={15} key={event.id}>
 				<AdminEventCard
@@ -119,7 +119,7 @@ function AdminEventsList(): JSX.Element {
 		queryParams.pagination = pag;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
-			dispatch(fetchFullEvents({}));
+			dispatch(fetchEvents({}));
 		} else {
 			setqueryParameters(queryParams);
 		}
@@ -230,7 +230,7 @@ function AdminEventsList(): JSX.Element {
 			>
 				{eventsList}
 			</Grid>
-			{fullEvents.length !== 0 ? (
+			{Events.length !== 0 ? (
 				<div
 					style={{
 						display: "flex",
