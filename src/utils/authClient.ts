@@ -11,8 +11,10 @@ import {
 import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
 
 let routes: string;
+let noVersionRoutes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
-	routes = `${process.env.REACT_APP_EVENTS_API}/auth`;
+	routes = `${process.env.REACT_APP_EVENTS_API}/v1.0/auth`;
+	noVersionRoutes= `${process.env.REACT_APP_EVENTS_API}/auth`;
 }
 
 export async function getUsers(queryParams?: QueryParams): Promise<User[]> {
@@ -24,15 +26,12 @@ export async function getUsers(queryParams?: QueryParams): Promise<User[]> {
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
-			// const response = await o("https://localhost:44337")
-			// 	.get("Users")
 			const response = await o(routes)
 				.get("auth")
-			
 				.query(params);
 			return response;
 		} else {
-			const response = await o("https://localhost:44337")
+			const response = await o(noVersionRoutes)
 				.get("Users")
 				.query();
 			const results = await response;
@@ -52,12 +51,12 @@ export async function getCountUsers(queryParams?: QueryParams): Promise<number> 
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
 			params.$count = true;
-			const response = await o("https://localhost:44337")
+			const response = await o(noVersionRoutes)
 			.get("Users/$count")
 				.query(params);
 			return response;
 		} else {
-			const response = await o("https://localhost:44337")
+			const response = await o(noVersionRoutes)
 			.get("Users/$count")
 				.query();
 			const results = await response;

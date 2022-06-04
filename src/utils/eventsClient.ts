@@ -10,9 +10,10 @@ import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
 
 
 let routes: string;
-
+let noVersionRoutes: string;
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
-	routes = `${process.env.REACT_APP_EVENTS_API}/Events`;
+	routes = `${process.env.REACT_APP_EVENTS_API}/v1.0/Events`;
+	noVersionRoutes= `${process.env.REACT_APP_EVENTS_API}/Events`;
 }
 export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	try {
@@ -51,12 +52,12 @@ export async function getCountEvents(queryParams?: QueryParams): Promise<number>
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
 
-			const response = await o("https://localhost:44337")
+			const response = await o(noVersionRoutes)
 			.get("Events/$count")
 				.query(params);
 			return response;
 		} else {
-			const response = await o("https://localhost:44337")
+			const response = await o(noVersionRoutes)
 			.get("Events/$count")
 				.query();
 			const results = await response;
