@@ -1,6 +1,5 @@
-import { Form, Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
-import TextInput from "../components/TextInput";
 import { CreateUser } from "../redux/types";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,10 +10,8 @@ import {
 	Box,
 	Button,
 	Checkbox,
-	Container,
 	FormControlLabel,
 	Grid,
-	Switch,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -62,12 +59,7 @@ function CreateUserForm(): JSX.Element {
 		console.log(newUser);
 		await dispatch(createUser(newUser));
 	};
-	const initialValues: Values = {
-		username: "",
-		firstname: "",
-		lastname: "",
-		password: "",
-	};
+	
 	const formik = useFormik({
 		initialValues: {
 			username: "",

@@ -16,10 +16,7 @@ function EventCard({
 	time,
 	artist
 }: FullEvent): JSX.Element {
-	const frontCardDate =
-		new Date(dates[0]).getDay() +
-		"/" +
-		new Date(dates[0]).toLocaleString("default", { month: "short" }); //+ '/' + dateOfEvent.getFullYear();
+	
 	const fromToCardDate = setDatesRange();
 	const dispatch = useDispatch();
 

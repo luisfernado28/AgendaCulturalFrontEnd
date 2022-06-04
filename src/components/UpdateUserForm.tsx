@@ -1,17 +1,14 @@
-import { Form, Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import TextInput from "./TextInput";
 import * as Yup from "yup";
 import { UpdateUser, UserUpdateData } from "../redux/types";
 import { modifyUser } from "../redux/userSlice";
 import {
 	Button,
 	Checkbox,
-	Container,
 	FormControlLabel,
 	Grid,
-	Switch,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -60,7 +57,7 @@ function UpdateUserForm({
 	admin,
 }: FormProps): JSX.Element {
 	const dispatch = useDispatch();
-	const [adminValue, setAdminValue] = useState(false);
+	const [adminValue] = useState(false);
 	const [checked, setChecked] = useState(admin);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,12 +73,6 @@ function UpdateUserForm({
 			body: newUser,
 		};
 		await dispatch(modifyUser(updateData));
-	};
-	const initialValues: Values = {
-		username: username,
-		firstname: firstname,
-		lastname: lastname,
-		password: password,
 	};
 	const formik = useFormik({
 		initialValues: {

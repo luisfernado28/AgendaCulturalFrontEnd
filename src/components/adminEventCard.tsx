@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ShowModal from "./CustomModal";
-import { Dates, EventTypeStatus, FullEvent, ModalTypes } from "../redux/types";
+import { FullEvent, ModalTypes } from "../redux/types";
 import { removeFullEvent } from "../redux/fullEventsSlice";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -10,27 +10,6 @@ import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-interface AdminProps {
-	title: string;
-	artist: string;
-	venueId: string;
-	status: number;
-	price: number;
-	id: string;
-	phone: string;
-	type: EventTypeStatus;
-	description: string;
-	website: string;
-	facebook: string;
-	twitter: string;
-	instagram: string;
-	imageUrl?: string;
-	dates: Dates;
-	tagsId?: string[];
-	time?: string;
-	venueName?: string;
-}
-
 function AdminEventCard({
 	id,
 	title,

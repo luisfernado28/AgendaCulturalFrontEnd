@@ -5,7 +5,16 @@ import { countUsers, fetchUsers, selectAllUsers } from "../redux/usersSlice";
 import UserCard from "../components/UserCard";
 import { useHistory } from "react-router-dom";
 import { authUsers } from "../redux/authSlice";
-import { Box, Button, Grid, MenuItem, Pagination, Select, TextField, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	Grid,
+	MenuItem,
+	Pagination,
+	Select,
+	TextField,
+	Typography,
+} from "@mui/material";
 import { buildPaginationSize } from "../utils/buildOdataParams";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -52,16 +61,6 @@ function UsersList(): JSX.Element {
 		dispatch(fetchUsers(queryParameters));
 		dispatch(countUsers(queryParameters));
 	}, [dispatch, queryParameters]);
-
-	const dispatchPageContent = (topValue: number, skipValue: number) => {
-		let paginationvalues: PaginationContent = {
-			top: topValue,
-			skip: skipValue,
-		};
-		let queryParams: QueryParams = { pagination: paginationvalues };
-		dispatch(fetchUsers(queryParams));
-		dispatch(countUsers(queryParams));
-	};
 
 	const usersList = users.map((user: User) => {
 		return (

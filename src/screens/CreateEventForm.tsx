@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { CreateFullEvents, EventTypeStatus } from "../redux/types";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { postImage } from "../utils/blobStorageClient";
 import React from "react";
 import "yup-phone";

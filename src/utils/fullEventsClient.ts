@@ -6,7 +6,7 @@ import {
 	UpdateFullEvent,
 } from "../redux/types";
 import { o, OdataQuery } from "odata";
-import { buildFilter, buildOrderBy2, buildPagination } from "./buildOdataParams";
+import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
 
 
 let routes: string;

@@ -8,11 +8,9 @@ import {
 	Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authUsers, logOutUser } from "../redux/authSlice";
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import React from "react";
 

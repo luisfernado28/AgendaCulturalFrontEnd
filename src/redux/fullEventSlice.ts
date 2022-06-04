@@ -4,7 +4,7 @@ import {
 	FullEventReducer,
 	StoreState,
 } from "./stateTypes";
-import { EventTypeStatus, Status } from "./types";
+import {Status } from "./types";
 
 const initialState: FullEventReducer = {
 	error: {
