@@ -41,6 +41,32 @@ export async function getFullEvents(queryParams?: QueryParams): Promise<FullEven
 	}
 }
 
+export async function getCountFullEvents(queryParams?: QueryParams): Promise<number> {
+	try {
+		if (queryParams) {
+			const params: OdataQuery = {};
+			const { filter, orderby, pagination } = queryParams;
+			if (filter) params.$filter = buildFilter(filter);
+			if (orderby) params.$orderby = buildOrderBy2(orderby);
+			if (pagination) params.$top = pagination.top;
+			if (pagination) params.$skip = pagination.skip;
+
+			const response = await o("https://localhost:44337")
+			.get("Events/$count")
+				.query(params);
+			return response;
+		} else {
+			const response = await o("https://localhost:44337")
+			.get("Events/$count")
+				.query();
+			const results = await response;
+			return results;
+		}
+		
+	} catch (error) {
+		throw new Error();
+	}
+}
 export async function postFullEvent(params: CreateFullEvents): Promise<FullEvent> {
 	try {
 		const { ...body } = params;

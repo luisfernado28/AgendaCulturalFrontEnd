@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Filter, FullEvent, QueryParams } from "../redux/types";
+import {
+	Filter,
+	FullEvent,
+	PaginationContent,
+	QueryParams,
+} from "../redux/types";
 import EventCard from "../components/eventCard";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { fetchFullEvents, selectAllFullEvents } from "../redux/fullEventsSlice";
+import {
+	countFullEvents,
+	fetchFullEvents,
+	selectAllFullEvents,
+} from "../redux/fullEventsSlice";
 import {
 	Box,
 	Button,
@@ -15,37 +24,43 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { authUsers } from "../redux/authSlice";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { buildPaginationSize } from "../utils/buildOdataParams";
 interface Values {
 	searchBar: string;
 }
 
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
-	const { fullEvents } = useSelector(selectAllFullEvents);
-	const { userInfo } = useSelector(authUsers);
+	const { fullEvents, count } = useSelector(selectAllFullEvents);
 	const [sortValue, setSortValueDropdown] = useState("title asc");
-	const [top, setTop] = useState(10);
-	const [skip, setSkip] = useState(0);
-
+	const [topValueUsers] = useState(10);
 	const [page, setPage] = useState(1);
-	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-		setSkip((value - 1) * 10);
+	let setQueryParams: QueryParams = {
+		pagination: { top: topValueUsers, skip: 0 },
+	};
+	const [queryParameters, setqueryParameters] = useState(setQueryParams);
 
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		setPage(value);
+		let queryParams: QueryParams = { ...queryParameters };
+		const pag: PaginationContent = {
+			skip: (value - 1) * topValueUsers,
+			top: queryParameters.pagination.top,
+		};
+		queryParams.pagination = pag;
+		setqueryParameters(queryParams);
 	};
 	const CreateEventSchema = Yup.object().shape({
 		searchBar: Yup.string()
 			.min(1, "Al menos un caracter")
 			.max(50, "El titulo no puede tener mas que 50 caracteres "),
 	});
-
 	useEffect(() => {
-		let queryParams: QueryParams = {};
-		dispatch(fetchFullEvents(queryParams));
-	}, [dispatch]);
+		dispatch(fetchFullEvents(queryParameters));
+		dispatch(countFullEvents(queryParameters));
+	}, [dispatch, queryParameters]);
 	const eventsList = fullEvents.map((event: FullEvent) => {
 		return (
 			<Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
@@ -96,10 +111,17 @@ function ListPage(): JSX.Element {
 			const orderby: string[] = [sortValue];
 			queryParams.orderby = orderby;
 		}
+		const pag: PaginationContent = {
+			skip: 0,
+			top: queryParameters.pagination.top,
+		};
+		queryParams.pagination = pag;
+		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
 			dispatch(fetchFullEvents({}));
 		} else {
-			dispatch(fetchFullEvents(queryParams));
+			setqueryParameters(queryParams);
+			// dispatch(fetchFullEvents(queryParams));
 		}
 	};
 
@@ -225,7 +247,7 @@ function ListPage(): JSX.Element {
 					}}
 				>
 					<Pagination
-						count={10}
+						count={buildPaginationSize(count, topValueUsers)}
 						page={page}
 						onChange={handleChange}
 					/>

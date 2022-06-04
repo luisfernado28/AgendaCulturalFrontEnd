@@ -175,6 +175,9 @@ export interface Filter {
 	time?: string;
 	venueName?: string;
 	orderby?: string[];
+	username?: string;
+	firstname?: string;
+	lastname?: string;
 }
 
 export interface PaginationContent {

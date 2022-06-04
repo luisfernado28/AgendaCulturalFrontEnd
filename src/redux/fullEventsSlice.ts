@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
 	deleteFullEvent,
+	getCountFullEvents,
 	getFullEvents,
 	postFullEvent,
 	putFullEvent,
@@ -16,12 +17,20 @@ const initialState: FullEventsReducer = {
 	},
 	hasMore: true,
 	status: Status.IDLE,
+	count: 0
 };
 
 export const fetchFullEvents = createAsyncThunk(
 	"events/fetchFullEvents",
 	async (queryParams?: QueryParams) => {
 		return await getFullEvents(queryParams);
+	}
+);
+
+export const countFullEvents = createAsyncThunk(
+	"auth/countFullEvents",
+	async (queryParams?: QueryParams) => {
+		return await getCountFullEvents(queryParams);
 	}
 );
 
@@ -65,6 +74,16 @@ export const fullEventsSlice = createSlice({
 		builder.addCase(createFullEvent.fulfilled, (state, { payload }) => {
 			state.status = Status.SUCCEEDED;
 			state.fullEvents.push(payload);
+		});
+		builder.addCase(countFullEvents.pending, (state) => {
+			state.status = Status.LOADING;
+		});
+		builder.addCase(countFullEvents.fulfilled, (state, action) => {
+			state.status = Status.SUCCEEDED;
+			state.count = action.payload;
+		});
+		builder.addCase(countFullEvents.rejected, (state) => {
+			state.status = Status.FAILED;
 		});
 	},
 });

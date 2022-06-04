@@ -61,6 +61,7 @@ export interface FullEventsReducer {
   fullEvents: FullEvent[]
   hasMore: boolean
   status: string
+  count: number
 }
 
 export interface FullEventReducer {
