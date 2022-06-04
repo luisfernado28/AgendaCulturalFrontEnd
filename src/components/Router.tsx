@@ -10,7 +10,6 @@ import { authUsers, timeOutLogOut } from "../redux/authSlice";
 import AdminEventsList from "../screens/AdminEventsList";
 import CreateEventForm from "../screens/CreateEventForm";
 import CreateUserForm from "../screens/CreateUserForm";
-import CreateVemueForm from "../screens/CreateVenueForm";
 import EventsDetail from "../screens/EventDetail";
 import ListPage from "../screens/Listpage";
 import SignIn from "../screens/SignIn";
@@ -55,9 +54,6 @@ const Router = (): JSX.Element => {
 			</PrivateRoute>
 			<PrivateRoute exact path="/createEvent">
 				<CreateEventForm />
-			</PrivateRoute>
-			<PrivateRoute exact path="/createVenue">
-				<CreateVemueForm />
 			</PrivateRoute>
 			<Route exact path="/createUser" component={CreateUserForm} />
 			<PrivateRoute exact path="/updateEvent/:id">

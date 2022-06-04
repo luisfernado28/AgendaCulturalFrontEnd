@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { CreateFullEvents, EventTypeStatus } from "../redux/types";
 import { useState, useEffect } from "react";
 import { postImage } from "../utils/blobStorageClient";
-import { fetchVenues } from "../redux/venuesSlice";
 import React from "react";
 import "yup-phone";
 import { createFullEvent } from "../redux/fullEventsSlice";
@@ -20,7 +19,6 @@ import {
 	Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { couldStartTrivia } from "typescript";
 import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import ImageUpload from "../components/ImageUpload";
@@ -111,9 +109,6 @@ function CreateEventForm(): JSX.Element {
 	const calendarOnChange = (e: any) => {
 		setCalendarValue(e);
 	};
-	useEffect(() => {
-		dispatch(fetchVenues());
-	}, [dispatch]);
 
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";

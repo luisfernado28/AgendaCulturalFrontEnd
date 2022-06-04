@@ -8,8 +8,6 @@ import fullEventSlice  from "./fullEventSlice";
 import fullEventsSlice  from "./fullEventsSlice";
 import userSlice from "./userSlice";
 import usersSlice from "./usersSlice";
-import venueSlice from "./venueSlice"
-import venuesSlice from "./venuesSlice";
 
 
 const persistConfig = {
@@ -25,8 +23,6 @@ const store = configureStore({
     auth: persistedReducer,
     event: eventSlice,
     events: eventsSlice,
-    venue: venueSlice,
-    venues: venuesSlice,
     users: usersSlice,
     user: userSlice,
     fullEvents: fullEventsSlice,
