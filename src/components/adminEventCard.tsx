@@ -29,6 +29,7 @@ function AdminEventCard({
 		ShowModal({
 			onSuccess: () => {
 				history.push("/adminEvents");
+				window.location.reload();
 			},
 			type: ModalTypes.DeleteSucceededModalValues,
 		});

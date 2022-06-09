@@ -1,4 +1,4 @@
-import { Box, CardMedia, Link, Typography } from "@mui/material";
+import { Box, Button, CardMedia, Link, Typography } from "@mui/material";
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
@@ -8,6 +8,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { castTypeOfEvent } from "../utils/utils";
+import SocialMediaComponent from "../components/SocialMediaComponent";
 function EventsDetail({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
@@ -181,9 +182,7 @@ function EventsDetail({
 					<Typography variant="h5" style={{ fontWeight: 600 }}>
 						Descripcion:
 					</Typography>{" "}
-					<Typography variant="h6">
-						{Event.description}
-					</Typography>
+					<Typography variant="h6">{Event.description}</Typography>
 				</Box>
 			</Box>
 
@@ -191,61 +190,91 @@ function EventsDetail({
 				Redes sociales del evento
 			</Typography>
 			<Box>
-				<Link
-					href={Event.facebook}
-					underline="none"
-					target="_blank"
-				>
-					<FacebookIcon />
-				</Link>
-
-				<Link href={Event.twitter} underline="none" target="_blank">
-					<TwitterIcon />
-				</Link>
-				<Link href={Event.website} underline="none" target="_blank">
-					<LanguageIcon />
-				</Link>
-				<Link
-					href={Event.instagram}
-					underline="none"
-					target="_blank"
-				>
-					<InstagramIcon />
-				</Link>
+				{Event.facebook === "" ? (
+					<FacebookIcon color="disabled" />
+				) : (
+					<FacebookIcon
+						sx={{
+							color: "#1877F2",
+						}}
+						onClick={() => window.open(Event.facebook)}
+					/>
+				)}
+				{Event.twitter === "" ? (
+					<TwitterIcon color="disabled" />
+				) : (
+					<TwitterIcon
+						sx={{
+							color: "#1DA1F2",
+						}}
+						onClick={() => window.open(Event.twitter)}
+					/>
+				)}
+				{Event.website === "" ? (
+					<LanguageIcon color="disabled" />
+				) : (
+					<LanguageIcon
+						sx={{
+							color: "#000000",
+						}}
+						onClick={() => window.open(Event.website)}
+					/>
+				)}
+				{Event.instagram === "" ? (
+					<InstagramIcon color="disabled" />
+				) : (
+					<InstagramIcon
+						sx={{
+							color: "#E1306C",
+						}}
+						onClick={() => window.open(Event.instagram)}
+					/>
+				)}
 			</Box>
 			<Typography variant="h5" style={{ fontWeight: 600 }}>
 				Redes sociales del espacio
 			</Typography>
 			<Box>
-				<Link
-					href={Event.venueFacebook}
-					underline="none"
-					target="_blank"
-				>
-					<FacebookIcon />
-				</Link>
-
-				<Link
-					href={Event.venueTwitter}
-					underline="none"
-					target="_blank"
-				>
-					<TwitterIcon />
-				</Link>
-				<Link
-					href={Event.venueWebsite}
-					underline="none"
-					target="_blank"
-				>
-					<LanguageIcon />
-				</Link>
-				<Link
-					href={Event.venueInstagram}
-					underline="none"
-					target="_blank"
-				>
-					<InstagramIcon />
-				</Link>
+				{Event.venueFacebook === "" ? (
+					<FacebookIcon color="disabled" />
+				) : (
+					<FacebookIcon
+						sx={{
+							color: "#1877F2",
+						}}
+						onClick={() => window.open(Event.venueFacebook)}
+					/>
+				)}
+				{Event.venueTwitter === "" ? (
+					<TwitterIcon color="disabled" />
+				) : (
+					<TwitterIcon
+						sx={{
+							color: "#1DA1F2",
+						}}
+						onClick={() => window.open(Event.venueTwitter)}
+					/>
+				)}
+				{Event.venueWebsite === "" ? (
+					<LanguageIcon color="disabled" />
+				) : (
+					<LanguageIcon
+						sx={{
+							color: "#000000",
+						}}
+						onClick={() => window.open(Event.venueWebsite)}
+					/>
+				)}
+				{Event.venueInstagram === "" ? (
+					<InstagramIcon color="disabled" />
+				) : (
+					<InstagramIcon
+						sx={{
+							color: "#E1306C",
+						}}
+						onClick={() => window.open(Event.venueInstagram)}
+					/>
+				)}
 			</Box>
 			{Event.imageUrl === "" ? (
 				<div>No image</div>
