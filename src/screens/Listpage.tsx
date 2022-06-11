@@ -22,6 +22,8 @@ import {
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { buildPaginationSize } from "../utils/buildOdataParams";
+
+import SearchIcon from "@mui/icons-material/Search";
 interface Values {
 	searchBar: string;
 }
@@ -136,6 +138,7 @@ function ListPage(): JSX.Element {
 						alignItems: "center",
 						justifyContent: "center",
 						display: "flex",
+						paddingTop: "20px",
 					}}
 				>
 					<Grid
@@ -146,7 +149,7 @@ function ListPage(): JSX.Element {
 						justifyContent="center"
 						width={"500px"}
 					>
-						<Grid item xs={12} sm={8} md={8} lg={8}>
+						<Grid item xs={10} sm={6} md={6} lg={6}>
 							<TextField
 								fullWidth
 								id="searchBar"
@@ -164,41 +167,42 @@ function ListPage(): JSX.Element {
 								}
 							/>
 						</Grid>
-						<Grid item xs={12} sm={2} md={2} lg={2}>
+						<Grid item xs={2} sm={2} md={2} lg={2}>
 							<Box
 								sx={{
 									display: "flex",
 									alignItems: "center",
 									flexDirection: "column",
-									p: 1,
-									m: 1,
-									bgcolor: "background.paper",
-									borderRadius: 1,
+									// height: "100%",
 								}}
 							>
 								<Select
+									sx={{
+										height: "50%",
+									}}
 									value={sortValue}
 									onChange={(e) => {
 										setSortValueDropdown(e.target.value);
 									}}
 								>
 									<MenuItem value="title asc">
-										<ArrowUpwardIcon />
+										<ArrowUpwardIcon fontSize="medium" />
 									</MenuItem>
 									<MenuItem value="title desc">
-										<ArrowDownwardIcon />
+										<ArrowDownwardIcon fontSize="medium" />
 									</MenuItem>
 								</Select>
 							</Box>
 						</Grid>
-						<Grid item xs={12} sm={2} md={2} lg={2}>
+						<Grid item xs={12} sm={4} md={4} lg={4}>
 							<Button
 								color="primary"
 								variant="contained"
 								fullWidth
 								type="submit"
+								endIcon={<SearchIcon />}
 							>
-								Submit
+								Buscar
 							</Button>
 						</Grid>
 					</Grid>

@@ -9,6 +9,7 @@ import {
 	Box,
 	Button,
 	Grid,
+	makeStyles,
 	MenuItem,
 	Pagination,
 	Select,
@@ -18,7 +19,7 @@ import {
 import { buildPaginationSize } from "../utils/buildOdataParams";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
+import SearchIcon from "@mui/icons-material/Search";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 interface Values {
@@ -56,7 +57,6 @@ function UsersList(): JSX.Element {
 				"El nombre de usuario no puede contener mas de 50 caracteres "
 			),
 	});
-
 	useEffect(() => {
 		dispatch(fetchUsers(queryParameters));
 		dispatch(countUsers(queryParameters));
@@ -121,6 +121,7 @@ function UsersList(): JSX.Element {
 				justifyContent: "center",
 				alignItems: "center",
 				flexDirection: "column",
+				paddingTop:"20px"
 			}}
 		>
 			<form onSubmit={formik.handleSubmit}>
@@ -129,6 +130,7 @@ function UsersList(): JSX.Element {
 						alignItems: "center",
 						justifyContent: "center",
 						display: "flex",
+
 					}}
 				>
 					<Grid
@@ -139,7 +141,7 @@ function UsersList(): JSX.Element {
 						justifyContent="center"
 						width={"500px"}
 					>
-						<Grid item xs={12} sm={8} md={8} lg={8}>
+						<Grid item xs={10} sm={6} md={6} lg={6}>
 							<TextField
 								fullWidth
 								id="searchBar"
@@ -157,41 +159,42 @@ function UsersList(): JSX.Element {
 								}
 							/>
 						</Grid>
-						<Grid item xs={12} sm={2} md={2} lg={2}>
+						<Grid item xs={2} sm={2} md={2} lg={2}>
 							<Box
 								sx={{
 									display: "flex",
 									alignItems: "center",
 									flexDirection: "column",
-									p: 1,
-									m: 1,
-									bgcolor: "background.paper",
-									borderRadius: 1,
+									// height: "100%",
 								}}
 							>
 								<Select
+									sx={{
+										height: "50%",
+									}}
 									value={sortValue}
 									onChange={(e) => {
 										setSortValueDropdown(e.target.value);
 									}}
 								>
 									<MenuItem value="username asc">
-										<ArrowUpwardIcon />
+										<ArrowUpwardIcon fontSize="medium" />
 									</MenuItem>
 									<MenuItem value="username desc">
-										<ArrowDownwardIcon />
+										<ArrowDownwardIcon fontSize="medium" />
 									</MenuItem>
 								</Select>
 							</Box>
 						</Grid>
-						<Grid item xs={12} sm={2} md={2} lg={2}>
+						<Grid item xs={12} sm={4} md={4} lg={4}>
 							<Button
 								color="primary"
 								variant="contained"
 								fullWidth
 								type="submit"
+								endIcon={<SearchIcon />}
 							>
-								Submit
+								Buscar
 							</Button>
 						</Grid>
 					</Grid>
@@ -219,11 +222,23 @@ function UsersList(): JSX.Element {
 			>
 				{usersList}
 			</Grid>
-			<Pagination
-				count={buildPaginationSize(count, topValueUsers)}
-				page={page}
-				onChange={handleChange}
-			/>
+			{users.length !== 0 ? (
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Pagination
+						count={buildPaginationSize(count, topValueUsers)}
+						page={page}
+						onChange={handleChange}
+					/>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</Box>
 	);
 }

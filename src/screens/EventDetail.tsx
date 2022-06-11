@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Link, Typography } from "@mui/material";
+import { Box, CardMedia, Typography } from "@mui/material";
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
@@ -8,7 +8,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { castTypeOfEvent } from "../utils/utils";
-import SocialMediaComponent from "../components/SocialMediaComponent";
 function EventsDetail({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
