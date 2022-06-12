@@ -11,8 +11,7 @@ variables:
   imageRepository: 'reactagenda'
   containerRegistry: 'agendaculturalcontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: latest #'$(Build.BuildId)' should use build tag
-  REACT_APP_EVENTS_API: 'http://13.82.228.99:5000/v1.0'
+  tag: latestLocal #'$(Build.BuildId)' should use build tag
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
