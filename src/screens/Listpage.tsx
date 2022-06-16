@@ -22,7 +22,7 @@ import {
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { buildPaginationSize } from "../utils/buildOdataParams";
-
+import ReactGA from "react-ga4";
 import SearchIcon from "@mui/icons-material/Search";
 interface Values {
 	searchBar: string;
@@ -47,6 +47,7 @@ function ListPage(): JSX.Element {
 			top: queryParameters.pagination.top,
 		};
 		queryParams.pagination = pag;
+
 		setqueryParameters(queryParams);
 	};
 	const CreateEventSchema = Yup.object().shape({
@@ -58,6 +59,13 @@ function ListPage(): JSX.Element {
 		dispatch(fetchEvents(queryParameters));
 		dispatch(countEvents(queryParameters));
 	}, [dispatch, queryParameters]);
+	useEffect(() => {
+		//This will not be excuted on the first time the use come to this page
+		ReactGA.event({
+			category: "Consumidores agenda cultural",
+			action: "Pagina principal",
+		});
+	}, []);
 	const eventsList = Events.map((event: Event) => {
 		return (
 			<Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
@@ -101,6 +109,12 @@ function ListPage(): JSX.Element {
 				title: values.searchBar,
 				artist: values.searchBar,
 			};
+
+			ReactGA.event("search", {
+				category: "Consumidores agenda cultural",
+				action: "Busqueda de evento" + values.searchBar,
+				search_term: values.searchBar
+			});
 			queryParams.filter = filter;
 		}
 

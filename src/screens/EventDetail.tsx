@@ -7,6 +7,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import ReactGA from "react-ga4";
 import { castTypeOfEvent } from "../utils/utils";
 function EventsDetail({
 	match,
@@ -17,6 +18,15 @@ function EventsDetail({
 	useEffect(() => {
 		dispatch(fetchEventById(match.params.id));
 	}, [dispatch, Event.id, match.params.id]);
+
+	useEffect(() => {
+		//This will not be excuted on the first time the use come to this page
+		ReactGA.event("page_view", {
+			category: "Evento cultural individual",
+			action: Event.title,
+			page_title: Event.title,
+		});
+	}, []);
 
 	const listOfDates = Event.dates.map((inidividualDate) => {
 		const newDate = new Date(inidividualDate);
@@ -196,7 +206,15 @@ function EventsDetail({
 						sx={{
 							color: "#1877F2",
 						}}
-						onClick={() => window.open(Event.facebook)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de Facebook del evento: " +
+									Event.title,
+							});
+							window.open(Event.facebook);
+						}}
 					/>
 				)}
 				{Event.twitter === "" ? (
@@ -206,7 +224,15 @@ function EventsDetail({
 						sx={{
 							color: "#1DA1F2",
 						}}
-						onClick={() => window.open(Event.twitter)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de Twitter del evento: " +
+									Event.title,
+							});
+							window.open(Event.twitter);
+						}}
 					/>
 				)}
 				{Event.website === "" ? (
@@ -216,7 +242,14 @@ function EventsDetail({
 						sx={{
 							color: "#000000",
 						}}
-						onClick={() => window.open(Event.website)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de web del evento: " + Event.title,
+							});
+							window.open(Event.website);
+						}}
 					/>
 				)}
 				{Event.instagram === "" ? (
@@ -226,7 +259,15 @@ function EventsDetail({
 						sx={{
 							color: "#E1306C",
 						}}
-						onClick={() => window.open(Event.instagram)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de Instagram del evento: " +
+									Event.title,
+							});
+							window.open(Event.instagram);
+						}}
 					/>
 				)}
 			</Box>
@@ -241,7 +282,15 @@ function EventsDetail({
 						sx={{
 							color: "#1877F2",
 						}}
-						onClick={() => window.open(Event.venueFacebook)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de Facebook del espacio: " +
+									Event.title,
+							});
+							window.open(Event.venueFacebook);
+						}}
 					/>
 				)}
 				{Event.venueTwitter === "" ? (
@@ -251,7 +300,15 @@ function EventsDetail({
 						sx={{
 							color: "#1DA1F2",
 						}}
-						onClick={() => window.open(Event.venueTwitter)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de Twitter del espacio: " +
+									Event.title,
+							});
+							window.open(Event.venueTwitter);
+						}}
 					/>
 				)}
 				{Event.venueWebsite === "" ? (
@@ -261,7 +318,14 @@ function EventsDetail({
 						sx={{
 							color: "#000000",
 						}}
-						onClick={() => window.open(Event.venueWebsite)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de web del espacio: " + Event.title,
+							});
+							window.open(Event.venueWebsite);
+						}}
 					/>
 				)}
 				{Event.venueInstagram === "" ? (
@@ -271,7 +335,15 @@ function EventsDetail({
 						sx={{
 							color: "#E1306C",
 						}}
-						onClick={() => window.open(Event.venueInstagram)}
+						onClick={() => {
+							ReactGA.event({
+								category: "Evento cultural individual",
+								action:
+									"Pagina de Instagram del espacio: " +
+									Event.title,
+							});
+							window.open(Event.venueInstagram);
+						}}
 					/>
 				)}
 			</Box>

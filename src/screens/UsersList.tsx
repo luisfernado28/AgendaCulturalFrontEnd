@@ -61,7 +61,9 @@ function UsersList(): JSX.Element {
 		dispatch(fetchUsers(queryParameters));
 		dispatch(countUsers(queryParameters));
 	}, [dispatch, queryParameters]);
+	
 
+	
 	const usersList = users.map((user: User) => {
 		return (
 			<Grid item xs={8} rowSpacing={3} key={user.id}>
@@ -121,7 +123,7 @@ function UsersList(): JSX.Element {
 				justifyContent: "center",
 				alignItems: "center",
 				flexDirection: "column",
-				paddingTop:"20px"
+				paddingTop: "20px",
 			}}
 		>
 			<form onSubmit={formik.handleSubmit}>
@@ -130,7 +132,6 @@ function UsersList(): JSX.Element {
 						alignItems: "center",
 						justifyContent: "center",
 						display: "flex",
-
 					}}
 				>
 					<Grid
