@@ -11,7 +11,7 @@ export const buildQueryParams = (filter: Filter): string => {
 };
 
 const buildRule = (rule: string, ruleArray: any): string => {
-	return "contains(" + rule + ", '" + ruleArray[rule] + "')";
+	return "contains(tolower(" + rule + "), tolower('" + ruleArray[rule] + "'))";
 };
 
 export const buildOrderBy = (orderByFilters: string[]): string => {

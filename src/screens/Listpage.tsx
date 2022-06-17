@@ -112,8 +112,8 @@ function ListPage(): JSX.Element {
 
 			ReactGA.event("search", {
 				category: "Consumidores agenda cultural",
-				action: "Busqueda de evento" + values.searchBar,
-				search_term: values.searchBar
+				action: "Busqueda de evento" + values.searchBar.toLowerCase(),
+				search_term: values.searchBar.toLowerCase()
 			});
 			queryParams.filter = filter;
 		}
