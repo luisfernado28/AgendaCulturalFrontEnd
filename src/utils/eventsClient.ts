@@ -8,19 +8,28 @@ import {
 import { o, OdataQuery } from "odata";
 import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
 
-
 let routes: string;
 let noVersionRoutes: string;
+const activeFilterParameter: string= " status eq 'active'";
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
 	routes = `${process.env.REACT_APP_EVENTS_API}/v1.0/Events`;
-	noVersionRoutes= `${process.env.REACT_APP_EVENTS_API}/Events`;
+	noVersionRoutes = `${process.env.REACT_APP_EVENTS_API}/Events`;
 }
 export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	try {
 		if (queryParams) {
+			console.log(queryParams);
 			const params: OdataQuery = {};
-			const { filter, orderby,pagination } = queryParams;
-			if (filter) params.$filter = buildFilter(filter);
+			const { filter, orderby, pagination } = queryParams;
+			if (filter) {
+				params.$filter = buildFilter(filter);
+				if (queryParams.activeEvents) {
+					params.$filter =
+						"(" + params.$filter + ") and " +activeFilterParameter;
+				}
+			} else {
+				params.$filter = activeFilterParameter;
+			}
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
@@ -42,28 +51,37 @@ export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	}
 }
 
-export async function getCountEvents(queryParams?: QueryParams): Promise<number> {
+export async function getCountEvents(
+	queryParams?: QueryParams
+): Promise<number> {
 	try {
 		if (queryParams) {
 			const params: OdataQuery = {};
 			const { filter, orderby, pagination } = queryParams;
-			if (filter) params.$filter = buildFilter(filter);
+			if (filter) {
+				params.$filter = buildFilter(filter);
+				if (queryParams.activeEvents) {
+					params.$filter =
+						"(" + params.$filter + ") and " +activeFilterParameter;
+				}
+			} else {
+				params.$filter = activeFilterParameter;
+			}
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;
 			if (pagination) params.$skip = pagination.skip;
 
 			const response = await o(noVersionRoutes)
-			.get("Events/$count")
+				.get("Events/$count")
 				.query(params);
 			return response;
 		} else {
 			const response = await o(noVersionRoutes)
-			.get("Events/$count")
+				.get("Events/$count")
 				.query();
 			const results = await response;
 			return results;
 		}
-		
 	} catch (error) {
 		throw new Error();
 	}
@@ -110,7 +128,6 @@ export async function getEventById(EventId: string): Promise<Event> {
 	}
 }
 
-
 export async function putEvent({
 	body,
 	EventId,
@@ -133,7 +150,6 @@ export async function putEvent({
 		}
 	}
 }
-
 
 export async function deleteEvent(EventId: string): Promise<void> {
 	try {

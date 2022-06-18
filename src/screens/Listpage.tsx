@@ -36,6 +36,7 @@ function ListPage(): JSX.Element {
 	const [page, setPage] = useState(1);
 	let setQueryParams: QueryParams = {
 		pagination: { top: topValueUsers, skip: 0 },
+		activeEvents: true
 	};
 	const [queryParameters, setqueryParameters] = useState(setQueryParams);
 
@@ -127,6 +128,7 @@ function ListPage(): JSX.Element {
 			top: queryParameters.pagination.top,
 		};
 		queryParams.pagination = pag;
+		queryParams.activeEvents= true;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
 			dispatch(fetchEvents({}));

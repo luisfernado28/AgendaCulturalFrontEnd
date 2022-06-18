@@ -130,6 +130,7 @@ export interface QueryParams {
 	filter?: Filter;
 	orderby?: string[];
 	pagination?: PaginationContent;
+	activeEvents?: Boolean;
 }
 
 export interface User {

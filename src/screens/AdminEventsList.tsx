@@ -38,6 +38,7 @@ function AdminEventsList(): JSX.Element {
 
 	let setQueryParams: QueryParams = {
 		pagination: { top: topValueUsers, skip: 0 },
+		activeEvents: false
 	};
 	const [page, setPage] = useState(1);
 
@@ -117,6 +118,7 @@ function AdminEventsList(): JSX.Element {
 			top: queryParameters.pagination.top,
 		};
 		queryParams.pagination = pag;
+		queryParams.activeEvents= false;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
 			dispatch(fetchEvents({}));
