@@ -13,9 +13,8 @@ import {
 	Box,
 	Button,
 	Grid,
-	MenuItem,
+	IconButton,
 	Pagination,
-	Select,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -31,12 +30,12 @@ interface Values {
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
 	const { Events, count } = useSelector(selectAllEvents);
-	const [sortValue, setSortValueDropdown] = useState("title asc");
+	const [sortValue2, setSortValueDropdown2] = useState(true);
 	const [topValueUsers] = useState(10);
 	const [page, setPage] = useState(1);
 	let setQueryParams: QueryParams = {
 		pagination: { top: topValueUsers, skip: 0 },
-		activeEvents: true
+		activeEvents: true,
 	};
 	const [queryParameters, setqueryParameters] = useState(setQueryParams);
 
@@ -114,21 +113,19 @@ function ListPage(): JSX.Element {
 			ReactGA.event("search", {
 				category: "Consumidores agenda cultural",
 				action: "Busqueda de evento" + values.searchBar.toLowerCase(),
-				search_term: values.searchBar.toLowerCase()
+				search_term: values.searchBar.toLowerCase(),
 			});
 			queryParams.filter = filter;
 		}
 
-		if (sortValue !== "Ordenar") {
-			const orderby: string[] = [sortValue];
-			queryParams.orderby = orderby;
-		}
+		queryParams.orderby = sortValue2 ? ["title asc"] : ["title desc"];
+
 		const pag: PaginationContent = {
 			skip: 0,
 			top: queryParameters.pagination.top,
 		};
 		queryParams.pagination = pag;
-		queryParams.activeEvents= true;
+		queryParams.activeEvents = true;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
 			dispatch(fetchEvents({}));
@@ -146,6 +143,10 @@ function ListPage(): JSX.Element {
 			handleSubmit(values);
 		},
 	});
+
+	const handleButtonVariantChange = () => {
+		setSortValueDropdown2(!sortValue2);
+	};
 	return (
 		<div>
 			<form onSubmit={formik.handleSubmit}>
@@ -165,7 +166,7 @@ function ListPage(): JSX.Element {
 						justifyContent="center"
 						width={"500px"}
 					>
-						<Grid item xs={10} sm={6} md={6} lg={6}>
+						<Grid item xs={8} sm={6} md={6} lg={6}>
 							<TextField
 								fullWidth
 								id="searchBar"
@@ -183,35 +184,26 @@ function ListPage(): JSX.Element {
 								}
 							/>
 						</Grid>
+
 						<Grid item xs={2} sm={2} md={2} lg={2}>
 							<Box
 								sx={{
 									display: "flex",
 									alignItems: "center",
 									flexDirection: "column",
-									// height: "100%",
 								}}
 							>
-								<Select
-									sx={{
-										height: "50%",
-									}}
-									value={sortValue}
-									onChange={(e) => {
-										setSortValueDropdown(e.target.value);
-									}}
-								>
-									<MenuItem value="title asc">
+								<IconButton onClick={handleButtonVariantChange}>
+									{sortValue2 ? (
 										<ArrowUpwardIcon fontSize="medium" />
-									</MenuItem>
-									<MenuItem value="title desc">
+									) : (
 										<ArrowDownwardIcon fontSize="medium" />
-									</MenuItem>
-								</Select>
+									)}
+								</IconButton>
 							</Box>
 						</Grid>
-						<Grid item xs={12} sm={4} md={4} lg={4}>
-							<Button
+						<Grid item xs={2} sm={2} md={2} lg={2}>
+							{/* <Button
 								color="primary"
 								variant="contained"
 								fullWidth
@@ -219,7 +211,10 @@ function ListPage(): JSX.Element {
 								endIcon={<SearchIcon />}
 							>
 								Buscar
-							</Button>
+							</Button>*/}
+							<IconButton type="submit">
+								<SearchIcon />
+							</IconButton>
 						</Grid>
 					</Grid>
 				</Box>
@@ -235,6 +230,8 @@ function ListPage(): JSX.Element {
 					sx={{
 						justifyContent: "stretch",
 						my: "10px",
+						paddingLeft: "85px",
+						paddingRight: "85px",
 					}}
 				>
 					{eventsList}

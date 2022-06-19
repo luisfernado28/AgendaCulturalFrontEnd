@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	Filter,
-	Event,
-	PaginationContent,
-	QueryParams,
-} from "../redux/types";
+import { Filter, Event, PaginationContent, QueryParams } from "../redux/types";
 import AdminEventCard from "../components/adminEventCard";
 import {
 	fetchEvents,
@@ -16,11 +11,10 @@ import {
 	Box,
 	Button,
 	Grid,
-	MenuItem,
-	Select,
 	TextField,
 	Typography,
 	Pagination,
+	IconButton,
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -33,12 +27,12 @@ interface Values {
 }
 function AdminEventsList(): JSX.Element {
 	const dispatch = useDispatch();
-	const [sortValue, setSortValueDropdown] = useState("title asc");
+	const [sortValue2, setSortValueDropdown2] = useState(true);
 	const [topValueUsers] = useState(10);
 
 	let setQueryParams: QueryParams = {
 		pagination: { top: topValueUsers, skip: 0 },
-		activeEvents: false
+		activeEvents: false,
 	};
 	const [page, setPage] = useState(1);
 
@@ -109,16 +103,14 @@ function AdminEventsList(): JSX.Element {
 			queryParams.filter = filter;
 		}
 
-		if (sortValue !== "Ordenar") {
-			const orderby: string[] = [sortValue];
-			queryParams.orderby = orderby;
-		}
+		queryParams.orderby = sortValue2 ? ["title asc"] : ["title desc"];
+
 		const pag: PaginationContent = {
 			skip: 0,
 			top: queryParameters.pagination.top,
 		};
 		queryParams.pagination = pag;
-		queryParams.activeEvents= false;
+		queryParams.activeEvents = false;
 		setPage(1);
 		if (Object.keys(queryParams).length === 0) {
 			dispatch(fetchEvents({}));
@@ -136,7 +128,9 @@ function AdminEventsList(): JSX.Element {
 			handleSubmit(values);
 		},
 	});
-
+	const handleButtonVariantChange = () => {
+		setSortValueDropdown2(!sortValue2);
+	};
 	return (
 		<div>
 			<form onSubmit={formik.handleSubmit}>
@@ -185,19 +179,13 @@ function AdminEventsList(): JSX.Element {
 									borderRadius: 1,
 								}}
 							>
-								<Select
-									value={sortValue}
-									onChange={(e) => {
-										setSortValueDropdown(e.target.value);
-									}}
-								>
-									<MenuItem value="title asc">
-										<ArrowUpwardIcon />
-									</MenuItem>
-									<MenuItem value="title desc">
-										<ArrowDownwardIcon />
-									</MenuItem>
-								</Select>
+								<IconButton onClick={handleButtonVariantChange}>
+									{sortValue2 ? (
+										<ArrowUpwardIcon fontSize="medium" />
+									) : (
+										<ArrowDownwardIcon fontSize="medium" />
+									)}
+								</IconButton>
 							</Box>
 						</Grid>
 						<Grid item xs={12} sm={2} md={2} lg={2}>

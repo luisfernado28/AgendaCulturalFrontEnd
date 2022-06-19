@@ -9,10 +9,8 @@ import {
 	Box,
 	Button,
 	Grid,
-	makeStyles,
-	MenuItem,
+	IconButton,
 	Pagination,
-	Select,
 	TextField,
 	Typography,
 } from "@mui/material";
@@ -31,7 +29,7 @@ function UsersList(): JSX.Element {
 	const { users, count } = useSelector(selectAllUsers);
 	const { userInfo } = useSelector(authUsers);
 	const [topValueUsers] = useState(5);
-	const [sortValue, setSortValueDropdown] = useState("username asc");
+	const [sortValue2, setSortValueDropdown2] = useState(true);
 	const [page, setPage] = useState(1);
 	let setQueryParams: QueryParams = {
 		pagination: { top: topValueUsers, skip: 0 },
@@ -61,9 +59,7 @@ function UsersList(): JSX.Element {
 		dispatch(fetchUsers(queryParameters));
 		dispatch(countUsers(queryParameters));
 	}, [dispatch, queryParameters]);
-	
 
-	
 	const usersList = users.map((user: User) => {
 		return (
 			<Grid item xs={8} rowSpacing={3} key={user.id}>
@@ -89,10 +85,8 @@ function UsersList(): JSX.Element {
 			queryParams.filter = filter;
 		}
 
-		if (sortValue !== "Ordenar") {
-			const orderby: string[] = [sortValue];
-			queryParams.orderby = orderby;
-		}
+		queryParams.orderby = sortValue2 ? ["username asc"] : ["username desc"];
+
 		const pag: PaginationContent = {
 			skip: 0,
 			top: queryParameters.pagination.top,
@@ -116,6 +110,9 @@ function UsersList(): JSX.Element {
 	});
 	if (!userInfo.admin) history.push("/adminEvents");
 
+	const handleButtonVariantChange = () => {
+		setSortValueDropdown2(!sortValue2);
+	};
 	return (
 		<Box
 			sx={{
@@ -166,25 +163,17 @@ function UsersList(): JSX.Element {
 									display: "flex",
 									alignItems: "center",
 									flexDirection: "column",
-									// height: "100%",
-								}}
+									}}
 							>
-								<Select
-									sx={{
-										height: "50%",
-									}}
-									value={sortValue}
-									onChange={(e) => {
-										setSortValueDropdown(e.target.value);
-									}}
+								<IconButton
+									onClick={handleButtonVariantChange}
 								>
-									<MenuItem value="username asc">
+									{sortValue2 ? (
 										<ArrowUpwardIcon fontSize="medium" />
-									</MenuItem>
-									<MenuItem value="username desc">
+									) : (
 										<ArrowDownwardIcon fontSize="medium" />
-									</MenuItem>
-								</Select>
+									)}
+								</IconButton>
 							</Box>
 						</Grid>
 						<Grid item xs={12} sm={4} md={4} lg={4}>

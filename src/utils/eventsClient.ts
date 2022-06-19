@@ -10,7 +10,7 @@ import { buildFilter, buildOrderBy2 } from "./buildOdataParams";
 
 let routes: string;
 let noVersionRoutes: string;
-const activeFilterParameter: string= " status eq 'active'";
+const activeFilterParameter: string = " status eq 'active'";
 if (process.env.REACT_APP_EVENTS_API !== undefined) {
 	routes = `${process.env.REACT_APP_EVENTS_API}/v1.0/Events`;
 	noVersionRoutes = `${process.env.REACT_APP_EVENTS_API}/Events`;
@@ -18,14 +18,13 @@ if (process.env.REACT_APP_EVENTS_API !== undefined) {
 export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 	try {
 		if (queryParams) {
-			console.log(queryParams);
 			const params: OdataQuery = {};
 			const { filter, orderby, pagination } = queryParams;
 			if (filter) {
 				params.$filter = buildFilter(filter);
 				if (queryParams.activeEvents) {
 					params.$filter =
-						"(" + params.$filter + ") and " +activeFilterParameter;
+						"(" + params.$filter + ") and " + activeFilterParameter;
 				}
 			} else {
 				params.$filter = activeFilterParameter;
@@ -62,7 +61,7 @@ export async function getCountEvents(
 				params.$filter = buildFilter(filter);
 				if (queryParams.activeEvents) {
 					params.$filter =
-						"(" + params.$filter + ") and " +activeFilterParameter;
+						"(" + params.$filter + ") and " + activeFilterParameter;
 				}
 			} else {
 				params.$filter = activeFilterParameter;
