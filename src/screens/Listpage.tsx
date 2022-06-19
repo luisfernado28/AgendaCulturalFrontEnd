@@ -11,26 +11,27 @@ import {
 } from "../redux/EventsSlice";
 import {
 	Box,
-	Button,
 	Grid,
 	IconButton,
 	Pagination,
 	TextField,
 	Typography,
+	useMediaQuery,
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { buildPaginationSize } from "../utils/buildOdataParams";
 import ReactGA from "react-ga4";
 import SearchIcon from "@mui/icons-material/Search";
+import SwiperComponent from "../components/SwiperComponent";
 interface Values {
 	searchBar: string;
 }
-
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
 	const { Events, count } = useSelector(selectAllEvents);
 	const [sortValue2, setSortValueDropdown2] = useState(true);
+	const matchesMinWidh600 = useMediaQuery('(min-width:600px)');
 	const [topValueUsers] = useState(10);
 	const [page, setPage] = useState(1);
 	let setQueryParams: QueryParams = {
@@ -59,6 +60,7 @@ function ListPage(): JSX.Element {
 		dispatch(fetchEvents(queryParameters));
 		dispatch(countEvents(queryParameters));
 	}, [dispatch, queryParameters]);
+	const imagesForCarousel = Events.map((x) => ({ eventId: x.id, imageUrl: x.imageUrl }) ).slice(0, 3);
 	useEffect(() => {
 		//This will not be excuted on the first time the use come to this page
 		ReactGA.event({
@@ -143,19 +145,30 @@ function ListPage(): JSX.Element {
 			handleSubmit(values);
 		},
 	});
-
 	const handleButtonVariantChange = () => {
 		setSortValueDropdown2(!sortValue2);
 	};
 	return (
 		<div>
+			<Box
+				sx={{
+					maxWidth: "100%",
+					maxHeight: "400px",
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+					direction: "column",
+				}}
+			>
+				<SwiperComponent imagesLink={imagesForCarousel} />
+			</Box>
 			<form onSubmit={formik.handleSubmit}>
 				<Box
 					sx={{
 						alignItems: "center",
 						justifyContent: "center",
 						display: "flex",
-						paddingTop: "20px",
+						backgroundColor: "#1976d3",
 					}}
 				>
 					<Grid
@@ -184,7 +197,6 @@ function ListPage(): JSX.Element {
 								}
 							/>
 						</Grid>
-
 						<Grid item xs={2} sm={2} md={2} lg={2}>
 							<Box
 								sx={{
@@ -203,15 +215,6 @@ function ListPage(): JSX.Element {
 							</Box>
 						</Grid>
 						<Grid item xs={2} sm={2} md={2} lg={2}>
-							{/* <Button
-								color="primary"
-								variant="contained"
-								fullWidth
-								type="submit"
-								endIcon={<SearchIcon />}
-							>
-								Buscar
-							</Button>*/}
 							<IconButton type="submit">
 								<SearchIcon />
 							</IconButton>
@@ -230,8 +233,8 @@ function ListPage(): JSX.Element {
 					sx={{
 						justifyContent: "stretch",
 						my: "10px",
-						paddingLeft: "85px",
-						paddingRight: "85px",
+						paddingLeft: matchesMinWidh600 ? "85px" :"15px",
+						paddingRight: matchesMinWidh600 ? "85px" :"15px",
 					}}
 				>
 					{eventsList}
