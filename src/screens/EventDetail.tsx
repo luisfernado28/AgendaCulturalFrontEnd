@@ -24,6 +24,8 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CastleIcon from "@mui/icons-material/Castle";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import EventInfoBox from "../components/eventInfoBox";
+
 declare module "@mui/material/styles" {
 	interface Theme {
 		status: {
@@ -89,369 +91,337 @@ function EventsDetail({
 				<Box
 					sx={{
 						backgroundColor: "#FFFFFF",
-						width: "800px",
+						minWidth: "200px",
 						height: "100%",
 						display: "flex",
 						alignItems: "center",
 						justifyContent: "center",
 						alignContent: "center",
+						flexFlow: "column",
 						my: "20px",
 						paddingLeft: "20px",
 						paddingRight: "20px",
 					}}
 				>
-					<Box>
-						<Box
-							sx={{
-								display: "flex",
-								flexDirection: "row",
-								justifyContent: "center",
-								//  matchesMinWidh600
-								// 	? "flex-start"
-								// 	: "center",
-								alignItems: "center",
+					{/* <Box> */}
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "center",
+							alignItems: "center",
+							//  matchesMinWidh600
+							// 	? "flex-start"
+							// 	: "center",
+						}}
+					>
+						<Typography
+							style={{
+								fontWeight: 700,
+								fontSize: 60,
 							}}
+							// variant="h3"
+							//color="#1976d3"
 						>
-							{/* <Typography
-								variant="h5"
-								style={{ fontWeight: 600 }}
-							>
-								Titulo
-							</Typography>
-							{"  "} */}
-							<Typography
-								style={{
-									fontWeight: 700,
-									fontSize: 60,
-								}}
-								// variant="h3"
-								//color="#1976d3"
-							>
-								{Event.title}
-							</Typography>
-						</Box>
-						<Box
-							sx={{
-								display: "flex",
-								flexDirection: "row",
-								justifyContent: "center",
-								//  matchesMinWidh600
-								// 	? "flex-start"
-								// 	: "center",
-								alignItems: "center",
-							}}
-						>
-							{/* <Typography
+							{Event.title}
+						</Typography>
+					</Box>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "center",
+							//  matchesMinWidh600
+							// 	? "flex-start"
+							// 	: "center",
+							alignItems: "center",
+						}}
+					>
+						{/* <Typography
 								variant="h5"
 								style={{ fontWeight: 600 }}
 							>
 								Artista/Elenco:
 							</Typography> */}
-							<Typography
-								style={{
-									fontWeight: 700,
-									fontSize: 40,
-								}}
-								// variant="h3"
-								//color="#1976d3"
-							>
-								{Event.artist}
-							</Typography>
-						</Box>
+						<Typography
+							style={{
+								fontWeight: 700,
+								fontSize: 40,
+							}}
+							// variant="h3"
+							//color="#1976d3"
+						>
+							{Event.artist}
+						</Typography>
+					</Box>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							maxWidth: "500px",
+						}}
+					>
 						{Event.imageUrl === "" ? (
 							<div>No image</div>
 						) : (
-							<Box
+							<CardMedia
+								component="img"
+								src={`${process.env.REACT_APP_Blob_API}/eventsimages/${Event.imageUrl}`}
+							></CardMedia>
+						)}
+					</Box>
+					<Grid
+						container
+						spacing={2}
+						direction="row"
+						alignItems="flex-start"
+						justifyContent="center"
+						sx={{ marginTop: "10px" }}
+					>
+						<Grid item xs={12} sm={12} md={12} lg={6} sx={{}}>
+							<EventInfoBox
+								statusImage={
+									<AddLocationIcon fontSize={"large"} />
+								}
+								content={
+									Event.address + " / " + Event.venueName
+								}
+								title={"Escenario"}
+							/>
+
+							{/* <Box
 								sx={{
 									display: "flex",
-									flexDirection: "column",
+									flexDirection: "row",
 									justifyContent: "center",
-									alignItems: "center",
+									alignItems: "flex-start",
+									maxWidth: "150px",
+									//backgroundColor: "#ECEEFF",
 								}}
 							>
-								<Box sx={{ height: "500px", width: "500px" }}>
-									<CardMedia
-										component="img"
-										src={`${process.env.REACT_APP_Blob_API}/eventsimages/${Event.imageUrl}`}
-									></CardMedia>
-								</Box>
-							</Box>
-						)}
-						<Grid
-							container
-							spacing={2}
-							direction="row"
-							alignItems="flex-start"
-							justifyContent="center"
-						>
-							<Grid item xs={12} sm={12} md={12} lg={6}>
+								<AddLocationIcon fontSize={"large"} />
 								<Box
 									sx={{
 										display: "flex",
-										flexDirection: "row",
-										justifyContent: "center",
+										flexDirection: "column",
+										justifyContent: "flex-start",
 										alignItems: "flex-start",
-										//backgroundColor: "#ECEEFF",
 									}}
 								>
-									<AddLocationIcon fontSize={"large"} />
-									<Box
+									<Typography
 										sx={{
-											display: "flex",
-											flexDirection: "column",
-											justifyContent: "flex-start",
-											alignItems: "flex-start",
+											fontWeight: 700,
+											fontSize: 25,
 										}}
 									>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 25,
-											}}
-										>
-											Escenario
-										</Typography>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 15,
-											}}
-										>
-											{Event.venueName}
-											{Event.address}
-										</Typography>
-									</Box>
+										Escenario
+									</Typography>
+									<Typography
+										sx={{
+											fontWeight: 700,
+											fontSize: 15,
+										}}
+									>
+										{Event.venueName}
+										{Event.address}
+									</Typography>
 								</Box>
-							</Grid>
-							<Grid item xs={12} sm={12} md={12} lg={6}>
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "row",
-										justifyContent: "center",
-										alignItems: "flex-start",
-										//backgroundColor: "#ECEEFF",
-									}}
-								>
+							</Box> */}
+						</Grid>
+						<Grid item xs={12} sm={12} md={12} lg={6}>
+							<EventInfoBox
+								statusImage={
 									<CalendarTodayIcon fontSize={"large"} />
-									<Box
-										sx={{
-											display: "flex",
-											flexDirection: "column",
-											justifyContent: "flex-start",
-											alignItems: "flex-start",
-											//backgroundColor: "#ECEEFF",
-										}}
-									>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 25,
-											}}
-										>
-											Fechas y Horario
-										</Typography>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 15,
-											}}
-										>
-											{Event.areIndependent ? (
-												listOfDates
-											) : (
-												<Typography
-													sx={{
-														fontWeight: 700,
-														fontSize: 15,
-													}}
-													// variant="h4"
-													//color="#1976d3"
-												>
-													{new Date(
-														Event.dates[0]
-													).toDateString()}{" "}
-													a{" "}
-													{new Date(
-														Event.dates[1]
-													).toDateString()}
-												</Typography>
-											)}
-											{Event.time}
-										</Typography>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 15,
-											}}
-										>
-											{new Date(Event.time).getHours()}:
-											{new Date(Event.time).getMinutes()}
-										</Typography>
-									</Box>
-								</Box>
-							</Grid>
-						</Grid>
-						<Grid
-							container
-							spacing={2}
-							direction="row"
-							alignItems="flex-start"
-							justifyContent="center"
-							sx={{ my: "5px" }}
-						>
-							<Grid item xs={12} sm={12} md={12} lg={6}>
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "row",
-										justifyContent: "center",
-										alignItems: "flex-start",
-										//backgroundColor: "#ECEEFF",
-									}}
-								>
-									<AttachMoneyIcon fontSize={"large"} />
-									<Box
-										sx={{
-											display: "flex",
-											flexDirection: "column",
-											justifyContent: "flex-start",
-											alignItems: "flex-start",
-										}}
-									>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 25,
-											}}
-										>
-											Precio
-										</Typography>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 15,
-											}}
-										>
-											{Event.venueName}
-											{Event.address}
-										</Typography>
-									</Box>
-								</Box>
-							</Grid>
-							<Grid item xs={12} sm={12} md={12} lg={6}>
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "row",
-										justifyContent: "center",
-										alignItems: "flex-start",
-										//	backgroundColor: "#ECEEFF",
-									}}
-								>
-									<CastleIcon fontSize={"large"} />
-									<Box
-										sx={{
-											display: "flex",
-											flexDirection: "column",
-											justifyContent: "flex-start",
-											alignItems: "flex-start",
-										}}
-									>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 25,
-											}}
-										>
-											Tipo de Evento
-										</Typography>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 15,
-											}}
-										>
-											{Event.areIndependent ? (
-												listOfDates
-											) : (
-												<Typography
-													sx={{
-														fontWeight: 700,
-														fontSize: 15,
-													}}
-													// variant="h4"
-													//color="#1976d3"
-												>
-													{new Date(
-														Event.dates[0]
-													).toDateString()}{" "}
-													a{" "}
-													{new Date(
-														Event.dates[1]
-													).toDateString()}
-												</Typography>
-											)}
-											{Event.time}
-										</Typography>
-										<Typography
-											sx={{
-												fontWeight: 700,
-												fontSize: 15,
-											}}
-										>
-											{new Date(Event.time).getHours()}:
-											{new Date(Event.time).getMinutes()}
-										</Typography>
-									</Box>
-								</Box>
-							</Grid>
-						</Grid>
-						<Box
-							sx={{
-								display: "flex",
-								flexDirection: "row",
-								justifyContent: "flex-start",
-								alignItems: "flex-start",
-								//backgroundColor: "#ECEEFF",
-								width: "200px",
-							}}
-						>
-							<LocalPhoneIcon fontSize={"large"} />
-							<Box
+								}
+								content={Event.areIndependent}
+								title={"Fechas y Horario"}
+								datesArray={Event.dates}
+							/>
+							{/* <Box
 								sx={{
 									display: "flex",
-									flexDirection: "column",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "flex-start",
+									//backgroundColor: "#ECEEFF",
+								}}
+							>
+								<CalendarTodayIcon fontSize={"large"} />
+								<Box
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "flex-start",
+										alignItems: "flex-start",
+										//backgroundColor: "#ECEEFF",
+									}}
+								>
+									<Typography
+										sx={{
+											fontWeight: 700,
+											fontSize: 25,
+										}}
+									>
+										Fechas y Horario
+									</Typography>
+									<Typography
+										sx={{
+											fontWeight: 700,
+											fontSize: 15,
+										}}
+									>
+										{Event.areIndependent ? (
+											listOfDates
+										) : (
+											<Typography
+												sx={{
+													fontWeight: 700,
+													fontSize: 15,
+												}}
+												// variant="h4"
+												//color="#1976d3"
+											>
+												{new Date(
+													Event.dates[0]
+												).toDateString()}{" "}
+												a{" "}
+												{new Date(
+													Event.dates[1]
+												).toDateString()}
+											</Typography>
+										)}
+										{new Date(Event.time).getHours()}:
+										{new Date(Event.time).getMinutes()}
+									</Typography>
+								</Box>
+							</Box> */}
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						spacing={2}
+						direction="row"
+						alignItems="flex-start"
+						justifyContent="center"
+						sx={{ marginTop: "10px", marginBottom: "10px" }}
+					>
+						<Grid item xs={12} sm={12} md={12} lg={6}>
+							<EventInfoBox
+								statusImage={
+									<AttachMoneyIcon fontSize={"large"} />
+								}
+								content={Event.price + " Bs"}
+								title={"Precio"}
+							/>
+							{/* <Box
+								sx={{
+									display: "flex",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "flex-start",
+									//backgroundColor: "#ECEEFF",
+								}}
+							>
+								<AttachMoneyIcon fontSize={"large"} />
+								<Box
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "flex-start",
+										alignItems: "flex-start",
+									}}
+								>
+									<Typography
+										sx={{
+											fontWeight: 700,
+											fontSize: 25,
+										}}
+									>
+										Precio
+									</Typography>
+									<Typography
+										style={{
+											fontWeight: 700,
+											fontSize: 15,
+										}}
+										// variant="body1"
+										// color="#1976d3"
+									>
+										{Event.price + " Bs"}
+									</Typography>
+								</Box>
+							</Box> */}
+						</Grid>
+						<Grid item xs={12} sm={12} md={12} lg={6}>
+							<EventInfoBox
+								statusImage={<CastleIcon fontSize={"large"} />}
+								content={castTypeOfEvent(Event.type)}
+								title={"Tipo de Evento"}
+							/>
+							{/* <Box
+								sx={{
+									display: "flex",
+									flexDirection: "row",
 									justifyContent: "flex-start",
 									alignItems: "flex-start",
+									//	backgroundColor: "#ECEEFF",
 								}}
 							>
-								<Typography
+								<CastleIcon fontSize={"large"} />
+								<Box
 									sx={{
-										fontWeight: 700,
-										fontSize: 25,
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "flex-start",
+										alignItems: "flex-start",
 									}}
 								>
-									Contacto
-								</Typography>
-								<Typography
-									sx={{
-										fontWeight: 700,
-										fontSize: 15,
-									}}
-								>
-									{Event.phone}
-								</Typography>
-							</Box>
-						</Box>
-
+									<Typography
+										sx={{
+											fontWeight: 700,
+											fontSize: 25,
+										}}
+									>
+										Tipo de Evento
+									</Typography>
+									<Typography
+										style={{
+											fontWeight: 600,
+											fontSize: 15,
+										}}
+										// variant="h4"
+										//color="#1976d3"
+									>
+										{castTypeOfEvent(Event.type)}
+									</Typography>
+								</Box>
+							</Box> */}
+						</Grid>
+					</Grid>
+					<EventInfoBox
+						statusImage={<LocalPhoneIcon fontSize={"large"} />}
+						content={Event.phone}
+						title={"Contacto"}
+					/>
+					{/* <Box
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "flex-start",
+							alignItems: "flex-start",
+							//backgroundColor: "#ECEEFF",
+							width: "200px",
+						}}
+					>
+						<LocalPhoneIcon fontSize={"large"} />
 						<Box
 							sx={{
 								display: "flex",
 								flexDirection: "column",
 								justifyContent: "flex-start",
 								alignItems: "flex-start",
-								width: "600px",
 							}}
 						>
 							<Typography
@@ -460,583 +430,237 @@ function EventsDetail({
 									fontSize: 25,
 								}}
 							>
-								Descripcion del evento
+								Contacto
 							</Typography>
 							<Typography
 								sx={{
 									fontWeight: 700,
 									fontSize: 15,
 								}}
-								paragraph={true}
-								align="justify"
 							>
-								{Event.description}
+								{Event.phone}
 							</Typography>
 						</Box>
+					</Box> */}
 
-						<Grid
-							container
-							spacing={2}
-							direction="row"
-							alignItems="center"
-							justifyContent="center"
-							width={"100%"}
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-start",
+							alignItems: "flex-start",
+							maxWidth: "550px",
+						}}
+					>
+						<Typography
+							sx={{
+								fontWeight: 700,
+								fontSize: 25,
+							}}
 						>
-							<Grid item xs={12} sm={12} md={6} lg={6}>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 700 }}
-									color="#1976d3"
-								>
-									Redes sociales del evento
-								</Typography>
-								<Box>
-									{Event.facebook === "" ? (
-										<FacebookIcon color="disabled" />
-									) : (
-										<FacebookIcon
-											sx={{
-												color: "#1877F2",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de Facebook del evento: " +
-														Event.title,
-												});
-												window.open(Event.facebook);
-											}}
-										/>
-									)}
-									{Event.twitter === "" ? (
-										<TwitterIcon color="disabled" />
-									) : (
-										<TwitterIcon
-											sx={{
-												color: "#1DA1F2",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de Twitter del evento: " +
-														Event.title,
-												});
-												window.open(Event.twitter);
-											}}
-										/>
-									)}
-									{Event.website === "" ? (
-										<LanguageIcon color="disabled" />
-									) : (
-										<LanguageIcon
-											sx={{
-												color: "#000000",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de web del evento: " +
-														Event.title,
-												});
-												window.open(Event.website);
-											}}
-										/>
-									)}
-									{Event.instagram === "" ? (
-										<InstagramIcon color="disabled" />
-									) : (
-										<InstagramIcon
-											sx={{
-												color: "#E1306C",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de Instagram del evento: " +
-														Event.title,
-												});
-												window.open(Event.instagram);
-											}}
-										/>
-									)}
-								</Box>
-							</Grid>
-							<Grid item xs={12} sm={12} md={6} lg={6}>
-								<Typography
-									variant="h5"
-									color="#1976d3"
-									style={{ fontWeight: 700 }}
-								>
-									Redes sociales del espacio
-								</Typography>
-								<Box>
-									{Event.venueFacebook === "" ? (
-										<FacebookIcon color="disabled" />
-									) : (
-										<FacebookIcon
-											sx={{
-												color: "#1877F2",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de Facebook del espacio: " +
-														Event.title,
-												});
-												window.open(
-													Event.venueFacebook
-												);
-											}}
-										/>
-									)}
-									{Event.venueTwitter === "" ? (
-										<TwitterIcon color="disabled" />
-									) : (
-										<TwitterIcon
-											sx={{
-												color: "#1DA1F2",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de Twitter del espacio: " +
-														Event.title,
-												});
-												window.open(Event.venueTwitter);
-											}}
-										/>
-									)}
-									{Event.venueWebsite === "" ? (
-										<LanguageIcon color="disabled" />
-									) : (
-										<LanguageIcon
-											sx={{
-												color: "#000000",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de web del espacio: " +
-														Event.title,
-												});
-												window.open(Event.venueWebsite);
-											}}
-										/>
-									)}
-									{Event.venueInstagram === "" ? (
-										<InstagramIcon color="disabled" />
-									) : (
-										<InstagramIcon
-											sx={{
-												color: "#E1306C",
-											}}
-											onClick={() => {
-												ReactGA.event({
-													category:
-														"Evento cultural individual",
-													action:
-														"Pagina de Instagram del espacio: " +
-														Event.title,
-												});
-												window.open(
-													Event.venueInstagram
-												);
-											}}
-										/>
-									)}
-								</Box>
-							</Grid>
-						</Grid>
+							Descripcion del evento
+						</Typography>
+						<Typography
+							sx={{
+								fontWeight: 700,
+								fontSize: 15,
+								display: "flex",
+								flexDirection: "row",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+							paragraph={true}
+							align="justify"
+						>
+							{Event.description}
+						</Typography>
+					</Box>
 
-						{/* previous design */}
-						<div>
-							<Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: matchesMinWidh600
-										? "flex-start"
-										: "center",
-									alignItems: "center",
-								}}
-							>
-								{/* <Typography
+					<Grid
+						container
+						spacing={2}
+						direction="row"
+						alignItems="center"
+						justifyContent="center"
+						width={"100%"}
+					>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
+							<Typography
 								variant="h5"
-								style={{ fontWeight: 600 }}
-							>
-								Escenario:
-							</Typography> */}
-								<Typography
-									style={{
-										fontWeight: 700,
-										fontSize: 34,
-									}}
-									// variant="h3"
-									color="#1976d3"
-								>
-									{Boolean(Event.venueName)
-										? Event.venueName
-										: "sin escenario"}
-								</Typography>
-							</Box>
-							<Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: matchesMinWidh600
-										? "flex-start"
-										: "center",
-									alignItems: "center",
-								}}
-							>
-								{/* <Typography
 								style={{ fontWeight: 700 }}
-								variant="h4"
+								color="#1976d3"
 							>
-								Tipo de evento:
-							</Typography> */}
-								<Typography
-									style={{
-										fontWeight: 700,
-										fontSize: 34,
-									}}
-									// variant="h4"
-									color="#1976d3"
-								>
-									{castTypeOfEvent(Event.type)}
-								</Typography>
-							</Box>
-							<Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: matchesMinWidh600
-										? "flex-start"
-										: "center",
-									alignItems: "center",
-								}}
-							>
-								{/* <Typography
-								variant="h5"
-								style={{ fontWeight: 600 }}
-							>
-								Fechas
-							</Typography> */}
-								{Event.areIndependent ? (
-									listOfDates
+								Redes sociales del evento
+							</Typography>
+							<Box>
+								{Event.facebook === "" ? (
+									<FacebookIcon color="disabled" />
 								) : (
-									<Typography
-										style={{
-											fontWeight: 500,
-											fontSize: 28,
+									<FacebookIcon
+										sx={{
+											color: "#1877F2",
 										}}
-										// variant="h4"
-										color="#1976d3"
-									>
-										{new Date(
-											Event.dates[0]
-										).toDateString()}{" "}
-										a{" "}
-										{new Date(
-											Event.dates[1]
-										).toDateString()}
-									</Typography>
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de Facebook del evento: " +
+													Event.title,
+											});
+											window.open(Event.facebook);
+										}}
+									/>
+								)}
+								{Event.twitter === "" ? (
+									<TwitterIcon color="disabled" />
+								) : (
+									<TwitterIcon
+										sx={{
+											color: "#1DA1F2",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de Twitter del evento: " +
+													Event.title,
+											});
+											window.open(Event.twitter);
+										}}
+									/>
+								)}
+								{Event.website === "" ? (
+									<LanguageIcon color="disabled" />
+								) : (
+									<LanguageIcon
+										sx={{
+											color: "#000000",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de web del evento: " +
+													Event.title,
+											});
+											window.open(Event.website);
+										}}
+									/>
+								)}
+								{Event.instagram === "" ? (
+									<InstagramIcon color="disabled" />
+								) : (
+									<InstagramIcon
+										sx={{
+											color: "#E1306C",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de Instagram del evento: " +
+													Event.title,
+											});
+											window.open(Event.instagram);
+										}}
+									/>
 								)}
 							</Box>
-							<Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: matchesMinWidh600
-										? "flex-start"
-										: "center",
-									alignItems: "center",
-								}}
-							>
-								{/* <Typography
+						</Grid>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
+							<Typography
 								variant="h5"
-								style={{ fontWeight: 600 }}
+								color="#1976d3"
+								style={{ fontWeight: 700 }}
 							>
-								Telefono:
-							</Typography> */}
-								<Typography
-									style={{
-										fontWeight: 500,
-										fontSize: 28,
-									}}
-									// variant="h4"
-									color="#1976d3"
-								>
-									{Event.phone}
-								</Typography>
+								Redes sociales del espacio
+							</Typography>
+							<Box>
+								{Event.venueFacebook === "" ? (
+									<FacebookIcon color="disabled" />
+								) : (
+									<FacebookIcon
+										sx={{
+											color: "#1877F2",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de Facebook del espacio: " +
+													Event.title,
+											});
+											window.open(Event.venueFacebook);
+										}}
+									/>
+								)}
+								{Event.venueTwitter === "" ? (
+									<TwitterIcon color="disabled" />
+								) : (
+									<TwitterIcon
+										sx={{
+											color: "#1DA1F2",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de Twitter del espacio: " +
+													Event.title,
+											});
+											window.open(Event.venueTwitter);
+										}}
+									/>
+								)}
+								{Event.venueWebsite === "" ? (
+									<LanguageIcon color="disabled" />
+								) : (
+									<LanguageIcon
+										sx={{
+											color: "#000000",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de web del espacio: " +
+													Event.title,
+											});
+											window.open(Event.venueWebsite);
+										}}
+									/>
+								)}
+								{Event.venueInstagram === "" ? (
+									<InstagramIcon color="disabled" />
+								) : (
+									<InstagramIcon
+										sx={{
+											color: "#E1306C",
+										}}
+										onClick={() => {
+											ReactGA.event({
+												category:
+													"Evento cultural individual",
+												action:
+													"Pagina de Instagram del espacio: " +
+													Event.title,
+											});
+											window.open(Event.venueInstagram);
+										}}
+									/>
+								)}
 							</Box>
+						</Grid>
+					</Grid>
 
-							<Box
-								sx={{
-									display: "flex",
-									flexDirection: "column",
-									justifyContent: matchesMinWidh600
-										? "flex-start"
-										: "center",
-									alignItems: "center",
-									width: "500px",
-								}}
-							>
-								{/* <Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Descripcion:
-								</Typography>{" "} */}
-								<Typography
-									// variant="h6"
-									color="#1976d3"
-									style={{
-										fontWeight: 500,
-										fontSize: 20,
-									}}
-									paragraph={true}
-								>
-									{Event.description}
-								</Typography>
-							</Box>
-							<Box
-								sx={{
-									display: "flex",
-									// flexDirection: "row",
-									justifyContent: matchesMinWidh600
-										? "flex-start"
-										: "center",
-									// alignItems: "center",
-								}}
-							>
-								{/* <Typography
-								variant="h5"
-								style={{ fontWeight: 600 }}
-							>
-								Precio:
-							</Typography> */}
-								<Typography
-									style={{
-										fontWeight: 700,
-										fontSize: 71,
-									}}
-									variant="body1"
-									color="#1976d3"
-								>
-									{Event.price + " Bs"}
-								</Typography>
-							</Box>
-
-							<Grid
-								container
-								spacing={2}
-								direction="row"
-								alignItems="center"
-								justifyContent="center"
-								width={"100%"}
-							>
-								<Grid item xs={12} sm={12} md={6} lg={6}>
-									<Typography
-										variant="h5"
-										style={{ fontWeight: 700 }}
-										color="#1976d3"
-									>
-										Redes sociales del evento
-									</Typography>
-									<Box>
-										{Event.facebook === "" ? (
-											<FacebookIcon color="disabled" />
-										) : (
-											<FacebookIcon
-												sx={{
-													color: "#1877F2",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de Facebook del evento: " +
-															Event.title,
-													});
-													window.open(Event.facebook);
-												}}
-											/>
-										)}
-										{Event.twitter === "" ? (
-											<TwitterIcon color="disabled" />
-										) : (
-											<TwitterIcon
-												sx={{
-													color: "#1DA1F2",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de Twitter del evento: " +
-															Event.title,
-													});
-													window.open(Event.twitter);
-												}}
-											/>
-										)}
-										{Event.website === "" ? (
-											<LanguageIcon color="disabled" />
-										) : (
-											<LanguageIcon
-												sx={{
-													color: "#000000",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de web del evento: " +
-															Event.title,
-													});
-													window.open(Event.website);
-												}}
-											/>
-										)}
-										{Event.instagram === "" ? (
-											<InstagramIcon color="disabled" />
-										) : (
-											<InstagramIcon
-												sx={{
-													color: "#E1306C",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de Instagram del evento: " +
-															Event.title,
-													});
-													window.open(
-														Event.instagram
-													);
-												}}
-											/>
-										)}
-									</Box>
-								</Grid>
-								<Grid item xs={12} sm={12} md={6} lg={6}>
-									<Typography
-										variant="h5"
-										color="#1976d3"
-										style={{ fontWeight: 700 }}
-									>
-										Redes sociales del espacio
-									</Typography>
-									<Box>
-										{Event.venueFacebook === "" ? (
-											<FacebookIcon color="disabled" />
-										) : (
-											<FacebookIcon
-												sx={{
-													color: "#1877F2",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de Facebook del espacio: " +
-															Event.title,
-													});
-													window.open(
-														Event.venueFacebook
-													);
-												}}
-											/>
-										)}
-										{Event.venueTwitter === "" ? (
-											<TwitterIcon color="disabled" />
-										) : (
-											<TwitterIcon
-												sx={{
-													color: "#1DA1F2",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de Twitter del espacio: " +
-															Event.title,
-													});
-													window.open(
-														Event.venueTwitter
-													);
-												}}
-											/>
-										)}
-										{Event.venueWebsite === "" ? (
-											<LanguageIcon color="disabled" />
-										) : (
-											<LanguageIcon
-												sx={{
-													color: "#000000",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de web del espacio: " +
-															Event.title,
-													});
-													window.open(
-														Event.venueWebsite
-													);
-												}}
-											/>
-										)}
-										{Event.venueInstagram === "" ? (
-											<InstagramIcon color="disabled" />
-										) : (
-											<InstagramIcon
-												sx={{
-													color: "#E1306C",
-												}}
-												onClick={() => {
-													ReactGA.event({
-														category:
-															"Evento cultural individual",
-														action:
-															"Pagina de Instagram del espacio: " +
-															Event.title,
-													});
-													window.open(
-														Event.venueInstagram
-													);
-												}}
-											/>
-										)}
-									</Box>
-								</Grid>
-							</Grid>
-						</div>
-					</Box>
+					{/* </Box> */}
 				</Box>
 			</ThemeProvider>
 		</Box>
