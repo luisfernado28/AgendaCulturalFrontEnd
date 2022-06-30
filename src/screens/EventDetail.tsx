@@ -25,6 +25,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CastleIcon from "@mui/icons-material/Castle";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EventInfoBox from "../components/eventInfoBox";
+import "./../styles/screens/EventDetail.css";
 
 declare module "@mui/material/styles" {
 	interface Theme {
@@ -69,100 +70,32 @@ function EventsDetail({
 	// 		fontSize: "2rem",
 	// 	},
 	// };
-	const listOfDates = Event.dates.map((inidividualDate) => {
-		const newDate = new Date(inidividualDate);
-		return (
-			<Typography variant="h6" key={1}>
-				{newDate.toDateString() + ", "}
-			</Typography>
-		);
-	});
+
 	return (
-		<Box
-			sx={{
-				backgroundColor: "#ECEEFF",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				alignContent: "center",
-			}}
-		>
+		<Box className="backGroundFiller">
 			<ThemeProvider theme={theme}>
-				<Box
-					sx={{
-						backgroundColor: "#FFFFFF",
-						minWidth: "200px",
-						height: "100%",
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						alignContent: "center",
-						flexFlow: "column",
-						my: "20px",
-						paddingLeft: "20px",
-						paddingRight: "20px",
-					}}
-				>
-					{/* <Box> */}
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-							justifyContent: "center",
-							alignItems: "center",
-							//  matchesMinWidh600
-							// 	? "flex-start"
-							// 	: "center",
-						}}
-					>
+				<Box className="eventCardFiller">
+					<Box className="titleBox">
 						<Typography
 							style={{
 								fontWeight: 700,
 								fontSize: 60,
 							}}
-							// variant="h3"
-							//color="#1976d3"
 						>
 							{Event.title}
 						</Typography>
 					</Box>
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-							justifyContent: "center",
-							//  matchesMinWidh600
-							// 	? "flex-start"
-							// 	: "center",
-							alignItems: "center",
-						}}
-					>
-						{/* <Typography
-								variant="h5"
-								style={{ fontWeight: 600 }}
-							>
-								Artista/Elenco:
-							</Typography> */}
+					<Box className="titleBox">
 						<Typography
 							style={{
 								fontWeight: 700,
 								fontSize: 40,
 							}}
-							// variant="h3"
-							//color="#1976d3"
 						>
 							{Event.artist}
 						</Typography>
 					</Box>
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							justifyContent: "center",
-							alignItems: "center",
-							maxWidth: "500px",
-						}}
-					>
+					<Box className="imageBox">
 						{Event.imageUrl === "" ? (
 							<div>No image</div>
 						) : (
@@ -180,7 +113,7 @@ function EventsDetail({
 						justifyContent="center"
 						sx={{ marginTop: "10px" }}
 					>
-						<Grid item xs={12} sm={12} md={12} lg={6} sx={{}}>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
 							<EventInfoBox
 								statusImage={
 									<AddLocationIcon fontSize={"large"} />
@@ -190,47 +123,8 @@ function EventsDetail({
 								}
 								title={"Escenario"}
 							/>
-
-							{/* <Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "center",
-									alignItems: "flex-start",
-									maxWidth: "150px",
-									//backgroundColor: "#ECEEFF",
-								}}
-							>
-								<AddLocationIcon fontSize={"large"} />
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "flex-start",
-										alignItems: "flex-start",
-									}}
-								>
-									<Typography
-										sx={{
-											fontWeight: 700,
-											fontSize: 25,
-										}}
-									>
-										Escenario
-									</Typography>
-									<Typography
-										sx={{
-											fontWeight: 700,
-											fontSize: 15,
-										}}
-									>
-										{Event.venueName}
-										{Event.address}
-									</Typography>
-								</Box>
-							</Box> */}
 						</Grid>
-						<Grid item xs={12} sm={12} md={12} lg={6}>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
 							<EventInfoBox
 								statusImage={
 									<CalendarTodayIcon fontSize={"large"} />
@@ -239,64 +133,6 @@ function EventsDetail({
 								title={"Fechas y Horario"}
 								datesArray={Event.dates}
 							/>
-							{/* <Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "center",
-									alignItems: "flex-start",
-									//backgroundColor: "#ECEEFF",
-								}}
-							>
-								<CalendarTodayIcon fontSize={"large"} />
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "flex-start",
-										alignItems: "flex-start",
-										//backgroundColor: "#ECEEFF",
-									}}
-								>
-									<Typography
-										sx={{
-											fontWeight: 700,
-											fontSize: 25,
-										}}
-									>
-										Fechas y Horario
-									</Typography>
-									<Typography
-										sx={{
-											fontWeight: 700,
-											fontSize: 15,
-										}}
-									>
-										{Event.areIndependent ? (
-											listOfDates
-										) : (
-											<Typography
-												sx={{
-													fontWeight: 700,
-													fontSize: 15,
-												}}
-												// variant="h4"
-												//color="#1976d3"
-											>
-												{new Date(
-													Event.dates[0]
-												).toDateString()}{" "}
-												a{" "}
-												{new Date(
-													Event.dates[1]
-												).toDateString()}
-											</Typography>
-										)}
-										{new Date(Event.time).getHours()}:
-										{new Date(Event.time).getMinutes()}
-									</Typography>
-								</Box>
-							</Box> */}
 						</Grid>
 					</Grid>
 					<Grid
@@ -305,9 +141,9 @@ function EventsDetail({
 						direction="row"
 						alignItems="flex-start"
 						justifyContent="center"
-						sx={{ marginTop: "10px", marginBottom: "10px" }}
+						sx={{ marginTop: "5px", marginBottom: "10px" }}
 					>
-						<Grid item xs={12} sm={12} md={12} lg={6}>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
 							<EventInfoBox
 								statusImage={
 									<AttachMoneyIcon fontSize={"large"} />
@@ -315,133 +151,33 @@ function EventsDetail({
 								content={Event.price + " Bs"}
 								title={"Precio"}
 							/>
-							{/* <Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "center",
-									alignItems: "flex-start",
-									//backgroundColor: "#ECEEFF",
-								}}
-							>
-								<AttachMoneyIcon fontSize={"large"} />
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "flex-start",
-										alignItems: "flex-start",
-									}}
-								>
-									<Typography
-										sx={{
-											fontWeight: 700,
-											fontSize: 25,
-										}}
-									>
-										Precio
-									</Typography>
-									<Typography
-										style={{
-											fontWeight: 700,
-											fontSize: 15,
-										}}
-										// variant="body1"
-										// color="#1976d3"
-									>
-										{Event.price + " Bs"}
-									</Typography>
-								</Box>
-							</Box> */}
 						</Grid>
-						<Grid item xs={12} sm={12} md={12} lg={6}>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
 							<EventInfoBox
 								statusImage={<CastleIcon fontSize={"large"} />}
 								content={castTypeOfEvent(Event.type)}
 								title={"Tipo de Evento"}
 							/>
-							{/* <Box
-								sx={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "flex-start",
-									alignItems: "flex-start",
-									//	backgroundColor: "#ECEEFF",
-								}}
-							>
-								<CastleIcon fontSize={"large"} />
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-										justifyContent: "flex-start",
-										alignItems: "flex-start",
-									}}
-								>
-									<Typography
-										sx={{
-											fontWeight: 700,
-											fontSize: 25,
-										}}
-									>
-										Tipo de Evento
-									</Typography>
-									<Typography
-										style={{
-											fontWeight: 600,
-											fontSize: 15,
-										}}
-										// variant="h4"
-										//color="#1976d3"
-									>
-										{castTypeOfEvent(Event.type)}
-									</Typography>
-								</Box>
-							</Box> */}
 						</Grid>
 					</Grid>
-					<EventInfoBox
-						statusImage={<LocalPhoneIcon fontSize={"large"} />}
-						content={Event.phone}
-						title={"Contacto"}
-					/>
-					{/* <Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-							justifyContent: "flex-start",
-							alignItems: "flex-start",
-							//backgroundColor: "#ECEEFF",
-							width: "200px",
-						}}
+					<Grid
+						container
+						spacing={2}
+						direction="row"
+						alignItems="flex-start"
+						justifyContent="flex-start"
+						sx={{ marginBottom: "10px" }}
 					>
-						<LocalPhoneIcon fontSize={"large"} />
-						<Box
-							sx={{
-								display: "flex",
-								flexDirection: "column",
-								justifyContent: "flex-start",
-								alignItems: "flex-start",
-							}}
-						>
-							<Typography
-								sx={{
-									fontWeight: 700,
-									fontSize: 25,
-								}}
-							>
-								Contacto
-							</Typography>
-							<Typography
-								sx={{
-									fontWeight: 700,
-									fontSize: 15,
-								}}
-							>
-								{Event.phone}
-							</Typography>
-						</Box>
-					</Box> */}
+						<Grid item xs={12} sm={12} md={6} lg={6}>
+							<EventInfoBox
+								statusImage={
+									<LocalPhoneIcon fontSize={"large"} />
+								}
+								content={Event.phone}
+								title={"Contacto"}
+							/>
+						</Grid>
+					</Grid>
 
 					<Box
 						sx={{
@@ -659,8 +395,6 @@ function EventsDetail({
 							</Box>
 						</Grid>
 					</Grid>
-
-					{/* </Box> */}
 				</Box>
 			</ThemeProvider>
 		</Box>

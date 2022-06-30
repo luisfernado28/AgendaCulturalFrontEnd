@@ -17,11 +17,42 @@ const createImageForBlob = (props: contents): File => {
 };
 export default createImageForBlob;
 
+export const castTypeOfEvent = (value: string): string => {
+	return value === "0" ? "Hibrido" : value === "1" ? "Presencial" : "Virtual";
+};
 
-export const castTypeOfEvent = (value: string): string =>{
-	return value === "0"
-	? "Hibrido"
-	: value === "1"
-	? "Presencial"
-	: "Virtual"
-}
+const meses = [
+	"Enero",
+	"Febrero",
+	"Marzo",
+	"Abril",
+	"Mayo",
+	"Junio",
+	"Julio",
+	"Agosto",
+	"Septiembre",
+	"Octubre",
+	"Noviembre",
+	"Diciembre",
+];
+const dias_semana = [
+	"Domingo",
+	"Lunes",
+	"Martes",
+	"Miércoles",
+	"Jueves",
+	"Viernes",
+	"Sábado",
+];
+export const createDateFormat = (date: string): string => {
+	const newDate = new Date(date);
+	return (
+		dias_semana[newDate.getDay()] +
+		", " +
+		newDate.getDate() +
+		" de " +
+		meses[newDate.getMonth()] +
+		" de " +
+		newDate.getUTCFullYear()
+	);
+};
