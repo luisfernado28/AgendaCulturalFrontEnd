@@ -11,7 +11,7 @@ variables:
   imageRepository: 'reactagenda'
   containerRegistry: 'agendaculturalcontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: latestLocal #'$(Build.BuildId)' should use build tag
+  tag: latest #'$(Build.BuildId)' should use build tag
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
