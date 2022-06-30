@@ -31,7 +31,7 @@ function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
 	const { Events, count } = useSelector(selectAllEvents);
 	const [sortValue2, setSortValueDropdown2] = useState(true);
-	const matchesMinWidh600 = useMediaQuery('(min-width:600px)');
+	const matchesMinWidh600 = useMediaQuery("(min-width:600px)");
 	const [topValueUsers] = useState(10);
 	const [page, setPage] = useState(1);
 	let setQueryParams: QueryParams = {
@@ -60,7 +60,10 @@ function ListPage(): JSX.Element {
 		dispatch(fetchEvents(queryParameters));
 		dispatch(countEvents(queryParameters));
 	}, [dispatch, queryParameters]);
-	const imagesForCarousel = Events.map((x) => ({ eventId: x.id, imageUrl: x.imageUrl }) ).slice(0, 3);
+	const imagesForCarousel = Events.map((x) => ({
+		eventId: x.id,
+		imageUrl: x.imageUrl,
+	})).slice(0, 3);
 	useEffect(() => {
 		//This will not be excuted on the first time the use come to this page
 		ReactGA.event({
@@ -168,7 +171,7 @@ function ListPage(): JSX.Element {
 						alignItems: "center",
 						justifyContent: "center",
 						display: "flex",
-						backgroundColor: "#1976d3",
+						backgroundColor: "#FFFFFF",
 					}}
 				>
 					<Grid
@@ -181,10 +184,12 @@ function ListPage(): JSX.Element {
 					>
 						<Grid item xs={8} sm={6} md={6} lg={6}>
 							<TextField
+								variant="filled"
 								fullWidth
 								id="searchBar"
 								name="searchBar"
 								label="Busqueda"
+								// color="success"
 								value={formik.values.searchBar}
 								onChange={formik.handleChange}
 								error={
@@ -222,9 +227,9 @@ function ListPage(): JSX.Element {
 					</Grid>
 				</Box>
 			</form>
-			<Typography variant="h3" component="div">
+			{/* <Typography variant="h3" component="div">
 				Eventos en tendencia
-			</Typography>
+			</Typography> */}
 			{Events.length !== 0 ? (
 				<Grid
 					container
@@ -233,8 +238,8 @@ function ListPage(): JSX.Element {
 					sx={{
 						justifyContent: "stretch",
 						my: "10px",
-						paddingLeft: matchesMinWidh600 ? "85px" :"15px",
-						paddingRight: matchesMinWidh600 ? "85px" :"15px",
+						paddingLeft: matchesMinWidh600 ? "85px" : "15px",
+						paddingRight: matchesMinWidh600 ? "85px" : "15px",
 					}}
 				>
 					{eventsList}
