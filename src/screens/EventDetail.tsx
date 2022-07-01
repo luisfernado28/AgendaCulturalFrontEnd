@@ -26,6 +26,7 @@ import CastleIcon from "@mui/icons-material/Castle";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EventInfoBox from "../components/eventInfoBox";
 import "./../styles/screens/EventDetail.css";
+import Maps from "../components/Maps";
 
 declare module "@mui/material/styles" {
 	interface Theme {
@@ -85,6 +86,7 @@ function EventsDetail({
 							{Event.title}
 						</Typography>
 					</Box>
+
 					<Box className="titleBox">
 						<Typography
 							style={{
@@ -210,6 +212,25 @@ function EventsDetail({
 						>
 							{Event.description}
 						</Typography>
+					</Box>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "flex-start",
+							alignItems: "flex-start",
+							maxWidth: "550px",
+						}}
+					>
+						<Typography
+							sx={{
+								fontWeight: 700,
+								fontSize: 25,
+							}}
+						>
+							Ubicacion del evento
+						</Typography>
+						<Maps  markerCoordinates={Event.locationCoordinates}/>
 					</Box>
 
 					<Grid
