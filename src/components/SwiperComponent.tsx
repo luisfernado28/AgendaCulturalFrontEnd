@@ -35,7 +35,7 @@ function SwiperComponent(imagesArray: props): JSX.Element {
 			modules={[Navigation, Pagination, Autoplay]}
 			slidesPerView={1}
 			navigation
-			autoplay={{ delay: 1000 }}
+			autoplay={{ delay: 5000 }}
 			pagination={{ clickable: true }}
 		>
 			{imagesArray.imagesLink.map((x: imagesObj) => {

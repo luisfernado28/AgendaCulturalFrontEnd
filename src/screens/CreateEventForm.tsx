@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { CreateEvents, EventTypeStatus } from "../redux/types";
-import { useState} from "react";
+import { useState } from "react";
 import { postImage } from "../utils/blobStorageClient";
 import React from "react";
 import "yup-phone";
@@ -23,6 +23,7 @@ import CalendarItem from "../components/CalendarItem";
 import TimePickerItem from "../components/TimeItem";
 import ImageUpload from "../components/ImageUpload";
 import createImageForBlob from "../utils/utils";
+import Maps from "../components/Maps";
 
 interface Values {
 	title: string;
@@ -109,6 +110,11 @@ function CreateEventForm(): JSX.Element {
 	const calendarOnChange = (e: any) => {
 		setCalendarValue(e);
 	};
+	const [localizationData, setlocalizationData] = useState([]);
+	const childToParent = (e: google.maps.LatLng) => {
+		// console.log(e.lat());
+		setlocalizationData([e.lat(), e.lng()]);
+	};
 
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
@@ -122,6 +128,11 @@ function CreateEventForm(): JSX.Element {
 			newImageUrl = await postImage(setFile);
 		}
 		values.type = statusValue.toString();
+		console.log(localizationData);
+
+		if (localizationData) {
+			values.locationCoordinates = localizationData;
+		}
 		const newEvent: CreateEvents = {
 			...values,
 			status: "active",
@@ -133,6 +144,7 @@ function CreateEventForm(): JSX.Element {
 			}),
 			time: timeValue.toDate().toISOString(),
 		};
+		// console.log(newEvent);
 		await dispatch(createEvent(newEvent));
 	};
 
@@ -285,6 +297,32 @@ function CreateEventForm(): JSX.Element {
 										multiline
 										rows={10}
 									/>
+								</Grid>
+
+								<Grid item xs={12}>
+									<Typography
+										sx={{
+											fontWeight: 700,
+											fontSize: 25,
+										}}
+									>
+										Ubicacion del evento
+									</Typography>
+									<Box
+										sx={{
+											display: "flex",
+											flexDirection: "column",
+											justifyContent: "center",
+											alignItems: "center",
+											maxWidth: "1000px",
+										}}
+									>
+										<Maps
+											markerCoordinates={[]}
+											type={"Picker"}
+											valueOfLocal={childToParent}
+										/>
+									</Box>
 								</Grid>
 								<Grid item xs={12}>
 									Tipo de evento

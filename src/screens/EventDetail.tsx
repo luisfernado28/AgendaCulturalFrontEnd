@@ -150,7 +150,7 @@ function EventsDetail({
 								statusImage={
 									<AttachMoneyIcon fontSize={"large"} />
 								}
-								content={Event.price + " Bs"}
+								content={Event.price}
 								title={"Precio"}
 							/>
 						</Grid>
@@ -230,7 +230,7 @@ function EventsDetail({
 						>
 							Ubicacion del evento
 						</Typography>
-						<Maps  markerCoordinates={Event.locationCoordinates}/>
+						<Maps  markerCoordinates={Event.locationCoordinates} type={"Informative"} valueOfLocal={undefined}/>
 					</Box>
 
 					<Grid

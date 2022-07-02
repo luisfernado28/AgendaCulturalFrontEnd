@@ -9,20 +9,21 @@ const containerStyle = {
 
 interface MapProps {
 	markerCoordinates: number[];
+	type: string; //Infromative or Picker
+	valueOfLocal: Function;
 }
 
+const center = {
+	lat: -16.49542163483714,
+	lng: -68.13353376825822,
+};
 const Maps = (props: MapProps): JSX.Element => {
-	const latitude = props.markerCoordinates[0];
-	const longitude = props.markerCoordinates[1];
-	const position = {
-		lat: latitude,
-		lng: longitude,
-	};
+	const [map, setMap] = React.useState(null);
+	const [marker, setmarker] = React.useState({
+		lat: props.markerCoordinates[0],
+		lng: props.markerCoordinates[1],
+	});
 
-	const center = {
-		lat: latitude,
-		lng: longitude,
-	};
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
 		googleMapsApiKey: "AIzaSyDDBcXB8d1K9mE4IeKdnlWWR-l6pRMKZcU",
@@ -31,7 +32,6 @@ const Maps = (props: MapProps): JSX.Element => {
 	const onLoad2 = (marker) => {
 		console.log("marker: ", marker);
 	};
-	const [map, setMap] = React.useState(null);
 
 	const onLoad = React.useCallback(function callback(map) {
 		const bounds = new window.google.maps.LatLngBounds(center);
@@ -43,21 +43,63 @@ const Maps = (props: MapProps): JSX.Element => {
 		setMap(null);
 	}, []);
 
-	return isLoaded ? (
-		<GoogleMap
-			mapContainerStyle={containerStyle}
-			center={center}
-			zoom={16}
-			onLoad={onLoad}
-			onUnmount={onUnmount}
-			onClick={(e: any) => {
-				console.log(e);
-			}}
-		>
-			<Marker onLoad={onLoad2} position={position} />
-		</GoogleMap>
-	) : (
-		<></>
-	);
+	if (props.type === "Picker") {
+		const onClick = (e: google.maps.LatLng) => {
+			setmarker({ lat: e.lat(), lng: e.lng() });
+			props.valueOfLocal(e);
+		};
+		return isLoaded ? (
+			<GoogleMap
+				mapContainerStyle={containerStyle}
+				center={center}
+				zoom={11}
+				onLoad={onLoad}
+				onUnmount={onUnmount}
+				onClick={(e: google.maps.MapMouseEvent) => {
+					onClick(e.latLng);
+				}}
+			>
+				{marker ? (
+					<Marker onLoad={onLoad2} position={marker} />
+				) : (
+					<div></div>
+				)}
+			</GoogleMap>
+		) : (
+			<></>
+		);
+	} else {
+		let showMarker = false;
+		const position = {
+			lat: -16.49542163483714,
+			lng: -68.13353376825822,
+		};
+		if (props.markerCoordinates !== []) {
+			showMarker = true;
+
+			position.lat = props.markerCoordinates[0];
+			position.lng = props.markerCoordinates[1];
+		}
+		return isLoaded ? (
+			<GoogleMap
+				mapContainerStyle={containerStyle}
+				center={center}
+				zoom={11}
+				onLoad={onLoad}
+				onUnmount={onUnmount}
+				onClick={(e: any) => {
+					console.log(e);
+				}}
+			>
+				{showMarker ? (
+					<Marker onLoad={onLoad2} position={position} />
+				) : (
+					<div>bbbbbbbbbbbbbbbbbbbbbb</div>
+				)}
+			</GoogleMap>
+		) : (
+			<></>
+		);
+	}
 };
 export default Maps;

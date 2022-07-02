@@ -1,11 +1,6 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import {
-	Dates,
-	EventTypeStatus,
-	UpdateEvent,
-	Event,
-} from "../redux/types";
+import { Dates, EventTypeStatus, UpdateEvent, Event } from "../redux/types";
 import ImageUpload from "../components/ImageUpload";
 import { useState } from "react";
 import { postImage } from "../utils/blobStorageClient";
@@ -27,6 +22,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import createImageForBlob from "../utils/utils";
+import Maps from "./Maps";
 
 export interface FormProps {
 	title: string;
@@ -143,10 +139,20 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 	const calendarOnChange = (e: any) => {
 		setCalendarValue(e);
 	};
+	const [localizationData, setlocalizationData] = useState([]);
+	const childToParent = (e: google.maps.LatLng) => {
+		// console.log(e.lat());
+		setlocalizationData([e.lat(), e.lng()]);
+	};
 
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
 		values.type = statusValue.toString();
+		console.log(localizationData);
+
+		if (localizationData) {
+			values.locationCoordinates = localizationData;
+		}
 		const updatedEvent: UpdateEvent = {
 			...values,
 			status: "active",
@@ -221,7 +227,7 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 			venueInstagram: eventForUpdate.venueInstagram,
 			venueDescription: eventForUpdate.venueDescription,
 			locationType: "",
-			locationCoordinates: [],
+			locationCoordinates: eventForUpdate.locationCoordinates,
 		},
 		validationSchema: CreateEventSchema,
 		onSubmit: (values) => {
@@ -342,6 +348,31 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 									multiline
 									rows={6}
 								/>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography
+									sx={{
+										fontWeight: 700,
+										fontSize: 25,
+									}}
+								>
+									Ubicacion del evento
+								</Typography>
+								<Box
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "center",
+										alignItems: "center",
+										maxWidth: "1000px",
+									}}
+								>
+									<Maps
+										markerCoordinates={initialValues.locationCoordinates}
+										type={"Picker"}
+										valueOfLocal={childToParent}
+									/>
+								</Box>
 							</Grid>
 							<Grid item>Tipo de evento</Grid>
 							<Grid

@@ -34,7 +34,15 @@ const EventInfoBox = (props): JSX.Element => {
 					);
 				}
 			case "Precio":
-				return <div>{Content}</div>;
+				return (
+					<div>
+						{Content === 0 ? (
+							<div>Gratis</div>
+						) : (
+							<div>{Content + " Bs"}</div>
+						)}
+					</div>
+				);
 			case "Tipo de Evento":
 				return <div>{Content}</div>;
 			case "Contacto":
