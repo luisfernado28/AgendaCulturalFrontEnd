@@ -80,7 +80,7 @@ function EventsDetail({
 						<Typography
 							style={{
 								fontWeight: 700,
-								fontSize: 60,
+								fontSize: matchesMinWidh600 ? 60 : 45,
 							}}
 						>
 							{Event.title}
@@ -91,7 +91,7 @@ function EventsDetail({
 						<Typography
 							style={{
 								fontWeight: 700,
-								fontSize: 40,
+								fontSize: matchesMinWidh600 ? 40 : 30,
 							}}
 						>
 							{Event.artist}
@@ -109,7 +109,7 @@ function EventsDetail({
 					</Box>
 					<Grid
 						container
-						spacing={2}
+						spacing={0}
 						direction="row"
 						alignItems="flex-start"
 						justifyContent="center"
@@ -139,11 +139,11 @@ function EventsDetail({
 					</Grid>
 					<Grid
 						container
-						spacing={2}
+						spacing={1}
 						direction="row"
 						alignItems="flex-start"
 						justifyContent="center"
-						sx={{ marginTop: "5px", marginBottom: "10px" }}
+						sx={{ marginTop: "0px", marginBottom: "10px" }}
 					>
 						<Grid item xs={12} sm={12} md={6} lg={6}>
 							<EventInfoBox
@@ -201,7 +201,7 @@ function EventsDetail({
 						<Typography
 							sx={{
 								fontWeight: 700,
-								fontSize: 15,
+								fontSize: matchesMinWidh600 ? 15 : 18,
 								display: "flex",
 								flexDirection: "row",
 								justifyContent: "center",
@@ -212,25 +212,31 @@ function EventsDetail({
 						>
 							{Event.description}
 						</Typography>
-					</Box>
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							justifyContent: "flex-start",
-							alignItems: "flex-start",
-							maxWidth: "550px",
-						}}
-					>
 						<Typography
 							sx={{
 								fontWeight: 700,
-								fontSize: 25,
+								fontSize: 25
 							}}
 						>
 							Ubicacion del evento
 						</Typography>
-						<Maps  markerCoordinates={Event.locationCoordinates} type={"Informative"} valueOfLocal={undefined}/>
+					</Box>
+
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							maxWidth: "300px",
+							marginBottom: "10px",
+						}}
+					>
+						<Maps
+							markerCoordinates={Event.locationCoordinates}
+							type={"Informative"}
+							valueOfLocal={undefined}
+						/>
 					</Box>
 
 					<Grid

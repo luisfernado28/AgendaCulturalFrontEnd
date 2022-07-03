@@ -1,11 +1,7 @@
 import React from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { Marker } from "@react-google-maps/api";
-
-const containerStyle = {
-	width: "400px",
-	height: "400px",
-};
+import { useMediaQuery } from "@mui/material";
 
 interface MapProps {
 	markerCoordinates: number[];
@@ -18,6 +14,12 @@ const center = {
 	lng: -68.13353376825822,
 };
 const Maps = (props: MapProps): JSX.Element => {
+	const matchesMinWidh600 = useMediaQuery("(min-width:600px)");
+
+	const containerStyle = {
+		width: matchesMinWidh600 ? "400px" : "330px",
+		height: matchesMinWidh600 ? "400px" : "300px",
+	};
 	const [map, setMap] = React.useState(null);
 	const [marker, setmarker] = React.useState({
 		lat: props.markerCoordinates[0],
@@ -30,7 +32,7 @@ const Maps = (props: MapProps): JSX.Element => {
 	});
 
 	const onLoad2 = (marker) => {
-		console.log("marker: ", marker);
+		// console.log("marker: ", marker);
 	};
 
 	const onLoad = React.useCallback(function callback(map) {
