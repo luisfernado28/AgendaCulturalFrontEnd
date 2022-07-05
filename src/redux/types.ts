@@ -94,6 +94,7 @@ export enum ModalTypes {
 	ConfirmUpdateModalValues = "confirmUpdate",
 	UpdateSucceededModalValues = "updateSucceeded",
 	SessionExpiredModal = "sessionExpired",
+	ConfirmUpdateEventModalValues= "updateEvent"
 }
 
 export interface Filter {

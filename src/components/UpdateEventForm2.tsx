@@ -1,6 +1,12 @@
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { Dates, EventTypeStatus, UpdateEvent, Event } from "../redux/types";
+import {
+	Dates,
+	EventTypeStatus,
+	UpdateEvent,
+	Event,
+	ModalTypes,
+} from "../redux/types";
 import ImageUpload from "../components/ImageUpload";
 import { useState } from "react";
 import { postImage } from "../utils/blobStorageClient";
@@ -23,6 +29,8 @@ import {
 import { useFormik } from "formik";
 import createImageForBlob from "../utils/utils";
 import Maps from "./Maps";
+import ShowModal from "./CustomModal";
+import { useHistory } from "react-router-dom";
 
 export interface FormProps {
 	title: string;
@@ -70,11 +78,11 @@ export interface Values {
 const CreateEventSchema = Yup.object().shape({
 	title: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El titulo no puede tener mas que 50 caracteres ")
+		.max(400, "El titulo no puede tener mas que 50 caracteres ")
 		.required("Titulo del evento es requerido"),
 	artist: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El artista no puede tener mas que 50 caracteres ")
+		.max(400, "El artista no puede tener mas que 50 caracteres ")
 		.required("Artista del evento es requerido"),
 	price: Yup.number()
 		.max(1000, "El precio no puede ser superior a 1000 Bs")
@@ -109,6 +117,7 @@ const CreateEventSchema = Yup.object().shape({
 function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 	const dispatch = useDispatch();
 	const [image, setImage] = useState<File>();
+	const history = useHistory();
 
 	const [statusValue, setValueRadio] = useState(
 		EventTypeStatus[eventForUpdate.type]
@@ -126,7 +135,7 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 		eventForUpdate.areIndependent
 	);
 	const handlerangeOrMultipleValue = (e: any) => {
-		setrangeOrMultipleValue(e.target.value.toString());
+		setrangeOrMultipleValue(e.target.value.toString() === "true");
 	};
 
 	const handleChange = (e: any) => {
@@ -148,7 +157,6 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 	const handleSubmit = async (values: Values) => {
 		let newImageUrl: string = "";
 		values.type = statusValue.toString();
-		console.log(localizationData);
 
 		if (localizationData) {
 			values.locationCoordinates = localizationData;
@@ -180,6 +188,9 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 				EventId: eventForUpdate.id,
 			})
 		);
+
+		history.push("/adminEvents");
+		window.location.reload();
 	};
 
 	const initialValues: Values = {
@@ -231,7 +242,10 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 		},
 		validationSchema: CreateEventSchema,
 		onSubmit: (values) => {
-			handleSubmit(values);
+			ShowModal({
+				type: ModalTypes.ConfirmUpdateEventModalValues,
+				onSuccess: () => handleSubmit(values),
+			});
 		},
 	});
 	return (
@@ -240,7 +254,7 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 			<form onSubmit={formik.handleSubmit}>
 				<Box
 					sx={{
-						alignItems: "center",
+						alignItems: "flex-end",
 						justifyContent: "center",
 						display: "flex",
 					}}
@@ -250,10 +264,9 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 							display: "flex",
 							flexDirection: "column",
 							justifyContent: "center",
-							alignItems: "center",
+							alignItems: "flex-end",
 							alignContent: "center",
 							backgroundColor: "#FFFFFF",
-							margin: "20px",
 							height: "200px",
 							width: "300px",
 						}}
@@ -368,7 +381,9 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 									}}
 								>
 									<Maps
-										markerCoordinates={initialValues.locationCoordinates}
+										markerCoordinates={
+											initialValues.locationCoordinates
+										}
 										type={"Picker"}
 										valueOfLocal={childToParent}
 									/>
@@ -450,12 +465,12 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 										}}
 									>
 										<FormControlLabel
-											value={false}
+											value={true}
 											control={<Radio />}
 											label="Rango de fechas"
 										/>
 										<FormControlLabel
-											value={true}
+											value={false}
 											control={<Radio />}
 											label="Fechas individuales"
 										/>

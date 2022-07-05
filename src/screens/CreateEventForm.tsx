@@ -52,11 +52,11 @@ interface Values {
 const CreateEventSchema = Yup.object().shape({
 	title: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El titulo no puede tener mas que 50 caracteres ")
+		.max(400, "El titulo no puede tener mas que 50 caracteres ")
 		.required("Titulo del evento es requerido"),
 	artist: Yup.string()
 		.min(1, "Al menos un caracter")
-		.max(50, "El artista no puede tener mas que 50 caracteres ")
+		.max(400, "El artista no puede tener mas que 50 caracteres ")
 		.required("Artista del evento es requerido"),
 	price: Yup.number()
 		.max(1000, "El precio no puede ser superior a 1000 Bs")

@@ -130,7 +130,7 @@ function ImageUpload({
 				) : overlay ? (
 					<Typography>Suelta tu imagen aca!</Typography>
 				) : data ? (
-					<Container sx={{ height: "500px", width: "300px" }}>
+					<Container >
 						<CardMedia src={data} component="img" />
 					</Container>
 				) : (
