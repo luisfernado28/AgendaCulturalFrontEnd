@@ -25,7 +25,15 @@ const ConfirmDeleteModalValues = {
 	Text: "Esta accion no podra ser revertida!",
 	Title: "Esta seguro de eliminar este evento?",
 };
-
+const SessionExpiredModal = {
+	AllowOutsideClick: false,
+	ConfirmButtonColor: "#3EBA9B",
+	ConfirmButtonText: "Okay",
+	Icon: "info",
+	ShowCancelButton: false,
+	Text: "Tu sesion expiro seras redirigido a la pagina de Log In!.",
+	Title: "Sesion Expirada!",
+};
 const dictionary = new Map();
 
 dictionary.set(ModalTypes.ConfirmDeleteModalValues, ConfirmDeleteModalValues);
@@ -33,6 +41,7 @@ dictionary.set(
 	ModalTypes.ConfirmUpdateEventModalValues,
 	ConfirmUpdateEventModalValues
 );
+dictionary.set(ModalTypes.SessionExpiredModal, SessionExpiredModal);
 
 interface ModalOptions {
 	type: string;

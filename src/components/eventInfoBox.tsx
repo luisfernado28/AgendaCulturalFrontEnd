@@ -35,8 +35,16 @@ const EventInfoBox = (props): JSX.Element => {
 				}
 			case "Horario":
 				const newDate = new Date(Content);
+				const minutes =
+					newDate.getMinutes() < 10
+						? "0" + newDate.getMinutes()
+						: newDate.getMinutes();
+				const hours =
+					newDate.getHours() < 10
+						? "0" + newDate.getHours()
+						: newDate.getHours();
 				console.log(Content);
-				return <div>{newDate.getHours()+":"+newDate.getMinutes()}</div>;
+				return <div>{hours + ":" + minutes}</div>;
 			case "Precio":
 				return (
 					<div>

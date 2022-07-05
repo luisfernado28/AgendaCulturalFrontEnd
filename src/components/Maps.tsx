@@ -25,10 +25,14 @@ const Maps = (props: MapProps): JSX.Element => {
 		lat: props.markerCoordinates[0],
 		lng: props.markerCoordinates[1],
 	});
+	let mapsAPI: string;
 
+	if (process.env.REACT_APP_MAPS_API !== undefined) {
+		mapsAPI = process.env.REACT_APP_MAPS_API;
+	}
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
-		googleMapsApiKey: "AIzaSyDDBcXB8d1K9mE4IeKdnlWWR-l6pRMKZcU",
+		googleMapsApiKey: mapsAPI,
 	});
 
 	const onLoad2 = (marker) => {
