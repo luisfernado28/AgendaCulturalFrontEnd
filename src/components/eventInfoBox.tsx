@@ -16,7 +16,7 @@ const EventInfoBox = (props): JSX.Element => {
 			case "Escenario":
 				const VenueInfo = Content.split("/");
 				return <div>{VenueInfo[0] + "palce" + VenueInfo[1]}</div>;
-			case "Fechas y Horario":
+			case "Fechas":
 				if (Content) {
 					return (
 						<div>
@@ -33,6 +33,10 @@ const EventInfoBox = (props): JSX.Element => {
 						</div>
 					);
 				}
+			case "Horario":
+				const newDate = new Date(Content);
+				console.log(Content);
+				return <div>{newDate.getHours()+":"+newDate.getMinutes()}</div>;
 			case "Precio":
 				return (
 					<div>

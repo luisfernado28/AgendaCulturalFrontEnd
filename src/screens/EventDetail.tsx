@@ -25,6 +25,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CastleIcon from "@mui/icons-material/Castle";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EventInfoBox from "../components/eventInfoBox";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import "./../styles/screens/EventDetail.css";
 import Maps from "../components/Maps";
 
@@ -132,14 +133,14 @@ function EventsDetail({
 									<CalendarTodayIcon fontSize={"large"} />
 								}
 								content={Event.areIndependent}
-								title={"Fechas y Horario"}
+								title={"Fechas"}
 								datesArray={Event.dates}
 							/>
 						</Grid>
 					</Grid>
 					<Grid
 						container
-						spacing={1}
+						spacing={0}
 						direction="row"
 						alignItems="flex-start"
 						justifyContent="center"
@@ -179,6 +180,15 @@ function EventsDetail({
 								title={"Contacto"}
 							/>
 						</Grid>
+						<Grid item xs={12} sm={12} md={6} lg={6}>
+							<EventInfoBox
+								statusImage={
+									<AccessTimeIcon fontSize={"large"} />
+								}
+								content={Event.time}
+								title={"Horario"}
+							/>
+						</Grid>
 					</Grid>
 
 					<Box
@@ -215,7 +225,7 @@ function EventsDetail({
 						<Typography
 							sx={{
 								fontWeight: 700,
-								fontSize: 25
+								fontSize: 25,
 							}}
 						>
 							Ubicacion del evento
