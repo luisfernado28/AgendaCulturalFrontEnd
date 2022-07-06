@@ -153,18 +153,22 @@ function ListPage(): JSX.Element {
 	};
 	return (
 		<div>
-			<Box
-				sx={{
-					maxWidth: "100%",
-					maxHeight: "400px",
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					direction: "column",
-				}}
-			>
-				<SwiperComponent imagesLink={imagesForCarousel} />
-			</Box>
+			{Events.length !== 0 ? (
+				<Box
+					sx={{
+						maxWidth: "100%",
+						maxHeight: "400px",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+						direction: "column",
+					}}
+				>
+					<SwiperComponent imagesLink={imagesForCarousel} />
+				</Box>
+			) : (
+				<div></div>
+			)}
 			<form onSubmit={formik.handleSubmit}>
 				<Box
 					sx={{
@@ -250,10 +254,12 @@ function ListPage(): JSX.Element {
 						display: "flex",
 						justifyContent: "center",
 						alignItems: "center",
+						width: "100%",
+						height: "500px",
 					}}
 				>
-					<Typography variant="h3" component="div">
-						No existen eventos con esas caracteristicas :c
+					<Typography sx={{ fontWeight: 700, fontSize: 30 }}>
+						No existen proximos eventos con estas caracteristicas
 					</Typography>
 				</Box>
 			)}

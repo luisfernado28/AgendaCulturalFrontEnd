@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 import PropTypes from "prop-types";
 import { string } from "yup/lib/locale";
-import { createDateFormat } from "../utils/utils";
+import { createDateFormat, createTimeFormat } from "../utils/utils";
 
 import "./../styles/components/InfoBox.css";
 
@@ -34,17 +34,7 @@ const EventInfoBox = (props): JSX.Element => {
 					);
 				}
 			case "Horario":
-				const newDate = new Date(Content);
-				const minutes =
-					newDate.getMinutes() < 10
-						? "0" + newDate.getMinutes()
-						: newDate.getMinutes();
-				const hours =
-					newDate.getHours() < 10
-						? "0" + newDate.getHours()
-						: newDate.getHours();
-				console.log(Content);
-				return <div>{hours + ":" + minutes}</div>;
+				return <div>{createTimeFormat(Content)}</div>;
 			case "Precio":
 				return (
 					<div>

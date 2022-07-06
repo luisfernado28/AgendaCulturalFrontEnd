@@ -56,3 +56,14 @@ export const createDateFormat = (date: string): string => {
 		newDate.getUTCFullYear()
 	);
 };
+
+export const createTimeFormat = (date: string): string => {
+	const newDate = new Date(date);
+	const minutes =
+		newDate.getMinutes() < 10
+			? "0" + newDate.getMinutes()
+			: newDate.getMinutes();
+	const hours =
+		newDate.getHours() < 10 ? "0" + newDate.getHours() : newDate.getHours();
+	return hours + ":" + minutes;
+};

@@ -6,6 +6,8 @@ import { Event } from "../redux/types";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import { createTimeFormat } from "../utils/utils";
+
 function EventCard({
 	id,
 	title,
@@ -14,34 +16,33 @@ function EventCard({
 	dates,
 	venueName,
 	time,
-	artist
+	artist,
 }: Event): JSX.Element {
-	
 	const fromToCardDate = setDatesRange();
 	const dispatch = useDispatch();
 
 	useEffect(() => {}, [dispatch]);
 	function setDatesRange(): string {
 		const first = new Date(dates[0]);
-		if (dates.length === 1) {
+		// if (dates.length === 1) {
 			return (
 				first.getDay() +
 				" de " +
 				first.toLocaleString("default", { month: "long" })
 			);
-		} else {
-			const last = new Date(dates[dates.length - 1]);
-			const string =
-				"Desde " +
-				first.getDay() +
-				" de " +
-				first.toLocaleString("default", { month: "long" }) +
-				" hasta el " +
-				last.getDay() +
-				" de " +
-				last.toLocaleString("default", { month: "long" });
-			return string;
-		}
+		// } else {
+		// 	const last = new Date(dates[dates.length - 1]);
+		// 	const string =
+		// 		"Desde " +
+		// 		first.getDay() +
+		// 		" de " +
+		// 		first.toLocaleString("default", { month: "long" }) +
+		// 		" hasta el " +
+		// 		last.getDay() +
+		// 		" de " +
+		// 		last.toLocaleString("default", { month: "long" });
+		// 	return string;
+		// }
 	}
 	return (
 		<Card
@@ -117,9 +118,7 @@ function EventCard({
 						{"   "}
 						<AccessTimeOutlinedIcon />
 						Hora:
-						{new Date(time).getHours() +
-							":" +
-							new Date(time).getMinutes()}
+						{createTimeFormat(time)}
 					</Box>
 				</Typography>
 			</CardContent>

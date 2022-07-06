@@ -81,7 +81,7 @@ function EventsDetail({
 						<Typography
 							style={{
 								fontWeight: 700,
-								fontSize: matchesMinWidh600 ? 60 : 45,
+								fontSize: matchesMinWidh600 ? 40 : 25,
 							}}
 						>
 							{Event.title}
@@ -91,8 +91,8 @@ function EventsDetail({
 					<Box className="titleBox">
 						<Typography
 							style={{
-								fontWeight: 700,
-								fontSize: matchesMinWidh600 ? 40 : 30,
+								fontWeight: 500,
+								fontSize: matchesMinWidh600 ? 35 : 25,
 							}}
 						>
 							{Event.artist}

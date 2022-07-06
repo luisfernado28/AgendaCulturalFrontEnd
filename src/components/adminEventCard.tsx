@@ -10,6 +10,8 @@ import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { createTimeFormat } from "../utils/utils";
+
 function AdminEventCard({
 	id,
 	title,
@@ -210,7 +212,7 @@ function AdminEventCard({
 									Hora:
 								</Typography>
 								<Typography variant="h6">
-									{eventTime.toTimeString()}
+									{createTimeFormat(time)}
 								</Typography>
 							</Box>
 						</Grid>
