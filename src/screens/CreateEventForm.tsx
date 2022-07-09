@@ -183,7 +183,7 @@ function CreateEventForm(): JSX.Element {
 			<form onSubmit={formik.handleSubmit}>
 				<Box
 					sx={{
-						alignItems: "center",
+						alignItems: "flex-end",
 						justifyContent: "center",
 						display: "flex",
 					}}
