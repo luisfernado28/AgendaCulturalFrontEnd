@@ -18,7 +18,7 @@ const createImageForBlob = (props: contents): File => {
 export default createImageForBlob;
 
 export const castTypeOfEvent = (value: string): string => {
-	return value === "0" ? "Hibrido" : value === "1" ? "Presencial" : "Virtual";
+	return value === "0" ? "Presencial y Virtual" : value === "1" ? "Presencial" : "Virtual";
 };
 
 const meses = [

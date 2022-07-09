@@ -152,7 +152,7 @@ function CreateEventForm(): JSX.Element {
 		initialValues: {
 			title: "",
 			artist: "",
-			price: 56,
+			price: 0,
 			description: "",
 			type: "0",
 			venueId: "",

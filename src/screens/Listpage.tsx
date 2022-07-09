@@ -32,7 +32,7 @@ function ListPage(): JSX.Element {
 	const { Events, count } = useSelector(selectAllEvents);
 	const [sortValue2, setSortValueDropdown2] = useState(true);
 	const matchesMinWidh600 = useMediaQuery("(min-width:600px)");
-	const [topValueUsers] = useState(10);
+	const [topValueUsers] = useState(12);
 	const [page, setPage] = useState(1);
 	let setQueryParams: QueryParams = {
 		pagination: { top: topValueUsers, skip: 0 },

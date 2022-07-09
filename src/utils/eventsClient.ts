@@ -27,7 +27,9 @@ export async function getEvents(queryParams?: QueryParams): Promise<Event[]> {
 						"(" + params.$filter + ") and " + activeFilterParameter;
 				}
 			} else {
-				params.$filter = activeFilterParameter;
+				if (queryParams.activeEvents) {
+					params.$filter = activeFilterParameter;
+				}
 			}
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;
@@ -64,7 +66,9 @@ export async function getCountEvents(
 						"(" + params.$filter + ") and " + activeFilterParameter;
 				}
 			} else {
-				params.$filter = activeFilterParameter;
+				if (queryParams.activeEvents) {
+					params.$filter = activeFilterParameter;
+				}
 			}
 			if (orderby) params.$orderby = buildOrderBy2(orderby);
 			if (pagination) params.$top = pagination.top;

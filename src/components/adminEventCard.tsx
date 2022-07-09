@@ -190,7 +190,7 @@ function AdminEventCard({
 									variant="h5"
 									style={{ fontWeight: 600 }}
 								>
-									Tipo de evento:
+									Modalidad:
 								</Typography>
 								<Typography variant="h6">
 									{typeOfEvent}
