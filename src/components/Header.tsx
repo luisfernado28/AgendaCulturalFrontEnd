@@ -39,7 +39,7 @@ const Header = (): JSX.Element => {
 					<Typography
 						variant="h6"
 						component="div"
-						sx={{ flexGrow: 1 }}
+						sx={{ flexGrow: 1, color: "#FFFFFF" }}
 					>
 						Bienvenido Agenda Cultural La Paz
 					</Typography>
@@ -51,7 +51,7 @@ const Header = (): JSX.Element => {
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
 								onClick={handleMenu}
-								color="inherit"
+								color="neutral"
 							>
 								<AccountCircle />
 							</IconButton>
@@ -87,7 +87,7 @@ const Header = (): JSX.Element => {
 							</Menu>
 						</div>
 					) : (
-						<Button href="/Signin" color="inherit">
+						<Button href="/Signin" sx={{ color: "#FFFFFF" }}>
 							Login
 						</Button>
 					)}

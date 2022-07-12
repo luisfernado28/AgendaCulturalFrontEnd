@@ -2,10 +2,10 @@ import { Box, Typography } from "@mui/material";
 
 const Footer = (props: any): JSX.Element => {
 	return (
-		<Box sx={{backgroundColor: "#1976D2"}}>
+		<Box sx={{backgroundColor: "#39B3BA"}}>
 			<Typography
 				variant="body2"
-				color="text.secondary"
+				color="#FFFFFF"
 				align="center"
 				{...props}
 			>

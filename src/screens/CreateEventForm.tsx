@@ -24,6 +24,7 @@ import TimePickerItem from "../components/TimeItem";
 import ImageUpload from "../components/ImageUpload";
 import createImageForBlob from "../utils/utils";
 import Maps from "../components/Maps";
+import { useHistory } from "react-router-dom";
 
 interface Values {
 	title: string;
@@ -90,6 +91,7 @@ const CreateEventSchema = Yup.object().shape({
 });
 function CreateEventForm(): JSX.Element {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [image, setImage] = useState<File>();
 	const [statusValue, setValueRadio] = React.useState(0); //EventTypeStatus.HYBRID);
 	const [calendarValue, setCalendarValue] = useState([new Date()]);
@@ -146,6 +148,7 @@ function CreateEventForm(): JSX.Element {
 		};
 		// console.log(newEvent);
 		await dispatch(createEvent(newEvent));
+		history.push("/adminEvents");
 	};
 
 	const formik = useFormik({
@@ -663,6 +666,21 @@ function CreateEventForm(): JSX.Element {
 									>
 										Submit
 									</Button>
+								</Grid>
+								<Grid item>
+									{Object.keys(formik.errors).length === 0 ? (
+										<div></div>
+									) : (
+										<Typography
+											variant="body1"
+											style={{
+												fontWeight: 400,
+												color: "#D32F2F",
+											}}
+										>
+											Errores de validacion
+										</Typography>
+									)}
 								</Grid>
 							</Grid>
 						</Grid>

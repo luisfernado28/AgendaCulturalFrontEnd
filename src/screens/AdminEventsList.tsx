@@ -21,6 +21,8 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { buildPaginationSize } from "../utils/buildOdataParams";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 interface Values {
 	searchBar: string;
@@ -188,15 +190,10 @@ function AdminEventsList(): JSX.Element {
 								</IconButton>
 							</Box>
 						</Grid>
-						<Grid item xs={12} sm={2} md={2} lg={2}>
-							<Button
-								color="primary"
-								variant="contained"
-								fullWidth
-								type="submit"
-							>
-								Submit
-							</Button>
+						<Grid item xs={2} sm={2} md={2} lg={2}>
+							<IconButton type="submit">
+								<SearchIcon />
+							</IconButton>
 						</Grid>
 					</Grid>
 				</Box>

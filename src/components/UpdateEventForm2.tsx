@@ -747,6 +747,21 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 										Submit
 									</Button>
 								</Grid>
+								<Grid item>
+									{Object.keys(formik.errors).length === 0 ? (
+										<div></div>
+									) : (
+										<Typography
+											variant="body1"
+											style={{
+												fontWeight: 400,
+												color: "#D32F2F",
+											}}
+										>
+											Errores de validacion
+										</Typography>
+									)}
+								</Grid>
 							</Grid>
 						</Grid>
 					</Grid>

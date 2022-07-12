@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import { Box, Grid, Paper, TextField, Typography } from "@mui/material";
 import { authUser } from "../redux/authSlice";
+import { grey } from "@mui/material/colors";
 
 export interface FormProps {
 	handleSubmit: (
@@ -55,8 +56,8 @@ const LoginForm = (): JSX.Element => {
 						backgroundRepeat: "no-repeat",
 						backgroundColor: (t) =>
 							t.palette.mode === "light"
-								? t.palette.grey[50]
-								: t.palette.grey[900],
+								? grey[50]
+								: grey[900],
 						backgroundSize: "cover",
 						backgroundPosition: "center",
 					}}
@@ -132,6 +133,10 @@ const LoginForm = (): JSX.Element => {
 							type="submit"
 							color="primary"
 							variant="contained"
+							sx={{
+								color:"#FFFFFF"
+							}}
+
 						>
 							Ingresa
 						</Button>
