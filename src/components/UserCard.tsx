@@ -28,16 +28,12 @@ function UserCard({
 	const history = useHistory();
 	const handleDelete = (id: string) => {
 		dispatch(removeUser(id));
-		ShowModal({
-			onSuccess: () => {
-				history.push("/usersList");
-			},
-			type: ModalTypes.DeleteSucceededModalValues,
-		});
+		history.push("/usersList");
+		window.location.reload();
 	};
 
 	return (
-		<Card  variant="outlined">
+		<Card variant="outlined">
 			<Grid container>
 				<Grid
 					item
@@ -144,7 +140,7 @@ function UserCard({
 							<Button
 								onClick={() =>
 									ShowModal({
-										type: ModalTypes.ConfirmDeleteModalValues,
+										type: ModalTypes.ConfirmDeleteUserModalValues,
 										onSuccess: () => handleDelete(id),
 									})
 								}

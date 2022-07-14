@@ -13,6 +13,17 @@ const ConfirmUpdateEventModalValues = {
 	Text: "El evento será actualizado",
 	Title: "Esta seguro de actualizar este evento?",
 };
+const ConfirmUpdateUserModalValues = {
+	AllowOutsideClick: true,
+	CancelButtonColor: "#DA3C3D",
+	cancelbuttontext: "Cancelar",
+	ConfirmButtonColor: "#3EBA9B",
+	ConfirmButtonText: "Si, actualizar",
+	Icon: "warning",
+	ShowCancelButton: true,
+	Text: "El usuario será actualizado",
+	Title: "Esta seguro de actualizar este usuario?",
+};
 
 const ConfirmDeleteModalValues = {
 	AllowOutsideClick: true,
@@ -24,6 +35,17 @@ const ConfirmDeleteModalValues = {
 	ShowCancelButton: true,
 	Text: "Esta accion no podra ser revertida!",
 	Title: "Esta seguro de eliminar este evento?",
+};
+const ConfirmDeleteUserModalValues = {
+	AllowOutsideClick: true,
+	CancelButtonColor: "#DA3C3D",
+	cancelbuttontext: "Cancelar",
+	ConfirmButtonColor: "#3EBA9B",
+	ConfirmButtonText: "Si, eliminar",
+	Icon: "warning",
+	ShowCancelButton: true,
+	Text: "Esta accion no podra ser revertida!",
+	Title: "Esta seguro de eliminar este usuario?",
 };
 const SessionExpiredModal = {
 	AllowOutsideClick: false,
@@ -42,6 +64,14 @@ dictionary.set(
 	ConfirmUpdateEventModalValues
 );
 dictionary.set(ModalTypes.SessionExpiredModal, SessionExpiredModal);
+dictionary.set(
+	ModalTypes.ConfirmUpdateUserModalValues,
+	ConfirmUpdateUserModalValues
+);
+dictionary.set(
+	ModalTypes.ConfirmDeleteUserModalValues,
+	ConfirmDeleteUserModalValues
+);
 
 interface ModalOptions {
 	type: string;

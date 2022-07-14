@@ -28,13 +28,7 @@ function AdminEventCard({
 
 	const handleDelete = (id: string) => {
 		dispatch(removeEvent(id));
-		ShowModal({
-			onSuccess: () => {
-				history.push("/adminEvents");
-				window.location.reload();
-			},
-			type: ModalTypes.DeleteSucceededModalValues,
-		});
+		window.location.reload();
 	};
 
 	const startingDate = new Date(dates[0]);
@@ -259,7 +253,9 @@ function AdminEventCard({
 							}}
 						>
 							<Link to={`/updateEvent/${id}`}>
-								<EditIcon sx={{ fontSize: 40 , color: "#39B3BA"}} />
+								<EditIcon
+									sx={{ fontSize: 40, color: "#39B3BA" }}
+								/>
 							</Link>
 						</Grid>
 						<Grid

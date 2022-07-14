@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { UpdateUser, UserUpdateData } from "../redux/types";
+import { ModalTypes, UpdateUser, UserUpdateData } from "../redux/types";
 import { modifyUser } from "../redux/userSlice";
 import {
 	Button,
@@ -12,6 +12,8 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
+import ShowModal from "./CustomModal";
+import { useHistory } from "react-router-dom";
 
 interface Values {
 	username: string;
@@ -36,7 +38,6 @@ const CreateUserSchema = Yup.object().shape({
 	password: Yup.string()
 		.min(1, "Al menos un caracter")
 		.max(5000, "Contrasena muy larga ")
-		.required("Password requerida"),
 });
 
 interface FormProps {
@@ -57,6 +58,7 @@ function UpdateUserForm({
 	admin,
 }: FormProps): JSX.Element {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [adminValue] = useState(false);
 	const [checked, setChecked] = useState(admin);
 
@@ -73,6 +75,8 @@ function UpdateUserForm({
 			body: newUser,
 		};
 		await dispatch(modifyUser(updateData));
+		history.push("/usersList");
+
 	};
 	const formik = useFormik({
 		initialValues: {
@@ -83,7 +87,11 @@ function UpdateUserForm({
 		},
 		validationSchema: CreateUserSchema,
 		onSubmit: (values) => {
-			handleSubmit(values);
+			ShowModal({
+				type: ModalTypes.ConfirmUpdateUserModalValues,
+				onSuccess: () => handleSubmit(values),
+			});
+			
 		},
 	});
 	return (
@@ -150,7 +158,6 @@ function UpdateUserForm({
 							id="password"
 							name="password"
 							label="Contraseña"
-							value={""}
 							onChange={formik.handleChange}
 							error={
 								formik.touched.password &&

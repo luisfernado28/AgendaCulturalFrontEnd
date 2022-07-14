@@ -1,11 +1,11 @@
 import { UserCredentials } from "../redux/types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import { Box, Grid, Paper, TextField, Typography } from "@mui/material";
-import { authUser } from "../redux/authSlice";
+import { authUser, authUsers } from "../redux/authSlice";
 import { grey } from "@mui/material/colors";
 
 export interface FormProps {
@@ -17,10 +17,15 @@ export interface FormProps {
 
 const LoginForm = (): JSX.Element => {
 	const dispatch = useDispatch();
+	const { loggedIn, requestError, requestErrorCode, requestStatus } =
+		useSelector(authUsers);
 	const handleSubmit = async (values: UserCredentials) => {
 		dispatch(authUser(values));
 	};
-
+	console.log("loggedIn  " + loggedIn);
+	console.log("requestError  " + requestError);
+	console.log("requestErrorCode  " + requestErrorCode);
+	console.log("requestStatus  " + requestStatus);
 	const LoginSchema = Yup.object().shape({
 		username: Yup.string()
 			.min(2, "The username cannot have less than 3 characters")
@@ -55,9 +60,7 @@ const LoginForm = (): JSX.Element => {
 							"url( https://storageagendacultural.blob.core.windows.net/eventsimages/morenadaSignIn2.jpg)",
 						backgroundRepeat: "no-repeat",
 						backgroundColor: (t) =>
-							t.palette.mode === "light"
-								? grey[50]
-								: grey[900],
+							t.palette.mode === "light" ? grey[50] : grey[900],
 						backgroundSize: "cover",
 						backgroundPosition: "center",
 					}}
@@ -92,7 +95,7 @@ const LoginForm = (): JSX.Element => {
 						<Typography variant="h4" component="div">
 							Bienvenido a agenda cultural
 						</Typography>
-						<br/>
+						<br />
 						<TextField
 							name="username"
 							id="username"
@@ -110,7 +113,7 @@ const LoginForm = (): JSX.Element => {
 								formik.errors.username
 							}
 						/>
-						<br/>
+						<br />
 						<TextField
 							name="password"
 							id="password"
@@ -128,25 +131,34 @@ const LoginForm = (): JSX.Element => {
 								formik.errors.password
 							}
 						/>
-						<br/>
+						<br />
 						<Button
 							type="submit"
 							color="primary"
 							variant="contained"
 							sx={{
-								color:"#FFFFFF"
+								color: "#FFFFFF",
 							}}
-
 						>
 							Ingresa
 						</Button>
+						{requestStatus === "failed" ? (
+							<Typography
+								variant="body1"
+								style={{
+									fontWeight: 400,
+									color: "#D32F2F",
+								}}
+							>
+								Usuario o contraseña incorrecta
+							</Typography>
+						) : (
+							<div></div>
+						)}
 					</Box>
 				</Grid>
 			</Grid>
 		</form>
-		// </Form>
-		// )}
-		// </Formik>
 	);
 };
 export default LoginForm;
