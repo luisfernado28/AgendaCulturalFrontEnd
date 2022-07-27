@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Filter, Event, PaginationContent, QueryParams } from "../redux/types";
+import { Filter, Event, PaginationContent, QueryParams, Status } from "../redux/types";
 import EventCard from "../components/eventCard";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -24,12 +24,13 @@ import { buildPaginationSize } from "../utils/buildOdataParams";
 import ReactGA from "react-ga4";
 import SearchIcon from "@mui/icons-material/Search";
 import SwiperComponent from "../components/SwiperComponent";
+import PageSpinner from "../components/Spinner";
 interface Values {
 	searchBar: string;
 }
 function ListPage(): JSX.Element {
 	const dispatch = useDispatch();
-	const { Events, count } = useSelector(selectAllEvents);
+	const { Events, count, status } = useSelector(selectAllEvents);
 	const [sortValue2, setSortValueDropdown2] = useState(true);
 	const matchesMinWidh600 = useMediaQuery("(min-width:600px)");
 	const [topValueUsers] = useState(12);
@@ -71,6 +72,7 @@ function ListPage(): JSX.Element {
 			action: "Pagina principal",
 		});
 	}, []);
+
 	const eventsList = Events.map((event: Event) => {
 		return (
 			<Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
@@ -151,6 +153,8 @@ function ListPage(): JSX.Element {
 	const handleButtonVariantChange = () => {
 		setSortValueDropdown2(!sortValue2);
 	};
+	if (status === Status.LOADING) return <PageSpinner />;
+
 	return (
 		<div>
 			{Events.length !== 0 ? (
@@ -259,7 +263,7 @@ function ListPage(): JSX.Element {
 					}}
 				>
 					<Typography sx={{ fontWeight: 700, fontSize: 30 }}>
-						No existen proximos eventos con estas caracteristicas
+						No existen proximos eventos con estas caracteristicas 
 					</Typography>
 				</Box>
 			)}
