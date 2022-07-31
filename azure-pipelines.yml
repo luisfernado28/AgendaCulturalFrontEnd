@@ -51,9 +51,10 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: echo my first deployment
-                    cd agendaCultural
-                    touch file1.txt
+          - script: | 
+              echo my first deployment
+              cd agendaCultural
+              touch file1.txt
 
     # - task: Docker@2
     #   displayName: Build and push an image to container registry
