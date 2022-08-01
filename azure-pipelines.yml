@@ -40,7 +40,11 @@ stages:
         repository: $(imageRepository)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: $(tag)
-    
+
+- stage: Deployment
+  displayName: Deployment on VM 
+  dependsOn: Build
+  jobs:
   - deployment: VMDeploy
     displayName: web
     environment:
