@@ -1,3 +1,10 @@
+/*
+ * File: UpdateEventForm2.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import {
@@ -744,7 +751,7 @@ function UpdateEventForm2(eventForUpdate: Event): JSX.Element {
 										variant="contained"
 										type="submit"
 									>
-										Submit
+										Actualizar Evento
 									</Button>
 								</Grid>
 								<Grid item>

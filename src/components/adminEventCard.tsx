@@ -1,3 +1,10 @@
+/*
+ * File: adminEventCard.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ShowModal from "./CustomModal";

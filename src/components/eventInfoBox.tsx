@@ -1,3 +1,10 @@
+/*
+ * File: eventInfoBox.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { Box, Typography } from "@mui/material";
 
 import PropTypes from "prop-types";

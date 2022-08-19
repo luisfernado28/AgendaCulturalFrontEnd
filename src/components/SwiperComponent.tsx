@@ -1,3 +1,10 @@
+/*
+ * File: SwiperComponent.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
 import { Autoplay, Navigation, Pagination } from "swiper";

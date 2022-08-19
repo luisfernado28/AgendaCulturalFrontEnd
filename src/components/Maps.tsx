@@ -1,3 +1,10 @@
+/*
+ * File: Maps.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import React from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { Marker } from "@react-google-maps/api";
@@ -36,7 +43,6 @@ const Maps = (props: MapProps): JSX.Element => {
 	});
 
 	const onLoad2 = (marker) => {
-		// console.log("marker: ", marker);
 	};
 
 	const onLoad = React.useCallback(function callback(map) {

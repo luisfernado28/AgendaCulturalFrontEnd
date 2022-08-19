@@ -1,3 +1,10 @@
+/*
+ * File: ImageUpload.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { CardMedia, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import { Fragment, useState } from "react";

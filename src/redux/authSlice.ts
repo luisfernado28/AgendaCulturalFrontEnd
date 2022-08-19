@@ -1,3 +1,10 @@
+/*
+ * File: authSlice.ts
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { logOutAuth, postAuth } from "../utils/authClient";
 import { Authentication, StoreState, userInfo } from "./stateTypes";

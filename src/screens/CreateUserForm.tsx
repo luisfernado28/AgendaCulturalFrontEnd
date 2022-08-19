@@ -1,3 +1,10 @@
+/*
+ * File: CreateUserForm.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { useFormik } from "formik";
 import { useState } from "react";
 import { CreateUser } from "../redux/types";
@@ -56,7 +63,6 @@ function CreateUserForm(): JSX.Element {
 			...values,
 			admin: checked,
 		};
-		console.log(newUser);
 		await dispatch(createUser(newUser));
 	};
 	
@@ -174,7 +180,7 @@ function CreateUserForm(): JSX.Element {
 							variant="contained"
 							type="submit"
 						>
-							Submit
+							Crear Usuario
 						</Button>
 					</Grid>
 				</Grid>

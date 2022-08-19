@@ -1,3 +1,10 @@
+/*
+ * File: LoginFrom.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { UserCredentials } from "../redux/types";
 import { useDispatch, useSelector } from "react-redux";
 import { FormikHelpers } from "formik";
@@ -22,10 +29,6 @@ const LoginForm = (): JSX.Element => {
 	const handleSubmit = async (values: UserCredentials) => {
 		dispatch(authUser(values));
 	};
-	console.log("loggedIn  " + loggedIn);
-	console.log("requestError  " + requestError);
-	console.log("requestErrorCode  " + requestErrorCode);
-	console.log("requestStatus  " + requestStatus);
 	const LoginSchema = Yup.object().shape({
 		username: Yup.string()
 			.min(2, "The username cannot have less than 3 characters")

@@ -23,6 +23,8 @@ services:
         - 5000:5000
     depends_on:
             - mongodb
+    restart: unless-stopped
+
 
   agendaCulturalFrontEnd:
     image: agendaculturalcontainerregistry.azurecr.io/reactagenda:latest
@@ -31,6 +33,8 @@ services:
     ports:
         - 3000:80
     container_name: reactVM
+    restart: unless-stopped
+
     
 volumes:
   mongodatabase:

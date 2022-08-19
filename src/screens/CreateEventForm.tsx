@@ -1,3 +1,10 @@
+/*
+ * File: CreateEventForm.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { CreateEvents, EventTypeStatus } from "../redux/types";
@@ -75,7 +82,7 @@ const CreateEventSchema = Yup.object().shape({
 	venueTwitter: Yup.string().url("Link debe ser una URL valida de Twitter"),
 	venueFacebook: Yup.string().url("Link debe ser una URL valida de Facebook"),
 	venueInstagram: Yup.string().url(
-		"Link debe ser una URL valida de Instagra"
+		"Link debe ser una URL valida de Instagram"
 	),
 	venueName: Yup.string()
 		.min(1, "Al menos un caracter")
@@ -114,7 +121,6 @@ function CreateEventForm(): JSX.Element {
 	};
 	const [localizationData, setlocalizationData] = useState([]);
 	const childToParent = (e: google.maps.LatLng) => {
-		// console.log(e.lat());
 		setlocalizationData([e.lat(), e.lng()]);
 	};
 
@@ -130,7 +136,6 @@ function CreateEventForm(): JSX.Element {
 			newImageUrl = await postImage(setFile);
 		}
 		values.type = statusValue.toString();
-		console.log(localizationData);
 
 		if (localizationData) {
 			values.locationCoordinates = localizationData;
@@ -146,7 +151,6 @@ function CreateEventForm(): JSX.Element {
 			}),
 			time: timeValue.toDate().toISOString(),
 		};
-		// console.log(newEvent);
 		await dispatch(createEvent(newEvent));
 		history.push("/adminEvents");
 	};
@@ -664,7 +668,7 @@ function CreateEventForm(): JSX.Element {
 										variant="contained"
 										type="submit"
 									>
-										Submit
+										Crear Evento
 									</Button>
 								</Grid>
 								<Grid item>

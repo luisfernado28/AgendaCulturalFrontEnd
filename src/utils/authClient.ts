@@ -1,3 +1,10 @@
+/*
+ * File: authClient.ts
+ * Project: Agenda Cultural Front End
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { o, OdataQuery } from "odata";
 import {
 	CreateUser,

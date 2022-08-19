@@ -1,3 +1,10 @@
+/*
+ * File: utils.ts
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 interface contents {
 	image: File;
 	title: string;

@@ -1,3 +1,10 @@
+/*
+ * File: UpdateUserForm.tsx
+ * Project: Agenda Cultural Front End React
+ * Author: Luis Fernando Choque (luisfernandochoquea@gmail.com)
+ * -----
+ * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
+ */
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -187,7 +194,7 @@ function UpdateUserForm({
 							variant="contained"
 							type="submit"
 						>
-							Submit
+							Actualizar Usuario
 						</Button>
 					</Grid>
 				</Grid>
