@@ -14,7 +14,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { createTimeFormat } from "../utils/utils";
@@ -93,13 +93,15 @@ function AdminEventCard({
 										</Typography>
 									</Grid>
 									<Grid item xs={7}>
-										<Typography
-											variant="h6"
-											align="left"
-											noWrap
-										>
-											{title}
-										</Typography>
+										<Tooltip title={title}>
+											<Typography
+												variant="h6"
+												align="left"
+												noWrap
+											>
+												{title}
+											</Typography>
+										</Tooltip>
 									</Grid>
 								</Grid>
 							</Box>
@@ -125,13 +127,15 @@ function AdminEventCard({
 										</Typography>
 									</Grid>
 									<Grid item xs={7}>
-										<Typography
-											variant="h6"
-											align="left"
-											noWrap
-										>
-											{artist}
-										</Typography>
+										<Tooltip title={artist}>
+											<Typography
+												variant="h6"
+												align="left"
+												noWrap
+											>
+												{artist}
+											</Typography>
+										</Tooltip>
 									</Grid>
 								</Grid>
 							</Box>
@@ -157,13 +161,15 @@ function AdminEventCard({
 										</Typography>
 									</Grid>
 									<Grid item xs={7}>
-										<Typography
-											variant="h6"
-											align="left"
-											noWrap
-										>
-											{venueName}
-										</Typography>
+										<Tooltip title={venueName}>
+											<Typography
+												variant="h6"
+												align="left"
+												noWrap
+											>
+												{venueName}
+											</Typography>
+										</Tooltip>
 									</Grid>
 								</Grid>
 							</Box>
