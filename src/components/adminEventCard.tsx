@@ -63,7 +63,7 @@ function AdminEventCard({
 					<Grid container>
 						<Grid
 							item
-							xs={6}
+							xs={7}
 							style={{
 								display: "flex",
 								justifyContent: "center",
@@ -79,15 +79,29 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Evento:
-								</Typography>
-								<Typography variant="h6">{title}</Typography>
+								<Grid container>
+									<Grid item xs={5}>
+										<Typography
+											variant="h6"
+											align="left"
+											style={{ fontWeight: 600 }}
+										>
+											Evento:
+										</Typography>
+									</Grid>
+									<Grid item xs={7}>
+										<Typography
+											variant="h6"
+											align="left"
+											noWrap
+										>
+											{title}
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 							<Box
 								sx={{
@@ -96,15 +110,30 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Artista/Elenco:
-								</Typography>
-								<Typography variant="h6">{artist}</Typography>
+								<Grid container>
+									<Grid item xs={5}>
+										<Typography
+											variant="h6"
+											align="left"
+											paragraph
+											style={{ fontWeight: 600 }}
+										>
+											Artista/Elenco:
+										</Typography>
+									</Grid>
+									<Grid item xs={7}>
+										<Typography
+											variant="h6"
+											align="left"
+											noWrap
+										>
+											{artist}
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 
 							<Box
@@ -114,17 +143,29 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Escenario:
-								</Typography>
-								<Typography variant="h6">
-									{venueName}
-								</Typography>
+								<Grid container>
+									<Grid item xs={5}>
+										<Typography
+											variant="h6"
+											style={{ fontWeight: 600 }}
+											align="left"
+										>
+											Escenario:
+										</Typography>
+									</Grid>
+									<Grid item xs={7}>
+										<Typography
+											variant="h6"
+											align="left"
+											noWrap
+										>
+											{venueName}
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 							<Box
 								sx={{
@@ -133,29 +174,40 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Fecha:
-								</Typography>
-								<Typography variant="h6">
-									{startingDate.toLocaleString("default", {
-										month: "long",
-									}) +
-										"/" +
-										startingDate.getDay()}
-								</Typography>
+								<Grid container>
+									<Grid item xs={5}>
+										<Typography
+											align="left"
+											variant="h6"
+											style={{ fontWeight: 600 }}
+										>
+											Fecha:
+										</Typography>
+									</Grid>
+									<Grid item xs={7}>
+										<Typography variant="h6" align="left">
+											{startingDate.toLocaleString(
+												"default",
+												{
+													month: "long",
+												}
+											) +
+												"/" +
+												startingDate.getDay()}
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 						</Grid>
 						<Grid
 							item
-							xs={6}
+							xs={5}
 							style={{
 								display: "flex",
-								justifyContent: "center",
+								justifyContent: "flex-start",
 								alignItems: "center",
 								alignContent: "center",
 								flexDirection: "column",
@@ -168,15 +220,25 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Precio:
-								</Typography>
-								<Typography variant="h6">{price}</Typography>
+								<Grid container>
+									<Grid item xs={6}>
+										<Typography
+											align="left"
+											variant="h6"
+											style={{ fontWeight: 600 }}
+										>
+											Precio:
+										</Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography align="left" variant="h6">
+											{price} Bs.
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 							<Box
 								sx={{
@@ -185,17 +247,25 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Modalidad:
-								</Typography>
-								<Typography variant="h6">
-									{typeOfEvent}
-								</Typography>
+								<Grid container>
+									<Grid item xs={6}>
+										<Typography
+											align="left"
+											variant="h6"
+											style={{ fontWeight: 600 }}
+										>
+											Modalidad:
+										</Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography align="left" variant="h6">
+											{typeOfEvent}
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 							<Box
 								sx={{
@@ -204,17 +274,25 @@ function AdminEventCard({
 									alignItems: "center",
 									alignContent: "center",
 									flexDirection: "row",
+									width: "100%",
 								}}
 							>
-								<Typography
-									variant="h5"
-									style={{ fontWeight: 600 }}
-								>
-									Hora:
-								</Typography>
-								<Typography variant="h6">
-									{createTimeFormat(time)}
-								</Typography>
+								<Grid container>
+									<Grid item xs={6}>
+										<Typography
+											align="left"
+											variant="h6"
+											style={{ fontWeight: 600 }}
+										>
+											Hora:
+										</Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography align="left" variant="h6">
+											{createTimeFormat(time)}
+										</Typography>
+									</Grid>
+								</Grid>
 							</Box>
 						</Grid>
 					</Grid>

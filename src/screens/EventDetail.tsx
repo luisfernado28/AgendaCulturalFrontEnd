@@ -35,6 +35,8 @@ import EventInfoBox from "../components/eventInfoBox";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import "./../styles/screens/EventDetail.css";
 import Maps from "../components/Maps";
+import PageSpinner from "../components/Spinner";
+import { Status } from "../redux/types";
 
 declare module "@mui/material/styles" {
 	interface Theme {
@@ -53,9 +55,8 @@ function EventsDetail({
 	match,
 }: RouteComponentProps<{ id: string }>): JSX.Element {
 	const dispatch = useDispatch();
-	const { Event } = useSelector(singleEvent);
+	const { Event, eventStatus } = useSelector(singleEvent);
 	const matchesMinWidh600 = useMediaQuery("(min-width:600px)");
-
 	useEffect(() => {
 		dispatch(fetchEventById(match.params.id));
 	}, [dispatch, Event.id, match.params.id]);
@@ -70,6 +71,8 @@ function EventsDetail({
 	}, []);
 	let theme = createTheme();
 	theme = responsiveFontSizes(theme);
+
+	if (eventStatus === Status.LOADING) return <PageSpinner />;
 
 	return (
 		<Box className="backGroundFiller">
