@@ -5,7 +5,15 @@
  * -----
  * Copyright 2021 - 2022 Universidad Privada Boliviana La Paz, Luis Fernando Choque Arana
  */
-import { CardMedia, Card, CardContent, Typography, Box } from "@mui/material";
+import {
+	CardMedia,
+	Card,
+	CardContent,
+	Typography,
+	Box,
+	Tooltip,
+	Grid,
+} from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -31,31 +39,12 @@ function EventCard({
 	useEffect(() => {}, [dispatch]);
 	function setDatesRange(): string {
 		const first = new Date(dates[0]);
-		// if (dates.length === 1) {
-			return (
-				first.getDay() +
-				" de " +
-				first.toLocaleString("default", { month: "long" })
-			);
-		// } else {
-		// 	const last = new Date(dates[dates.length - 1]);
-		// 	const string =
-		// 		"Desde " +
-		// 		first.getDay() +
-		// 		" de " +
-		// 		first.toLocaleString("default", { month: "long" }) +
-		// 		" hasta el " +
-		// 		last.getDay() +
-		// 		" de " +
-		// 		last.toLocaleString("default", { month: "long" });
-		// 	return string;
-		// }
+		let month = first.toLocaleString("default", { month: "short" });
+		month = month.charAt(0).toUpperCase() + month.slice(1);
+		return first.getDay() + "/" + month;
 	}
 	return (
-		<Card
-			sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-			variant="outlined"
-		>
+		<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
 			<div>
 				{imageUrl ? (
 					<Link to={`/events/${id}`}>
@@ -66,7 +55,6 @@ function EventCard({
 						></CardMedia>
 					</Link>
 				) : (
-					// <Link to={`/events/${id}`}>No image go to event</Link>
 					<Link to={`/events/${id}`}>
 						<CardMedia
 							component="img"
@@ -77,57 +65,153 @@ function EventCard({
 				)}
 			</div>
 			<CardContent sx={{ flexGrow: 1 }}>
-				<Typography gutterBottom variant="h5" component="h2">
-					{title} por {artist}
-				</Typography>
-				<Typography variant="h6" sx={{ fontWeight: "bold" }}>
-					{venueName === "" ? (
-						<Box
+				<Box
+					sx={{
+						height: "70px",
+					}}
+				>
+					<Tooltip title={title}>
+						<Typography
+							gutterBottom
+							align="center"
+							variant="h5"
 							sx={{
-								display: "flex",
-								flexDirection: "row",
-								justifyContent: "center",
-								alignItems: "center",
-								alignContent: "center",
+								display: "-webkit-box",
+								overflow: "hidden",
+								WebkitBoxOrient: "vertical",
+								WebkitLineClamp: 2,
+								height: "100%",
+								fontWeight: "bold",
 							}}
 						>
-							<AddLocationIcon />
-							<div>Virtual</div>
-						</Box>
-					) : (
-						<Box
+							{title}
+						</Typography>
+					</Tooltip>
+				</Box>
+				<Box
+					sx={{
+						height: "50px",
+					}}
+				>
+					<Tooltip title={artist}>
+						<Typography
+							gutterBottom
+							align="center"
+							variant="h5"
 							sx={{
-								display: "flex",
-								flexDirection: "row",
-								justifyContent: "center",
-								alignItems: "center",
-								alignContent: "center",
+								display: "-webkit-box",
+								overflow: "hidden",
+								WebkitBoxOrient: "vertical",
+								WebkitLineClamp: 2,
+								height: "100%",
 							}}
 						>
-							<AddLocationIcon />
-							{venueName}
-						</Box>
-					)}
-				</Typography>
-				<Typography>
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-							justifyContent: "center",
-							alignItems: "center",
-							alignContent: "center",
-						}}
+							{artist}
+						</Typography>
+					</Tooltip>
+				</Box>
+				<Tooltip title={venueName}>
+					<Typography
+						variant="h6"
+						sx={{ fontWeight: "bold", marginBottom: "20px" }}
 					>
-						<CalendarTodayOutlinedIcon />
-						Fecha:
-						{fromToCardDate}
-						{"   "}
-						<AccessTimeOutlinedIcon />
-						Hora:
-						{createTimeFormat(time)}
-					</Box>
-				</Typography>
+						{venueName === "" ? (
+							<Box
+								sx={{
+									display: "flex",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "center",
+									alignContent: "center",
+								}}
+							>
+								<AddLocationIcon />
+								<div>Virtual</div>
+							</Box>
+						) : (
+							<Box
+								sx={{
+									display: "flex",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "center",
+									alignContent: "center",
+								}}
+							>
+								<AddLocationIcon />
+								{venueName}
+							</Box>
+						)}
+					</Typography>
+				</Tooltip>
+				<Grid
+					container
+					sx={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "center",
+						alignItems: "center",
+						alignContent: "center",
+					}}
+				>
+					<Grid
+						item
+						xs={6}
+						alignContent="justify"
+						sx={{ width: "100%" }}
+					>
+						<Grid
+							container
+							sx={{
+								flexDirection: "row",
+								justifyContent: "center",
+								alignItems: "center",
+								alignContent: "center",
+								display: "flex",
+							}}
+						>
+
+							<Grid item xs={10}>
+								<Typography
+									gutterBottom
+									align="center"
+									variant="h6"
+								>
+									Fecha:
+									{fromToCardDate}
+								</Typography>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid item xs={6} sx={{ width: "100%" }}>
+						<Grid
+							container
+							sx={{
+								flexDirection: "row",
+								justifyContent: "flex-end",
+								alignItems: "center",
+								alignContent: "center",
+								display: "flex",
+							}}
+						>
+							<Grid
+								item
+								xs={10}
+								sx={{ justifyContent: "flex-end" }}
+							>
+								<Typography
+									gutterBottom
+									align="center"
+									variant="h6"
+								>
+									Hora:
+									{createTimeFormat(time)}
+								</Typography>
+							</Grid>
+						</Grid>
+					</Grid>
+				</Grid>
+				
 			</CardContent>
 		</Card>
 	);

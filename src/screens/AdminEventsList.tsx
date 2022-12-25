@@ -30,7 +30,6 @@ import { useFormik } from "formik";
 import { buildPaginationSize } from "../utils/buildOdataParams";
 import SearchIcon from "@mui/icons-material/Search";
 
-
 interface Values {
 	searchBar: string;
 }

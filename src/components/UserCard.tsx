@@ -181,7 +181,9 @@ function UserCard({
 							}}
 						>
 							<Link to={`/updateUser/${id}`}>
-								<EditIcon sx={{ fontSize: 40 }} />
+								<EditIcon
+									sx={{ fontSize: 40, color: "#39B3BA" }}
+								/>
 							</Link>
 						</Grid>
 						<Grid
