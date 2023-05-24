@@ -15,7 +15,7 @@ variables:
   imageRepository: 'reactagenda'
   containerRegistry: 'agendaculturalcontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: latest #'$(Build.BuildId)' should use build tag
+  tag: latest 
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -64,13 +64,3 @@ stages:
               cd
               cd agendaCultural
               ./scriptUpdateFE.sh
-
-    # - task: Docker@2
-    #   displayName: Build and push an image to container registry
-    #   inputs:
-    #     command: buildAndPush
-    #     repository: $(imageRepository)
-    #     dockerfile: $(dockerfilePath)
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     tags: |
-    #       $(tag)
