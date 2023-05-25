@@ -240,7 +240,6 @@ function ListPage(): JSX.Element {
 							</IconButton>
 						</Grid>
 					</Grid>
-					nuevo cambio
 				</Box>
 			</form>
 			
