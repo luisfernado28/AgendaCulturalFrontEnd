@@ -240,11 +240,10 @@ function ListPage(): JSX.Element {
 							</IconButton>
 						</Grid>
 					</Grid>
+					nuevo cambio
 				</Box>
 			</form>
-			{/* <Typography variant="h3" component="div">
-				Eventos en tendencia
-			</Typography> */}
+			
 			{Events.length !== 0 ? (
 				<Grid
 					container
