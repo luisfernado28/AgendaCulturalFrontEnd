@@ -101,7 +101,7 @@ function EventsDetail({
 					</Box>
 					<Box className="imageBox">
 						{Event.imageUrl === "" ? (
-							<div>No image</div>
+							<div></div>
 						) : (
 							<CardMedia
 								component="img"
