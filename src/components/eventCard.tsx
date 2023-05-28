@@ -41,7 +41,7 @@ function EventCard({
 		const first = new Date(dates[0]);
 		let month = first.toLocaleString("default", { month: "short" });
 		month = month.charAt(0).toUpperCase() + month.slice(1);
-		return (first.getUTCDate()-1) + "/" + month;
+		return first.getUTCDate() + "/" + month;
 	}
 	return (
 		<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>

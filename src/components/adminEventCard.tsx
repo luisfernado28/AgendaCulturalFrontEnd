@@ -202,7 +202,7 @@ function AdminEventCard({
 												}
 											) +
 												"/" +
-												(startingDate.getUTCDate()-1)}
+												(startingDate.getUTCDate())}
 										</Typography>
 									</Grid>
 								</Grid>
