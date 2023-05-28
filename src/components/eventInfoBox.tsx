@@ -33,12 +33,21 @@ const EventInfoBox = (props): JSX.Element => {
 						</div>
 					);
 				} else {
-					return (
-						<div>
-							{createDateFormat(props.datesArray[0])} a{" "}
-							{createDateFormat(props.datesArray[1])}
-						</div>
-					);
+					if (props.datesArray.length === 1){
+						return (		
+							<div>
+								{createDateFormat(props.datesArray[0])} 
+							</div>
+						)
+					}else {
+						return (		
+							<div>
+								{createDateFormat(props.datesArray[0])} a{" "}
+								{createDateFormat(props.datesArray[1])}
+							</div>
+						)
+					}
+						
 				}
 			case "Horario":
 				return <div>{createTimeFormat(Content)}</div>;
