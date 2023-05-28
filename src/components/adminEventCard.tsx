@@ -200,9 +200,9 @@ function AdminEventCard({
 												{
 													month: "long",
 												}
-											).toUpperCase() +
+											) +
 												"/" +
-												startingDate.getDay()}
+												(startingDate.getUTCDate()-1)}
 										</Typography>
 									</Grid>
 								</Grid>
