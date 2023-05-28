@@ -22,7 +22,7 @@ const EventInfoBox = (props): JSX.Element => {
 		switch (InfoTitle) {
 			case "Escenario":
 				const VenueInfo = Content.split("/");
-				return <div>{VenueInfo[0] + "palce" + VenueInfo[1]}</div>;
+				return <div>{VenueInfo[0] + "" + VenueInfo[1]}</div>;
 			case "Fechas":
 				if (Content) {
 					return (

@@ -200,7 +200,7 @@ function AdminEventCard({
 												{
 													month: "long",
 												}
-											) +
+											).toUpperCase() +
 												"/" +
 												startingDate.getDay()}
 										</Typography>
